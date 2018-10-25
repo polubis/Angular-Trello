@@ -1,0 +1,12 @@
+<div class="form-container">
+    <form (onSubmit)="onSubmitHandler($event)">
+      <section *ngFor="let item of items; let i = index">
+        <label>{{item.label}}</label>
+        <input [value]="item.value" (input)="onChangeInputHandler(i, $event)" 
+          [type]="item.type" [placeholder]="item.placeholder" />
+          
+      </section>
+
+      <button title="submit" type="submit">Submit</button>
+    </form>
+</div>
