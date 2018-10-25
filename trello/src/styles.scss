@@ -1,1 +1,53 @@
-/* You can add global styles to this file, and also import other style files */
+body, html{
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    background: #f2f2f2;
+}
+.main-container{
+    min-height: 100vh;
+}
+button{
+    cursor: pointer;
+    font-family: inherit;
+    &:focus{
+        outline: none;
+    }
+}
+.nav-btn{
+    background: transparent;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    min-width: 150px;
+    border-radius: 41px;
+}
+.nav-btn-bg{
+    background: rgba(147, 178, 221, 0.35);
+}
+.big-btn{
+    padding: 20px;
+    max-width: 250px;
+    text-align: center;
+    transition: .4s;
+    border-radius: 41px;
+    border: 1px solid white;
+    color: white;
+    min-width: 250px;
+    background: transparent;
+    font-size: 17px;
+    letter-spacing: 1.1px;
+    &:hover{
+        background: rgba(147, 178, 221, 0.35);
+        border-color: transparent;
+    }
+}
+ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.shadow{
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}

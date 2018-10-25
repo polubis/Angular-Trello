@@ -1,0 +1,37 @@
+.togler{
+    display: flex;
+    position: relative;
+    button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: unset;
+        i{
+            transition: .4s;
+        }
+        .rotated{
+            transform: rotate(180deg);
+        }
+    }
+    ul{
+        z-index: 1;
+        background: white;
+        position: absolute;
+        color: #424242;
+        right: -125px;
+        top: 25px;
+        li{
+            padding: 15px;
+            cursor: pointer;
+            display: flex;
+            min-width: 125px;
+            align-items: center;
+            &:hover{
+                background: #f2f2f2;
+            }
+            i{
+                margin-right: 10px;
+            }
+        }
+    }
+}

@@ -1,0 +1,26 @@
+.home-nav-container{
+    background-image: linear-gradient(to right top, #6495da, #5792db, #478edb, #328bdc, #0588dc);
+    color: white;
+    & > *{
+        width: 1200px;
+        padding: 20px 0;
+        display: flex;
+        margin: 0 auto;
+        align-items: center;
+    }
+    .nav-btn-container{
+        margin-left: auto;
+        & > *{
+            margin-left: 10px;
+        }
+    }   
+    .nav-content{
+        & > div{
+            max-width: 55%;
+            button{
+                margin: 15px 0 0 0;
+            }
+        }
+    }
+    
+}
