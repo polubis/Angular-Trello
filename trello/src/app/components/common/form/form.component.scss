@@ -28,4 +28,16 @@
            margin-left: 15px;
         }
      }
+     .login-modal-footer{
+        margin-top: auto;
+        display: flex;
+        i{
+            font-size: 32px;
+            cursor: pointer;
+            margin-right: auto;
+        }
+        button{
+            margin-left: auto;
+        }
+    }
 }

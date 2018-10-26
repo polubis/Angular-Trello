@@ -29,18 +29,13 @@
             <img src="assets/guitar.jpg" alt="picture"/>
         </div>
         <app-form [formClass]="'login-form'" [formSettings]="loginFormSettings">
-            <div class="remaind-password">
+            <div (click)="remaindPassword()" class="remaind-password">
                 remaind password
             </div>
 
             <div class="checkbox-container">
-                <input type="checkbox" />
+                <input (change)="rememberPassword($event)" type="checkbox" />
                 <span>remember me</span>
-            </div>
-
-            <div class="login-modal-footer">
-                <i class="material-icons error-color">warning</i>
-                <button [style.color]="'#0588DC'" class="letter-btn">Log in</button>
             </div>
         </app-form>
     </div>

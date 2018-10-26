@@ -8,6 +8,7 @@ import { LogoComponent } from './components/common/logo/logo.component';
 import { ToglerComponent } from './components/common/togler/togler.component';
 import { FormComponent } from './components/common/form/form.component';
 import { ModalComponent } from './components/common/modal/modal.component';
+import { FormService } from './services/form.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +23,7 @@ import { ModalComponent } from './components/common/modal/modal.component';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [FormService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

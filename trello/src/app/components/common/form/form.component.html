@@ -1,11 +1,15 @@
 <form [class]="formClass" (onSubmit)="onSubmitHandler($event)">
   <div class="inputs-container">
     <section class="row" *ngFor="let item of formSettings; let i = index">
-        <input [value]="item.value" (input)="onChangeInputHandler(i, $event)" 
+        <input (input)="handleTyping(i, $event)" 
           [type]="item.type" [placeholder]="item.placeholder" />          
       <i class="material-icons">lock_open</i>
     </section>
   </div>
   
   <ng-content></ng-content>
+  <div class="login-modal-footer">
+    <i [ngStyle]="{'visibility': isFormDirty ? 'visible' : 'hidden'}" class="material-icons error-color">warning</i>
+    <button (click)="submit($event)" [style.color]="'#0588DC'" class="letter-btn">Log in</button>
+  </div>
 </form>
