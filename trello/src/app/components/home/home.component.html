@@ -3,7 +3,7 @@
         <app-logo></app-logo>
         <app-togler [items]="toglerItems" title="Content" btnClass="nav-btn"></app-togler>
         <div class="nav-btn-container">
-            <button class="nav-btn nav-btn-bg" title="Log in">Login</button>
+            <button (click)="togleLoginModal()" class="nav-btn nav-btn-bg" title="Log in">Login</button>
             <button class="nav-btn" title="Register">Register</button>
         </div>
     </nav>
@@ -19,5 +19,30 @@
             <button class="big-btn">START USING</button>
         </div>
     </div>
-
 </header>
+
+
+<app-modal *ngIf="isLoginModalOpen" [modalTitle]="'Log into your account'"
+(onClosingModal)="togleLoginModal()" [width]="'500px'" [height]="'620px'">
+    <div class="login-form-container">
+        <div class="image-holder">
+            <img src="assets/guitar.jpg" alt="picture"/>
+        </div>
+        <app-form [formClass]="'login-form'" [formSettings]="loginFormSettings">
+            <div class="remaind-password">
+                remaind password
+            </div>
+
+            <div class="checkbox-container">
+                <input type="checkbox" />
+                <span>remember me</span>
+            </div>
+
+            <div class="login-modal-footer">
+                <i class="material-icons error-color">warning</i>
+                <button [style.color]="'#0588DC'" class="letter-btn">Log in</button>
+            </div>
+        </app-form>
+    </div>
+
+</app-modal>

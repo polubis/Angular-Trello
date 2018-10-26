@@ -1,0 +1,8 @@
+<div class="modal" [style.width]="width" [style.height]="height">
+  <h5 [style.background]="background">{{modalTitle}}</h5>
+  <ng-content></ng-content>
+</div>
+
+<div class="backdrop">
+  <i (click)="closeModal()" class="material-icons">close</i>
+</div>

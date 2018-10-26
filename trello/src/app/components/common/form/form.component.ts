@@ -6,15 +6,17 @@ import FormModel from '../../../models/form.model';
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit {
-  @Input() formItems: FormModel[];
+  @Input() formSettings: FormModel[];
+  @Input() formClass: string;
+  
   formStateItems: any[] = [];
 
   ngOnInit() {
-    this.formStateItems = this.formItems.map(item => ( { value: "", error: "" } )) ;
+    this.formStateItems = this.formSettings.map(item => ( { value: "", error: "" } )) ;
+    console.log(this.formSettings);
   }
 
   onChangeInputHandler(index: number, e){
-    console.log(e.target.value);
   }
 
 

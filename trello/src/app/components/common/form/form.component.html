@@ -1,12 +1,11 @@
-<div class="form-container">
-    <form (onSubmit)="onSubmitHandler($event)">
-      <section *ngFor="let item of items; let i = index">
-        <label>{{item.label}}</label>
+<form [class]="formClass" (onSubmit)="onSubmitHandler($event)">
+  <div class="inputs-container">
+    <section class="row" *ngFor="let item of formSettings; let i = index">
         <input [value]="item.value" (input)="onChangeInputHandler(i, $event)" 
-          [type]="item.type" [placeholder]="item.placeholder" />
-          
-      </section>
-
-      <button title="submit" type="submit">Submit</button>
-    </form>
-</div>
+          [type]="item.type" [placeholder]="item.placeholder" />          
+      <i class="material-icons">lock_open</i>
+    </section>
+  </div>
+  
+  <ng-content></ng-content>
+</form>

@@ -15,7 +15,7 @@
         }
     }   
     .nav-content{
-        & > div{
+        & > div:first-of-type{
             max-width: 55%;
             button{
                 margin: 15px 0 0 0;
@@ -24,3 +24,49 @@
     }
     
 }
+
+.login-form-container{
+    height: calc(100% - 80px);
+    padding: 20px;
+    box-sizing: border-box;
+    .image-holder{
+        width: 75px;
+        height: 75px;
+        margin: 20px auto;
+        img{
+            border-radius: 50%;
+        }
+    }
+    .login-modal-footer{
+        margin-top: auto;
+        display: flex;
+        justify-content: space-between;
+        i{
+            font-size: 32px;
+            cursor: pointer;
+        }
+    }
+    .remaind-password{
+        margin-left: auto;
+        color: #707070;
+        cursor: pointer;
+        padding: 15px 45px;
+    }
+    .checkbox-container{
+        padding: 15px 45px;
+        display: flex;
+        align-items: center;
+        input{
+            border: 1px solid #AAAAAA;
+            width: 20px;
+            height: 20px;
+            background: transparent;
+        }
+        span{
+            color: #AAAAAA;
+            margin-left: 7.5px;
+            font-size: 14px;
+        }
+    }
+}
+

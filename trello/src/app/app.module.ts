@@ -7,6 +7,7 @@ import { MainComponent } from './components/main/main.component';
 import { LogoComponent } from './components/common/logo/logo.component';
 import { ToglerComponent } from './components/common/togler/togler.component';
 import { FormComponent } from './components/common/form/form.component';
+import { ModalComponent } from './components/common/modal/modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -14,7 +15,8 @@ import { FormComponent } from './components/common/form/form.component';
     MainComponent,
     LogoComponent,
     ToglerComponent,
-    FormComponent
+    FormComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
