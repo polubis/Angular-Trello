@@ -4,7 +4,7 @@
         <app-togler [items]="toglerItems" title="Content" btnClass="nav-btn"></app-togler>
         <div class="nav-btn-container">
             <button (click)="togleLoginModal()" class="nav-btn nav-btn-bg" title="Log in">Login</button>
-            <button class="nav-btn" title="Register">Register</button>
+            <button (click)="togleRegisterModal()" class="nav-btn" title="Register">Register</button>
         </div>
     </nav>
 
@@ -28,7 +28,7 @@
         <div class="image-holder">
             <img src="assets/guitar.jpg" alt="picture"/>
         </div>
-        <app-form [formClass]="'login-form'" [formSettings]="loginFormSettings">
+        <app-form [isDoingRequest]="isDoingRequest" [submitMethod]="logIn" [formClass]="'stnd-form'" [formSettings]="loginFormSettings">
             <div (click)="remaindPassword()" class="remaind-password">
                 remaind password
             </div>
@@ -40,4 +40,13 @@
         </app-form>
     </div>
 
+</app-modal>
+
+<app-modal *ngIf="isRegisterModalOpen" [modalTitle]="'Create your account'" (onClosingModal)="togleRegisterModal()" [width]="'500px'" [height]="'600px'">
+    <div class="register-form-container">
+        <app-form [isDoingRequest]="isDoingRequest" [submitMethod]="register" [formClass]="'stnd-form'" 
+        [formSettings]="registerFormSettings">
+            
+        </app-form>
+    </div>
 </app-modal>

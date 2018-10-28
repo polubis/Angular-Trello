@@ -2,10 +2,7 @@
 import { Injectable } from '@angular/core';
 import FormModel from '../models/form.model';
 
-const patterns = {
-    name: /^[A-Z][a-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]+$/i, 
-    email: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-};
+
 
 const errorsNamingFunctions: {} = {
     minLength: (inputName, specifiedValue) => { return `Input ${inputName} should have more than ${specifiedValue} characters` },
@@ -38,7 +35,7 @@ export class FormService {
     }
 
     handleFormat(value: any, specifiedValue: any){
-        return !value.test(specifiedValue);
+        return !specifiedValue.test(value);
     }
 
     createFormItems(settings: FormModel[]): any[]{
@@ -68,4 +65,6 @@ export class FormService {
             return this.validate(item, item.value, formSettings[index].validationSettings);
         });
     }
+
+    
 }

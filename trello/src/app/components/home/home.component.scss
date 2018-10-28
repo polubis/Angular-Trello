@@ -29,6 +29,9 @@
     height: calc(100% - 80px);
     padding: 20px;
     box-sizing: border-box;
+    .stnd-form{
+        margin-top: 20px;
+    }
     .image-holder{
         width: 75px;
         height: 75px;
@@ -61,3 +64,9 @@
     }
 }
 
+.register-form-container{
+    padding: 0 20px 20px 20px;
+    .modal-footer{
+        margin-top: auto;
+    }
+}

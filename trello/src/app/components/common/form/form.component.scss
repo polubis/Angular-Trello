@@ -1,8 +1,14 @@
-.login-form{
+.scalled-form{
+    transform: scale(.9);
+}
+form{
+    transform: scale(1);
+    transition: .2s;
+}
+.stnd-form{
     display: flex;
     flex-flow: column;
     height: calc(100% - 115px);
-    margin-top: 20px;
     box-sizing: border-box;
     .errors-list{
         z-index: 2;
@@ -43,7 +49,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-     
        input{
            width: 90%;
            border: none;
@@ -54,7 +59,7 @@
                color: #707070;
                font-size: 12px;
            }
-           }
+        }
         .margined-span{
             margin-left: 10px;
             width: 24px;
@@ -70,7 +75,7 @@
             }
         }
      }
-     .login-modal-footer{
+     .modal-footer{
         margin-top: auto;
         display: flex;
         position: relative;

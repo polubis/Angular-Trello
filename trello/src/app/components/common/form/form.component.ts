@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import FormModel from '../../../models/form.model';
 import { FormService } from '../../../services/form.service';
+import { RequestService } from '../../../services/request.service';
+import { OperationsService } from '../../../services/operations.service'; 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -9,16 +11,16 @@ import { FormService } from '../../../services/form.service';
 export class FormComponent implements OnInit {
   @Input() formSettings: FormModel[];
   @Input() formClass: string;
+  @Input() submitMethod: Function;
+  @Input() isDoingRequest: boolean; 
 
-  constructor(private formService: FormService){}
-  isSendingData: boolean = false;
+  constructor(private formService: FormService, private requestService: RequestService, private operationsService: OperationsService){}
   formStateItems: any[] = [];
   currentFocusedInput: number = -1;
   showListWithErrorsCounters: boolean = false;
   numberOfFormItems: number = 0;
   isFormReadyToSubmit: boolean = true;
   isFormDirty: boolean = false;
-  
   shouldShowErrorsSpecifications: boolean = false;
   errorsSpecifications: any[] = [];
   ngOnInit() {
@@ -55,6 +57,7 @@ export class FormComponent implements OnInit {
       if(!part.isAllErrorsResolved)
         specifications.push({ index, numberOfErrors: part.contents.filter(content => content.isError).length })
     });
+
     return specifications;
   }
 
@@ -85,9 +88,17 @@ export class FormComponent implements OnInit {
     this.formStateItems = this.formService.validateAll(this.formStateItems, this.formSettings);
     this.isFormReadyToSubmit = this.formStateItems.filter(item => item.isAllErrorsResolved).length === this.numberOfFormItems;
     this.currentFocusedInput = this.formStateItems.findIndex(item => !item.isAllErrorsResolved);
-    
     if(!this.isFormDirty) this.isFormDirty = true;
 
-    this.handleCreatingSpecifications();
+    if(this.isFormReadyToSubmit){
+      this.submitMethod(this.formStateItems);
+    }
+    else{
+      this.handleCreatingSpecifications();
+    }
+
+
+    console.log(this.numberOfFormItems, this.errorsSpecifications)
+
   }
 }

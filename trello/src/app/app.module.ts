@@ -9,6 +9,12 @@ import { ToglerComponent } from './components/common/togler/togler.component';
 import { FormComponent } from './components/common/form/form.component';
 import { ModalComponent } from './components/common/modal/modal.component';
 import { FormService } from './services/form.service';
+import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+import { RequestService } from './services/request.service';
+import { SpinnerComponent } from './components/common/spinner/spinner.component';
+import { OperationsComponent } from './components/common/operations/operations.component';
+import { OperationsService } from './services/operations.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,13 +23,17 @@ import { FormService } from './services/form.service';
     LogoComponent,
     ToglerComponent,
     FormComponent,
-    ModalComponent
+    ModalComponent,
+    SpinnerComponent,
+    OperationsComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpModule,
+    HttpClientModule
   ],
-  providers: [FormService],
+  providers: [RequestService, FormService, OperationsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

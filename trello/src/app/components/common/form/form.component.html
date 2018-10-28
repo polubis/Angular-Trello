@@ -1,4 +1,6 @@
-<form [class]="formClass" (submit)="handleSubmit($event)">
+<app-spinner *ngIf="isDoingRequest" [showBackdrop]="true"></app-spinner>
+
+<form [class]="formClass" (submit)="handleSubmit($event)" [ngClass]="{'scalled-form': isDoingRequest}">
   <div class="inputs-container">
     <section class="row" *ngFor="let item of formSettings; let i = index" [ngClass]="{'invalid-input': formStateItems[i].isAllErrorsResolved === false, 'correct-input': formStateItems[i].isAllErrorsResolved === true}">
         <input (focus)="fillErrorsOnFocusedInput(i)" (input)="handleTyping(i, $event)" (blur)="removeErrorList()" 
@@ -19,10 +21,9 @@
     </section>
   </div>
   <ng-content></ng-content>
-  <div class="login-modal-footer">
+  <div class="modal-footer">
     <div [ngStyle]="{'visibility': isFormDirty ? 'visible' : 'hidden'}" class="errors-icon-container">
         <i [ngStyle]="{'visibility': !isFormReadyToSubmit && isFormDirty ? 'visible' : 'hidden'}" (click)="togleErrorsSpecifications()" class="material-icons error-color">error_outline</i>
-
         <ul *ngIf="shouldShowErrorsSpecifications" class="errors-list">
           <li *ngFor="let spec of errorsSpecifications">
             <i [style.color]="'#F35F5F'" class="material-icons">do_not_disturb</i>

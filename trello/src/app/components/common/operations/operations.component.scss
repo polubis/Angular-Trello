@@ -1,0 +1,48 @@
+.operations{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    color: white;
+    li{
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        animation: .5s error-in forwards;
+        @keyframes error-in{
+            0%{
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+            100%{
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        i{
+            cursor: pointer;
+        }
+        span{
+            display: inherit;
+            align-items: inherit;
+            i{
+                margin-right: 10px;
+            }
+        }
+    }
+    li{
+        margin-top: 1px;
+    }
+    .error{
+        background: #F35F5F;
+    }
+    .warning{
+        background: #F6F674;
+        color: black;
+    }
+    .success{
+        background: #6ECF8E;
+    }
+}

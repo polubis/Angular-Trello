@@ -1,0 +1,11 @@
+<ul *ngIf="operations.length > 0" class="operations">
+  <li *ngFor="let operation of operations; let i = index" [class]="operation.type">
+    <span>
+        <i *ngIf="operation.type === 'error'" class="material-icons">error</i>
+        <i *ngIf="operation.type === 'warning'" class="material-icons">warning</i>
+        <i *ngIf="operation.type === 'success'" class="material-icons">check_circle</i>
+        {{operation.content}}
+    </span> 
+    <i (click)="closeOperation(i)" class="material-icons">close</i>
+  </li>
+</ul>

@@ -1,13 +1,38 @@
 import FormModel from '../models/form.model';
 
+const patterns = {
+    name: /^[A-Z][a-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]+$/i, 
+    email: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+};
 
-// export const registerFormSettings: FormModel[] = [
-//     { label: "Email", placeholder: "type your email adress...", type: "email", mode: "input" },
-//     { label: "Password", placeholder: "type your password...", type: "password", mode: "input" },
-//     { label: "Repeated password", placeholder: "type your password again...", type: "password", mode: "input" },
-//     { label: "First name", placeholder: "type your first name...", type: "text", mode: "input" },
-//     { label: "Last name", placeholder: "type your last name...", type: "text", mode: "input" },
-// ];
+export const registerFormSettings: FormModel[] = [
+    { label: "Email", placeholder: "type your email adress...", type: "email", mode: "input",
+        validationSettings: {
+            minLength: 10, maxLength: 40, required: true, isCorrectFormat: patterns.email
+        } 
+    },
+    { label: "Password", placeholder: "type your password...", type: "password", mode: "input", 
+        validationSettings: {
+            minLength: 5, maxLength: 25, required: true 
+        } 
+    },
+    { label: "Repeated password", placeholder: "type your password again...", type: "password", mode: "input",
+        validationSettings: {
+            minLength: 5, maxLength: 25, required: true 
+        } 
+    },
+    { label: "First name", placeholder: "type your firstname...", type: "text", mode: "input",
+        validationSettings: {
+            minLength: 5, maxLength: 25, required: true, isCorrectFormat: patterns.name
+        } 
+    },
+    { label: "Last name", placeholder: "type your lastname...", type: "text", mode: "input",
+        validationSettings: {
+            minLength: 5, maxLength: 25, required: true, isCorrectFormat: patterns.name
+        } 
+    },
+];
+
 export const loginFormSettings: FormModel[] = [ 
     { label: "Username", placeholder: "type your username...", type: "text", mode: "input", 
         validationSettings: {
