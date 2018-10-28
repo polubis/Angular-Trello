@@ -4,40 +4,90 @@
     height: calc(100% - 115px);
     margin-top: 20px;
     box-sizing: border-box;
+    .errors-list{
+        z-index: 2;
+        box-shadow: 0 3px 20px rgba(0,0,0,.4);
+        position: absolute;
+        background: white;
+        color: #707070;
+        li{
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            span{
+                font-size: 12px;
+                margin-left: 15px;
+                width: 120px;
+            }
+
+        }
+    }
     .inputs-container{
         padding: 15px 45px;
         box-sizing: border-box;
+    }
+    .invalid-input{
+        input, i{
+            color: #F35F5F;
+            border-color: #F35F5F;
+        }
+    }
+    .correct-input{
+        input, i{
+            color: #6ECF8E;
+            border-color: #6ECF8E;
+        }
     }
     section{
         padding: 25px 0;
         display: flex;
         justify-content: center;
         align-items: center;
+     
        input{
            width: 90%;
            border: none;
            border-bottom: 1px solid #0588DC;
-           font-size: 12px;
+           font-size: 14px;
            color: #0588DC;
            &::placeholder{
                color: #707070;
-               font-size: 10px;
+               font-size: 12px;
            }
            }
-        i{
-           margin-left: 15px;
+        .margined-span{
+            margin-left: 10px;
+            width: 24px;
+        }
+        div{
+            transition: .5s;
+            margin: 0;
+            width: 0;
+            position: relative;
+            ul{
+                top: 10px;
+                left: 40px;
+            }
         }
      }
      .login-modal-footer{
         margin-top: auto;
         display: flex;
-        i{
-            font-size: 32px;
-            cursor: pointer;
-            margin-right: auto;
+        position: relative;
+        .errors-icon-container{
+            & > i{
+                font-size: 32px;
+                cursor: pointer;
+                margin-right: auto;
+            }
         }
         button{
             margin-left: auto;
+            color: #0588DC;
+            &:disabled{
+                color: #707070;
+                cursor: not-allowed;
+            }
         }
     }
 }

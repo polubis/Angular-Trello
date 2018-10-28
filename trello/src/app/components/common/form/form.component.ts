@@ -10,22 +10,84 @@ export class FormComponent implements OnInit {
   @Input() formSettings: FormModel[];
   @Input() formClass: string;
 
-  constructor(private formService: FormService){
-
-  }
-  isFormDirty: boolean = false;
+  constructor(private formService: FormService){}
+  isSendingData: boolean = false;
   formStateItems: any[] = [];
-  shouldLetUserSubmit: boolean = true;
+  currentFocusedInput: number = -1;
+  showListWithErrorsCounters: boolean = false;
+  numberOfFormItems: number = 0;
+  isFormReadyToSubmit: boolean = true;
+  isFormDirty: boolean = false;
   
+  shouldShowErrorsSpecifications: boolean = false;
+  errorsSpecifications: any[] = [];
   ngOnInit() {
-    this.formStateItems = this.formService.createErrorItems(this.formSettings);
+    this.formStateItems = this.formService.createFormItems(this.formSettings);
+    this.numberOfFormItems = this.formSettings.length;
   }
-
 
   handleTyping(index: number, e){
     this.formStateItems[index] = this.formService.validate(this.formStateItems[index], e.target.value, 
-        this.formSettings[index].validationSettings);
+      this.formSettings[index].validationSettings);
+    this.isFormReadyToSubmit = this.formStateItems.filter(item => item.isAllErrorsResolved).length === this.numberOfFormItems;
+    
+    if(this.isFormDirty) this.handleCreatingSpecifications();
   }
 
+  fillErrorsOnFocusedInput(index: number){
+    this.currentFocusedInput = index;
+    this.showListWithErrorsCounters = false;
+  }
 
+  removeErrorList(){
+    this.currentFocusedInput = -1;
+    this.showListWithErrorsCounters = false;
+  }
+
+  showErrorsOnClick(){
+    this.currentFocusedInput = -1;
+    this.showListWithErrorsCounters = true;
+  }
+
+  createSpecifications(){
+    let specifications = [];
+    this.formStateItems.forEach(function(part, index){
+      if(!part.isAllErrorsResolved)
+        specifications.push({ index, numberOfErrors: part.contents.filter(content => content.isError).length })
+    });
+    return specifications;
+  }
+
+  handleCreatingSpecifications(){
+    if(!this.isFormReadyToSubmit){
+      this.shouldShowErrorsSpecifications = true;
+      this.errorsSpecifications = this.createSpecifications();
+    }
+    else{
+      this.shouldShowErrorsSpecifications = false;
+      this.errorsSpecifications = [];
+    }
+  }
+
+  togleErrorsSpecifications(){
+    if(this.shouldShowErrorsSpecifications){
+      this.shouldShowErrorsSpecifications = false;
+      this.errorsSpecifications = [];
+    }
+    else{
+      this.shouldShowErrorsSpecifications = true;
+      this.errorsSpecifications = this.createSpecifications();
+    }
+  }
+
+  handleSubmit(e){
+    e.preventDefault();
+    this.formStateItems = this.formService.validateAll(this.formStateItems, this.formSettings);
+    this.isFormReadyToSubmit = this.formStateItems.filter(item => item.isAllErrorsResolved).length === this.numberOfFormItems;
+    this.currentFocusedInput = this.formStateItems.findIndex(item => !item.isAllErrorsResolved);
+    
+    if(!this.isFormDirty) this.isFormDirty = true;
+
+    this.handleCreatingSpecifications();
+  }
 }

@@ -1,15 +1,35 @@
-<form [class]="formClass" (onSubmit)="onSubmitHandler($event)">
+<form [class]="formClass" (submit)="handleSubmit($event)">
   <div class="inputs-container">
-    <section class="row" *ngFor="let item of formSettings; let i = index">
-        <input (input)="handleTyping(i, $event)" 
-          [type]="item.type" [placeholder]="item.placeholder" />          
-      <i class="material-icons">lock_open</i>
+    <section class="row" *ngFor="let item of formSettings; let i = index" [ngClass]="{'invalid-input': formStateItems[i].isAllErrorsResolved === false, 'correct-input': formStateItems[i].isAllErrorsResolved === true}">
+        <input (focus)="fillErrorsOnFocusedInput(i)" (input)="handleTyping(i, $event)" (blur)="removeErrorList()" 
+          [type]="item.type" [placeholder]="item.placeholder" />   
+          
+      <div (click)="openErrorList(i)" [ngClass]="{'margined-span': formStateItems[i].isAllErrorsResolved !== null}">
+        <i *ngIf="formStateItems[i].isAllErrorsResolved === false" class="material-icons">lock_outline</i>
+        <i *ngIf="formStateItems[i].isAllErrorsResolved === true" class="material-icons">lock_open</i>
+        
+        <ul class="errors-list" *ngIf="formStateItems[i].isAllErrorsResolved === false && i === currentFocusedInput">
+          <li *ngFor="let content of formStateItems[i].contents">
+              <i *ngIf="content.isError === false" [style.color]="'#6ECF8E'" class="material-icons">check</i>
+              <i *ngIf="content.isError === true" [style.color]="'#F35F5F'" class="material-icons">error_outline</i>
+              <span>{{content.content}}</span>
+          </li>
+        </ul>
+      </div>
     </section>
   </div>
-  
   <ng-content></ng-content>
   <div class="login-modal-footer">
-    <i [ngStyle]="{'visibility': isFormDirty ? 'visible' : 'hidden'}" class="material-icons error-color">warning</i>
-    <button (click)="submit($event)" [style.color]="'#0588DC'" class="letter-btn">Log in</button>
+    <div [ngStyle]="{'visibility': isFormDirty ? 'visible' : 'hidden'}" class="errors-icon-container">
+        <i [ngStyle]="{'visibility': !isFormReadyToSubmit && isFormDirty ? 'visible' : 'hidden'}" (click)="togleErrorsSpecifications()" class="material-icons error-color">error_outline</i>
+
+        <ul *ngIf="shouldShowErrorsSpecifications" class="errors-list">
+          <li *ngFor="let spec of errorsSpecifications">
+            <i [style.color]="'#F35F5F'" class="material-icons">do_not_disturb</i>
+            <span>In field {{formSettings[spec.index].label}} we found {{spec.numberOfErrors}} errors</span>
+          </li>
+        </ul>
+    </div>
+    <button [disabled]="isFormDirty && !isFormReadyToSubmit" type="submit" class="letter-btn">Log in</button>
   </div>
 </form>

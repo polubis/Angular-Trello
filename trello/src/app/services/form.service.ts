@@ -41,25 +41,31 @@ export class FormService {
         return !value.test(specifiedValue);
     }
 
-    createErrorItems(settings: FormModel[]): any[]{
+    createFormItems(settings: FormModel[]): any[]{
         return settings.map(setting => {
            const keys = Object.keys(setting.validationSettings);
-            return { isAllErrorsResolved: null, contents: keys.map(key => {
+            return { value: "", isAllErrorsResolved: null, contents: keys.map(key => {
                 return { isError: null, content: errorsNamingFunctions[key](setting.label, setting.validationSettings[key]) }
             }) } 
         });
     }
 
-    // isAllErrorsResolved, contents: { isError, contentOfError }
     validate(currentErrorObject: any, value: any, setting: any){
         const copiedObject = {...currentErrorObject};
         const keys = Object.keys(setting);
         const keysLength = keys.length;
         for(let i = 0; i < keysLength; i++){
-            copiedObject.contents[i].isError = this.validationFunctions[keys[i]](value, setting[keys[i]]); 
+            copiedObject.contents[i].isError = this.validationFunctions[keys[i]](value, setting[keys[i]]);
         }
         copiedObject.isAllErrorsResolved = copiedObject.contents.findIndex(content => content.isError) === -1;
-        console.log(copiedObject);
+        copiedObject.value = value;
+
         return copiedObject;
+    }
+
+    validateAll(formStateItems: any[], formSettings: any){
+        return formStateItems.map((item, index) => {
+            return this.validate(item, item.value, formSettings[index].validationSettings);
+        });
     }
 }
