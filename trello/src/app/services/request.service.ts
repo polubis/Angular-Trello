@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { OperationsService } from './operations.service';
-
+import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 @Injectable()
 export class RequestService {
-    constructor(private http: Http, private operationsService: OperationsService){ }
+    constructor(private http: Http, private operationsService: OperationsService, private authService: AuthService,
+        private router: Router){ }
+        
     serverPath: string =  "http://localhost:60965/";
 
     requests = {
         login: { url: "Account/Login", needsAuth: false, requestKeys: ["login", "password"] } ,
-        register: { url: "Account/Login", needsAuth: false } 
+        register: { url: "Account/Register", needsAuth: false, requestKeys: ["email", "password", "confirmPassword", "userName", "firstName", "lastName"] } 
     }
 
     prepareKeysForRequest(keys: string[], values: any[]){
@@ -21,7 +24,7 @@ export class RequestService {
         return model;
     }
 
-    executeRequest(requestName: string, requestType: string, payload: any, succOperationContent: string = ""){
+    executeRequest = (requestName: string, requestType: string, payload: any, succOperationContent: string = "") => {
         return new Promise((resolve, reject) => {
             let modifiedPayload = {...payload};
             if(this.requests[requestName].requestKeys)
@@ -36,11 +39,14 @@ export class RequestService {
                     resolve(this.parseResponse(response));
                 },
                 error => {
-                    const parsedError = this.parseError(error);
-                    this.operationsService.addOperation("error", parsedError);
-                    reject(parsedError);
+                    const parsedErrors = this.parseError(error);
+                    for(let key in parsedErrors){
+                        this.operationsService.addOperation("error", parsedErrors[key]);
+                    }
+                    reject(parsedErrors);
                 }
-            );
+            )
+
 
         })
     }
@@ -49,11 +55,16 @@ export class RequestService {
         return response;
     }
 
-    parseError(error){
-        if(error.response !== undefined){
-            return error.response;
+    parseError = (error) => {     
+        if(error._body !== undefined){
+            const parsedBody = JSON.parse(error._body);
+            if(error.status === 401){
+                this.authService.deleteCookie("auth");
+                this.router.navigate(["/"]);
+            }
+            return parsedBody.errors;
         }
 
-        return "Ups, something went wrong";
+        return ["Ups, something went wrong"];
     }
 }

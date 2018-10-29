@@ -42,7 +42,7 @@
 
 </app-modal>
 
-<app-modal *ngIf="isRegisterModalOpen" [modalTitle]="'Create your account'" (onClosingModal)="togleRegisterModal()" [width]="'500px'" [height]="'600px'">
+<app-modal *ngIf="isRegisterModalOpen" [modalTitle]="'Create your account'" (onClosingModal)="togleRegisterModal()" [width]="'500px'">
     <div class="register-form-container">
         <app-form [isDoingRequest]="isDoingRequest" [submitMethod]="register" [formClass]="'stnd-form'" 
         [formSettings]="registerFormSettings">

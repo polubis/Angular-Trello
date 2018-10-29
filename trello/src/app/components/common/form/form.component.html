@@ -23,13 +23,21 @@
   <ng-content></ng-content>
   <div class="modal-footer">
     <div [ngStyle]="{'visibility': isFormDirty ? 'visible' : 'hidden'}" class="errors-icon-container">
-        <i [ngStyle]="{'visibility': !isFormReadyToSubmit && isFormDirty ? 'visible' : 'hidden'}" (click)="togleErrorsSpecifications()" class="material-icons error-color">error_outline</i>
-        <ul *ngIf="shouldShowErrorsSpecifications" class="errors-list">
-          <li *ngFor="let spec of errorsSpecifications">
+        <i [ngStyle]="{'visibility': !isFormReadyToSubmit && isFormDirty ? 'visible' : 'hidden'}" class="material-icons error-color">error_outline</i>
+        <ul *ngIf="shouldShowErrorsSpecifications && errorsSpecifications.length > 3; else yowza_item" class="errors-list">
+          <li>
             <i [style.color]="'#F35F5F'" class="material-icons">do_not_disturb</i>
-            <span>In field {{formSettings[spec.index].label}} we found {{spec.numberOfErrors}} errors</span>
+            <span>Yowza... a lot of errors in this field</span>
           </li>
         </ul>
+        <ng-template #yowza_item>
+          <ul *ngIf="shouldShowErrorsSpecifications" class="errors-list">
+            <li *ngFor="let spec of errorsSpecifications">
+              <i [style.color]="'#F35F5F'" class="material-icons">do_not_disturb</i>
+              <span>In field {{formSettings[spec.index].label}} we found {{spec.numberOfErrors}} errors</span>
+            </li>
+          </ul>
+        </ng-template>
     </div>
     <button [disabled]="isFormDirty && !isFormReadyToSubmit" type="submit" class="letter-btn">Log in</button>
   </div>

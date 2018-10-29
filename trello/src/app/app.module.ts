@@ -15,6 +15,10 @@ import { RequestService } from './services/request.service';
 import { SpinnerComponent } from './components/common/spinner/spinner.component';
 import { OperationsComponent } from './components/common/operations/operations.component';
 import { OperationsService } from './services/operations.service';
+import { AuthService } from './services/auth.service';
+import { LoggedUserGuard } from './services/logged-user-guard';
+import { NotLoggedUserGuard } from "src/app/services/not-logged-user-guard";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +37,7 @@ import { OperationsService } from './services/operations.service';
     HttpModule,
     HttpClientModule
   ],
-  providers: [RequestService, FormService, OperationsService],
+  providers: [RequestService, FormService, OperationsService, AuthService, LoggedUserGuard, NotLoggedUserGuard],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

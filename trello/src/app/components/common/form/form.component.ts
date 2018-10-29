@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import FormModel from '../../../models/form.model';
 import { FormService } from '../../../services/form.service';
-import { RequestService } from '../../../services/request.service';
-import { OperationsService } from '../../../services/operations.service'; 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -14,7 +12,7 @@ export class FormComponent implements OnInit {
   @Input() submitMethod: Function;
   @Input() isDoingRequest: boolean; 
 
-  constructor(private formService: FormService, private requestService: RequestService, private operationsService: OperationsService){}
+  constructor(private formService: FormService){}
   formStateItems: any[] = [];
   currentFocusedInput: number = -1;
   showListWithErrorsCounters: boolean = false;
@@ -72,17 +70,6 @@ export class FormComponent implements OnInit {
     }
   }
 
-  togleErrorsSpecifications(){
-    if(this.shouldShowErrorsSpecifications){
-      this.shouldShowErrorsSpecifications = false;
-      this.errorsSpecifications = [];
-    }
-    else{
-      this.shouldShowErrorsSpecifications = true;
-      this.errorsSpecifications = this.createSpecifications();
-    }
-  }
-
   handleSubmit(e){
     e.preventDefault();
     this.formStateItems = this.formService.validateAll(this.formStateItems, this.formSettings);
@@ -96,9 +83,5 @@ export class FormComponent implements OnInit {
     else{
       this.handleCreatingSpecifications();
     }
-
-
-    console.log(this.numberOfFormItems, this.errorsSpecifications)
-
   }
 }

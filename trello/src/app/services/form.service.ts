@@ -8,7 +8,11 @@ const errorsNamingFunctions: {} = {
     minLength: (inputName, specifiedValue) => { return `Input ${inputName} should have more than ${specifiedValue} characters` },
     maxLength: (inputName, specifiedValue) => { return `Input ${inputName} should have less than ${specifiedValue} characters` },
     required: (inputName, specifiedValue) => { return `Input ${inputName} is required` },
-    isCorrectFormat: (inputName, specifiedValue) => { return `Input ${inputName} have wrong format` }
+    isCorrectFormat: (inputName, specifiedValue) => { return `Input ${inputName} have wrong format` },
+    shouldShowOneUppercase: (inputName, specifiedValue) => { return `Input ${inputName} must have ${specifiedValue} upper case ${specifiedValue < 2 ? "letter" : "letters"}` },
+    isContainsNumber: (inputName, specifiedValue) => { return `Input ${inputName} must have a ${specifiedValue} ${specifiedValue < 2 ? "number" : "numbers"}`},
+    isContainsSpecialChars: (inputName, specifiedValue) => { return `Input ${inputName} must have a ${specifiedValue} ${specifiedValue < 2 ? "character" : "characters"}`}
+    
 };
 
 
@@ -19,8 +23,32 @@ export class FormService {
         minLength: (value, specifiedValue) => this.handleMinLength(value.length, specifiedValue),
         maxLength: (value, specifiedValue) => this.handleMaxLength(value.length, specifiedValue),
         required: (value, specifiedValue) => this.handleRequired(value),
-        isCorrectFormat: (value, specifiedValue) => this.handleFormat(value, specifiedValue)
+        isCorrectFormat: (value, specifiedValue) => this.handleFormat(value, specifiedValue),
+        shouldShowOneUppercase: (value, specifiedValue) => this.handleUppercaseLetter(value, specifiedValue),
+        isContainsNumber: (value, specifiedValue) => this.handleNumbers(value, specifiedValue),
+        isContainsSpecialChars: (value, specifiedValue) => this.handleCharacters(value, specifiedValue)
     };
+
+    handleCharacters(value: any, specifiedValue: any){
+        return value.length - this.handleSpecialCharactersLength(value, /^[a-zA-Z0-9]+$/) < specifiedValue;
+    }
+
+    handleSpecialCharactersLength(value: any, patern: RegExp){
+        let countOfLetters = 0;
+        for(let key in value){
+            if(patern.test(value[key]))
+                countOfLetters++;                
+        }
+        return countOfLetters;
+    }
+
+    handleUppercaseLetter(value: any, specifiedValue: any){
+        return this.handleSpecialCharactersLength(value, /^[A-Z]/) < specifiedValue;
+    }
+
+    handleNumbers(value: any, specifiedValue: any){
+        return this.handleSpecialCharactersLength(value, /^[0-9]/) < specifiedValue;
+    }
     
     handleMinLength(valueLength: number, specifiedValue: number){
         return valueLength < specifiedValue;
