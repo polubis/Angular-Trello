@@ -1,4 +1,4 @@
-<app-spinner *ngIf="isDoingRequest" [showBackdrop]="true"></app-spinner>
+<app-spinner *ngIf="isDoingRequest" [showBackdrop]="true" [spinnerClass]="'spinner spinner-small spinner-form'"></app-spinner>
 
 <form [class]="formClass" (submit)="handleSubmit($event)" [ngClass]="{'scalled-form': isDoingRequest}">
   <div class="inputs-container">
@@ -39,6 +39,6 @@
           </ul>
         </ng-template>
     </div>
-    <button [disabled]="isFormDirty && !isFormReadyToSubmit" type="submit" class="letter-btn">Log in</button>
+    <button [disabled]="(isFormDirty && !isFormReadyToSubmit) || isDoingRequest" type="submit" class="letter-btn">Log in</button>
   </div>
 </form>

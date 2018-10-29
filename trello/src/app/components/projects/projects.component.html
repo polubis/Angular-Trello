@@ -1,28 +1,58 @@
 <div class="main-container">
- <app-logged-navigation></app-logged-navigation>
 
-  <div class="project-list-container">
-    <p>YOUR PROJECTS</p>
-    <ul>
-      <li *ngFor="let project of projects; let i = index" [ngClass]="{'actual-watched-project': i === actualWatchedProject}">
-        <div class="project-img">
-            <img [src]="project.img" />
-        </div>
-        <div class="title-container">
-            <span class="project-title">{{project.name}}</span>
-        </div>
-        <article>
-          {{project.description}}
-        </article>
-        <button class="label-btn">Go to</button>
-      </li>
-    </ul>
-    <footer>
-      <button class="label-btn">WHOLE PAGE VIEW</button>
-    </footer>
-  </div>
+  <app-logged-navigation></app-logged-navigation>
 
-  <div class="project-details-view">
-    
-  </div>
+  <app-spinner [spinnerClass]="'spinner spinner-big page-spinner'" *ngIf="isFetchingProjects; else project_template"></app-spinner>
+  
+  <ng-template #project_template>
+    <div class="project-list-container" *ngIf="projects.length > 0" [ngClass]="{'animate-slider': isSlideChanged}">
+      <p>
+        <span>YOUR PROJECTS</span> 
+        <button (click)="togleAddProjectModal()" class="label-btn">ADD PROJECT</button>
+      </p>
+
+      <app-pagination [items]="projects" [limit]="limit">
+
+      </app-pagination>
+      
+      <ul>
+        <li *ngFor="let project of projects; let i = index" 
+        [ngStyle]="{'display': (i >= leftRange && i < rightRange && leftRange !== -1) 
+          ? 'initial' : 'none'}">
+          <div class="project-img">
+              <img src="assets/guitar.jpg" />
+          </div>
+          <div class="title-container">
+              <span class="project-title">{{project.name}}</span>
+          </div>
+          <article>
+            {{project.description}}
+          </article>
+          <div class="go-to-btn-container">
+              <button (click)="changeProject(project.id)" class="label-btn">Go to</button>
+          </div>
+  
+          <div [ngClass]="{'actual-watched-project': project.id === actualWatchedProject}"></div>
+        </li>
+      </ul>
+      <footer>
+        <button class="label-btn">WHOLE PAGE VIEW</button>
+      </footer>
+    </div>
+
+    <div *ngIf="projects.length === 0" class="empty-projects">
+      <p>Your project list is empty. Please add new project first</p>
+      <button (click)="togleAddProjectModal()" class="circle-btn">Add new project</button>
+    </div>
+  </ng-template>
 </div>
+
+<app-modal *ngIf="isAddProjectModalOpen" [modalTitle]="'Add new project'"
+(onClosingModal)="togleAddProjectModal()" [width]="'500px'">
+    <div class="add-project-form-container">
+        <app-form [isDoingRequest]="isAddingProject" [submitMethod]="addProject" 
+        [formClass]="'stnd-form'" [formSettings]="addProjectFormSettings">
+
+        </app-form>
+    </div>
+</app-modal>

@@ -8,17 +8,12 @@
     height: 100%;
 }
 .spinner{
-    height: 20px;
-    width: 20px;
     border-radius: 50%;
-    position: absolute;
-    z-index: 3;
-    border: 2px solid #0588dc;
-    right: 25px;
-    border-top-color: transparent;
     border-right-color: transparent;
-    bottom: 25px;
     animation: .5s animate-spinner ease-in infinite;
+    border: 2px solid #0588dc;
+    border-top-color: transparent;
+    z-index: 3;
     @keyframes animate-spinner {
         0%{
             transform: rotate(0);
@@ -27,4 +22,25 @@
             transform: rotate(360deg);
         }
     }
+}
+.page-spinner{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    bottom: 0;
+}
+.spinner-big{
+    height: 45px;
+    width: 45px;
+}
+.spinner-small{
+    height: 20px;
+    width: 20px;
+}
+.spinner-form{
+    right: 25px;
+    position: absolute;
+    bottom: 25px;
 }

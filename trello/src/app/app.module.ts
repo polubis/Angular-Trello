@@ -19,6 +19,7 @@ import { AuthService } from './services/auth.service';
 import { LoggedUserGuard } from './services/logged-user-guard';
 import { NotLoggedUserGuard } from "src/app/services/not-logged-user-guard";
 import { LoggedNavigationComponent } from './components/common/logged-navigation/logged-navigation.component';
+import { PaginationComponent } from './components/common/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { LoggedNavigationComponent } from './components/common/logged-navigation
     ModalComponent,
     SpinnerComponent,
     OperationsComponent,
-    LoggedNavigationComponent
+    LoggedNavigationComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,

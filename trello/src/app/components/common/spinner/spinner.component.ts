@@ -7,5 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class SpinnerComponent {
   @Input() showBackdrop: boolean;
+  @Input() spinnerClass: string;
   constructor() { }
 }

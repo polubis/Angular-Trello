@@ -1,0 +1,9 @@
+<i (click)="goToPreviousPage()" *ngIf="currentSelectedPage > 1" class="material-icons left-arrow">chevron_left</i>
+<i (click)="goToNextPage()" *ngIf="currentSelectedPage !== pages.length" class="material-icons right-arrow">chevron_right</i>
+
+<div class="pagination-btns" *ngIf="pages.length > 1">
+  <button [ngClass]="{'current-page': currentSelectedPage === page, 'pagination-btn': currentSelectedPage !== page}" 
+  *ngFor="let page of pages" (click)="onChangePage(page)">
+    {{page}}
+  </button>
+</div>

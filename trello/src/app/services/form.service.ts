@@ -11,8 +11,9 @@ const errorsNamingFunctions: {} = {
     isCorrectFormat: (inputName, specifiedValue) => { return `Input ${inputName} have wrong format` },
     shouldShowOneUppercase: (inputName, specifiedValue) => { return `Input ${inputName} must have ${specifiedValue} upper case ${specifiedValue < 2 ? "letter" : "letters"}` },
     isContainsNumber: (inputName, specifiedValue) => { return `Input ${inputName} must have a ${specifiedValue} ${specifiedValue < 2 ? "number" : "numbers"}`},
-    isContainsSpecialChars: (inputName, specifiedValue) => { return `Input ${inputName} must have a ${specifiedValue} ${specifiedValue < 2 ? "character" : "characters"}`}
-    
+    isContainsSpecialChars: (inputName, specifiedValue) => { return `Input ${inputName} must have a ${specifiedValue} ${specifiedValue < 2 ? "character" : "characters"}`},
+    mustHaveLength: (inputName, specifiedValue) => { return `Input ${inputName} must have a ${specifiedValue} length `},
+    isColor: (inputName, specifiedValue) => { return `Input ${inputName} have ${specifiedValue} color format`}
 };
 
 
@@ -26,8 +27,23 @@ export class FormService {
         isCorrectFormat: (value, specifiedValue) => this.handleFormat(value, specifiedValue),
         shouldShowOneUppercase: (value, specifiedValue) => this.handleUppercaseLetter(value, specifiedValue),
         isContainsNumber: (value, specifiedValue) => this.handleNumbers(value, specifiedValue),
-        isContainsSpecialChars: (value, specifiedValue) => this.handleCharacters(value, specifiedValue)
+        isContainsSpecialChars: (value, specifiedValue) => this.handleCharacters(value, specifiedValue),
+        mustHaveLength: (value, specifiedValue) => this.handleLengthEqualTo(value.length, specifiedValue),
+        isColor: (value, specifiedValue) => this.checkIsColorFormat(value, specifiedValue)
     };
+
+    checkIsColorFormat(value: string, specifiedValue: string){
+        if(specifiedValue === "hex"){
+            if(value.charAt(0) !== '#')
+                return true;
+        }
+
+        return false;
+    }
+
+    handleLengthEqualTo(valueLength: number, specifiedValue: number){
+        return valueLength !== specifiedValue;
+    }
 
     handleCharacters(value: any, specifiedValue: any){
         return value.length - this.handleSpecialCharactersLength(value, /^[a-zA-Z0-9]+$/) < specifiedValue;

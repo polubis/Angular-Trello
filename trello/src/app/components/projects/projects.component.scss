@@ -1,13 +1,36 @@
 .main-container{
     display: flex;
     flex-flow: column;
+    .empty-projects{
+        background: #424242;
+        color: #f2f2f2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-flow: column;
+        padding: 55px 0;
+        p{
+            margin: 0;
+            font-size: 18px;
+            padding-bottom: 25px;
+        }
+    }
     .project-list-container{
         background: #424242;
         color: #98EE99;
         padding: 15px 55px;
+        position: relative;
         p{
-            font-size: 22px;
             margin: 0;
+            display: flex;
+            align-items: center;
+            button{
+                color: #FFEEEE;
+                margin-left: 15px;
+            }
+            span{
+                font-size: 22px;
+            }
         }
         ul{
             display: flex;
@@ -16,19 +39,16 @@
             li{
                 position: relative;
                 width: 300px;
-                margin: 10px; 
+                margin: 10px 15px;  
                 display: flex;
                 flex-flow: column;
-                &:hover{
-                    cursor: pointer;
-                }
                 img{
                     width: 100%;
                     height: auto;
                 }
                 .project-title{
                     margin: 5px 0;
-                    color: #98EE99;
+                    color: #78AC78;
                     font-weight: bolder;
                     text-align: left;
                 }
@@ -42,28 +62,36 @@
                         font-weight: bolder;
                     }
                 }
-                button{
-                    color: #FFEEEE;
+                .go-to-btn-container{
                     text-align: right;
+                    button{
+                        color: #FFEEEE;
+                    }
                 }
-            }
-            .actual-watched-project{
-                &:before{
+                .actual-watched-project{
                     position: absolute;
                     height: 25px;
                     width: 25px;
                     background: #f2f2f2;
+                    bottom: -95px;
+                    transform: rotate(45deg);
+                    left: 0;
+                    right: 0;
+                    margin: 0 auto;
+                    
                 }
             }
-            
         }
         footer{
             display: flex;
-            padding: 5px 0;
+            padding: 25px 0 15px 0;
             button{
                 color: #FFEEEE;
                 margin-left: auto;
             }
         }
     }
+}
+.add-project-form-container{
+    padding: 0 20px 20px 20px;
 }
