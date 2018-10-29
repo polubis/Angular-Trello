@@ -1,0 +1,25 @@
+<div class="main-container">
+ <app-logged-navigation></app-logged-navigation>
+
+  <div class="project-list-container">
+    <p>YOUR PROJECTS</p>
+    <div class="project-list-container">
+      <ul>
+        <li *ngFor="let project of projects">
+          <img src="assets/guitar.jpg" />
+          <button class="label-btn">{{project.name}}</button>
+          <article>
+            {{project.description}}
+          </article>
+        </li>
+      </ul>
+    </div>
+    <footer>
+      <button class="label-btn">WHOLE PAGE VIEW</button>
+    </footer>
+  </div>
+
+  <div class="project-details-view">
+    
+  </div>
+</div>

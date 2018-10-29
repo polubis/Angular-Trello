@@ -1,0 +1,21 @@
+.main-container{
+    display: flex;
+    flex-flow: column;
+    .project-list-container{
+        background: #424242;
+        color: #98EE99;
+        padding: 15px 55px;
+        p{
+            font-size: 22px;
+            margin: 0;
+        }
+        ul{
+            padding: 15px 0;
+        }
+        footer{
+            button{
+                color: #FFEEEE;
+            }
+        }
+    }
+}

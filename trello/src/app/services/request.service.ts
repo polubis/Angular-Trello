@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, RequestOptions } from '@angular/http';
 import { OperationsService } from './operations.service';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
@@ -12,7 +12,8 @@ export class RequestService {
 
     requests = {
         login: { url: "Account/Login", needsAuth: false, requestKeys: ["login", "password"] } ,
-        register: { url: "Account/Register", needsAuth: false, requestKeys: ["email", "password", "confirmPassword", "userName", "firstName", "lastName"] } 
+        register: { url: "Account/Register", needsAuth: false, requestKeys: ["email", "password", "confirmPassword", "userName", "firstName", "lastName"] },
+        projects: { url: "Project", needsAuth: true } 
     }
 
     prepareKeysForRequest(keys: string[], values: any[]){
@@ -24,13 +25,18 @@ export class RequestService {
         return model;
     }
 
-    executeRequest = (requestName: string, requestType: string, payload: any, succOperationContent: string = "") => {
+    executeRequest = (requestName: string, requestType: string, payload: any = {}, succOperationContent: string = "") => {
         return new Promise((resolve, reject) => {
             let modifiedPayload = {...payload};
             if(this.requests[requestName].requestKeys)
                 modifiedPayload = this.prepareKeysForRequest(this.requests[requestName].requestKeys, payload);
             
-            this.http[requestType](this.serverPath + this.requests[requestName].url, modifiedPayload)
+            let options: RequestOptions;
+            if(this.requests[requestName].needsAuth){
+                options = new RequestOptions({ withCredentials: true });
+            }
+
+            this.http[requestType](this.serverPath + this.requests[requestName].url, modifiedPayload, options)
             .subscribe(
                 response => {
                     if(succOperationContent !== "")
@@ -46,8 +52,6 @@ export class RequestService {
                     reject(parsedErrors);
                 }
             )
-
-
         })
     }
 
@@ -55,13 +59,15 @@ export class RequestService {
         return response;
     }
 
-    parseError = (error) => {     
-        if(error._body !== undefined){
+    parseError = (error) => {   
+        // if(error.status === 401){
+        //     //this.authService.deleteCookie("auth");
+        //     //this.router.navigate(["/"]);
+            
+        //     return ["Your session end. We redirect you to home page. Log in again for using our service"];
+        // }
+        if(error._body !== undefined && error._body !== ""){
             const parsedBody = JSON.parse(error._body);
-            if(error.status === 401){
-                this.authService.deleteCookie("auth");
-                this.router.navigate(["/"]);
-            }
             return parsedBody.errors;
         }
 

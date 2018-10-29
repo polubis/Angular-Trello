@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
       .then(response => {
         this.authService.setCookie("auth", 1, "/", "true");
         this.isDoingRequest = false;
-        this.router.navigate(["/main"]);
+        this.router.navigate(["/projects"]);
       })
       .catch(() => (this.isDoingRequest = false));
   }

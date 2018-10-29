@@ -1,0 +1,24 @@
+.navigation-container{
+    background: #424242;
+    position: relative;
+    nav{
+        width: 1200px;
+        margin: 0 auto;
+    }
+    & > button{
+        position: absolute;
+        right: 25px;
+        top: 0;
+        color: #D47D7D;
+        &:hover{
+            border-bottom-color: #D47D7D;
+        }
+    }
+}
+.actual-path-container{
+    padding: 15px 55px;
+    display: flex;
+    color: #424242;
+    align-items: center;
+    justify-content: space-between;
+}

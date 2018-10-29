@@ -14,7 +14,7 @@ export class NotLoggedUserGuard {
     if (!isAuth) {
       return true;
     } else {
-      this.router.navigate(["/main"]);
+      this.router.navigate(["/projects"]);
       return false;
     }
     

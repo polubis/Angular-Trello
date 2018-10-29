@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { AppRoutingModule } from './app-routing-module';
-import { MainComponent } from './components/main/main.component';
+import { ProjectsComponent } from './components/projects/projects.component';
 import { LogoComponent } from './components/common/logo/logo.component';
 import { ToglerComponent } from './components/common/togler/togler.component';
 import { FormComponent } from './components/common/form/form.component';
@@ -18,18 +18,20 @@ import { OperationsService } from './services/operations.service';
 import { AuthService } from './services/auth.service';
 import { LoggedUserGuard } from './services/logged-user-guard';
 import { NotLoggedUserGuard } from "src/app/services/not-logged-user-guard";
+import { LoggedNavigationComponent } from './components/common/logged-navigation/logged-navigation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    MainComponent,
+    ProjectsComponent,
     LogoComponent,
     ToglerComponent,
     FormComponent,
     ModalComponent,
     SpinnerComponent,
-    OperationsComponent
+    OperationsComponent,
+    LoggedNavigationComponent
   ],
   imports: [
     BrowserModule,
