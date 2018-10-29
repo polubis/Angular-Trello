@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions } from '@angular/http';
+import { Http, RequestOptions, Request } from '@angular/http';
 import { OperationsService } from './operations.service';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
@@ -30,13 +30,10 @@ export class RequestService {
             let modifiedPayload = {...payload};
             if(this.requests[requestName].requestKeys)
                 modifiedPayload = this.prepareKeysForRequest(this.requests[requestName].requestKeys, payload);
-            
-            let options: RequestOptions;
-            if(this.requests[requestName].needsAuth){
-                options = new RequestOptions({ withCredentials: true });
-            }
+        
+            const requestPath: string = this.serverPath + this.requests[requestName].url;
 
-            this.http[requestType](this.serverPath + this.requests[requestName].url, modifiedPayload, options)
+            this.http[requestType](requestPath, modifiedPayload, { withCredentails: true })
             .subscribe(
                 response => {
                     if(succOperationContent !== "")
@@ -60,6 +57,10 @@ export class RequestService {
     }
 
     parseError = (error) => {   
+        if(error.status === 404){
+            return ["Not found request parameters"];
+        }
+        console.log(error);
         // if(error.status === 401){
         //     //this.authService.deleteCookie("auth");
         //     //this.router.navigate(["/"]);

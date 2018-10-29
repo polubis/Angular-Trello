@@ -9,7 +9,11 @@ import { Project } from '../../models/project.model';
 })
 export class ProjectsComponent implements OnInit {
   constructor(private requestService: RequestService, private router: Router) {}
-  projects: Project[] = [];
+  projects: Project[] = [
+    { name: "Project with friends", description: "This will be the small project created with friends", img: "assets/guitar.jpg"},
+    { name: "Project witdh friends", description: "This will be the small project created with friendds", img: "assets/guitar.jpg"},
+  ];
+  actualWatchedProject: number = 0;
   isFetchingProjects: boolean = true;
 
 

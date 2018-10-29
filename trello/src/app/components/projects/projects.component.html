@@ -3,17 +3,20 @@
 
   <div class="project-list-container">
     <p>YOUR PROJECTS</p>
-    <div class="project-list-container">
-      <ul>
-        <li *ngFor="let project of projects">
-          <img src="assets/guitar.jpg" />
-          <button class="label-btn">{{project.name}}</button>
-          <article>
-            {{project.description}}
-          </article>
-        </li>
-      </ul>
-    </div>
+    <ul>
+      <li *ngFor="let project of projects; let i = index" [ngClass]="{'actual-watched-project': i === actualWatchedProject}">
+        <div class="project-img">
+            <img [src]="project.img" />
+        </div>
+        <div class="title-container">
+            <span class="project-title">{{project.name}}</span>
+        </div>
+        <article>
+          {{project.description}}
+        </article>
+        <button class="label-btn">Go to</button>
+      </li>
+    </ul>
     <footer>
       <button class="label-btn">WHOLE PAGE VIEW</button>
     </footer>

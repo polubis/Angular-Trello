@@ -1,3 +1,3 @@
 export class Project{
-    constructor(private name: string, private description: string = ""){}
+    constructor(name: string, description: string = "", img: string = ""){}
 }
