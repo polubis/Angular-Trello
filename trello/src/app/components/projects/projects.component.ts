@@ -26,7 +26,7 @@ export class ProjectsComponent implements OnInit {
   isFetchingProjects: boolean = true;
   addProjectFormSettings: FormModel[] = addProjectFormSettings;
   isAddingProject: boolean = false;
-  isSlideChanged: boolean = false;
+  isDeletingProject: boolean = false;
 
   leftRange: number = -1;
   rightRange: number = 1;
@@ -39,6 +39,9 @@ export class ProjectsComponent implements OnInit {
       (projects: ProjectModel[]) => {
         this.projects = projects;
         this.isFetchingProjects = false;
+
+        if(this.isDeletingProject)
+          this.isDeletingProject = false;
       }
     );
 
@@ -77,4 +80,9 @@ export class ProjectsComponent implements OnInit {
     this.isAddingProject = true;
     this.projectsService.addProject(addProjectData);
   };
+
+  closeProject(){
+    this.isDeletingProject = true;
+    this.projectsService.closeProject();
+  }
 }

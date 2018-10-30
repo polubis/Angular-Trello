@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { EventEmitter } from "@angular/core";
 import { RequestService } from "src/app/services/request.service";
 import { ProjectModel } from '../models/project.model';
+import { OperationsService } from "src/app/services/operations.service";
 @Injectable()
 export class ProjectsService {
   projects: ProjectModel[] = [];
@@ -14,7 +15,8 @@ export class ProjectsService {
   onChangeProjects = new EventEmitter<ProjectModel[]>();
 
   constructor(
-    private requestService: RequestService
+    private requestService: RequestService,
+    private operationsService: OperationsService
   ) {}
 
   getProjects() {
@@ -25,6 +27,29 @@ export class ProjectsService {
         this.onChangeProjects.emit(this.projects);
       })
       .catch(() => {
+        this.onChangeProjects.emit(this.projects);
+      });
+  }
+
+  closeProject() {
+    this.requestService
+      .executeRequest(
+        "closeProject",
+        "put",
+        {},
+        "Project has been succesfully closed",
+        this.currentWatchedProjectId.toString()
+      )
+      .then((response: any) => {
+        const closeDate = new Date();
+        const indexOfCloseProject = this.projects.findIndex(
+          i => i.id === this.currentWatchedProjectId
+        );
+        this.projects[indexOfCloseProject].closingDate = closeDate;
+        this.operationsService.removeAllAfterDelay(3000);
+        this.onChangeProjects.emit(this.projects);
+      })
+      .catch(error => {
         this.onChangeProjects.emit(this.projects);
       });
   }
@@ -62,9 +87,15 @@ export class ProjectsService {
       });
   };
 
-  getProjectDetails(id: string){
+  getProjectDetails(id: string) {
     this.currentWatchedProjectId = Number(id);
     this.onChangeCurrentWatchedProjectId.emit(Number(id));
-    return this.requestService.executeRequest("projectDetails", "get", {}, "", id.toString())
+    return this.requestService.executeRequest(
+      "projectDetails",
+      "get",
+      {},
+      "",
+      id.toString()
+    );
   }
 }

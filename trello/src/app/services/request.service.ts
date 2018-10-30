@@ -19,7 +19,7 @@ export class RequestService {
         projects: { url: "Project", needsAuth: true },
         addProject: { url: "Project/Add", needsAuth: true, requestKeys: ["Name", "Description", "Color"] },
         projectDetails: { url: "Project/Details/", needsAuth: true },
-
+        closeProject: { url: "Project/Close/", needsAuth: true }
     }
 
     prepareKeysForRequest(keys: string[], values: any[]){

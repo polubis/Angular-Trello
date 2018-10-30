@@ -1,16 +1,16 @@
 <div class="main-container">
 
   <app-logged-navigation [param]="actualWatchedProject" [path]="'/teammanage/project/'"></app-logged-navigation>
-
+  <app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-big page-spinner'" *ngIf="isDeletingProject"></app-spinner>
   <app-spinner [spinnerClass]="'spinner spinner-big page-spinner'" *ngIf="isFetchingProjects; else project_template"></app-spinner>
   
   <ng-template #project_template>
     <div class="project-list-container" *ngIf="projects.length > 0" [ngClass]="{'animate-slider': isSlideChanged}">
       <p>
         <span>YOUR PROJECTS</span> 
-        <button (click)="togleAddProjectModal()" class="label-btn">ADD PROJECT</button>
+        <button debounceClick (click)="togleAddProjectModal()" class="label-btn">ADD PROJECT</button>
 
-        <button *ngIf="actualWatchedProject !== -1" (click)="togleAddProjectModal()" class="label-btn">DELETE PROJECT</button>
+        <button debounceClick *ngIf="actualWatchedProject !== -1" (click)="closeProject()" class="label-btn">CLOSE PROJECT</button>
       </p>
 
       <app-pagination [items]="projects" [limit]="limit"></app-pagination>
@@ -31,7 +31,7 @@
             {{project.description}}
           </article>
           <div class="go-to-btn-container">
-              <button debounceClick (click)="changeProject(project.id)" class="label-btn">Go to</button>
+              <button debounceClick (click)="changeProject(project.id, i)" class="label-btn">Go to</button>
           </div>
   
           <div [ngClass]="{'actual-watched-project': project.id === actualWatchedProject}"></div>
