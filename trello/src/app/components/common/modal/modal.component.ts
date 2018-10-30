@@ -9,7 +9,7 @@ export class ModalComponent implements OnInit {
   @Output() onClosingModal = new EventEmitter<void>();
   @Input() width: string;
   @Input() height: string;
-  @Input() modalTitle: string;
+  @Input() modalTitle: string = "";
   @Input() background: string = "#0588DC";
 
   constructor() { }

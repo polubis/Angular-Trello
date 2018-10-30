@@ -1,0 +1,34 @@
+.prompt-header{
+    padding: 50px 15px;
+    display: flex;
+    background: #D47D7D;
+    color: white;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    i{
+        font-size: 42px;
+    }
+    span{
+        padding: 10px 0;
+    }
+}
+.prompt-content{
+    padding: 10px 15px 20px 15px;
+    color: #707070;
+    p{
+        text-align: center;
+    }
+    button:last-of-type{
+        color: inherit;
+        padding: 0 35px;
+    }
+    div{
+        display: flex;
+        justify-content: center;
+        margin-top: 50px;
+        button{
+            margin: 0 10px;
+        }
+    }
+}

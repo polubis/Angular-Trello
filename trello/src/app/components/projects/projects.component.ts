@@ -41,6 +41,8 @@ export class ProjectsComponent implements OnInit {
 
   isFullViewActivate: boolean = false;
 
+  isOpenCloseProjectConfirmModal: boolean = false;
+
   ngOnInit() {
     this.projectsService.onChangeProjects.subscribe(
       (projects: ProjectModel[]) => {
@@ -94,6 +96,7 @@ export class ProjectsComponent implements OnInit {
   };
 
   closeProject(){
+    this.isOpenCloseProjectConfirmModal = false;
     this.isDeletingProject = true;
     this.projectsService.closeProject();
   }
@@ -118,5 +121,9 @@ export class ProjectsComponent implements OnInit {
   editProject = (formData: any) => {
     this.isEditingProject = true;
     this.projectsService.editProject(this.actualWatchedProject, formData);
+  }
+
+  togleCloseProjectConfirmModal(){
+    this.isOpenCloseProjectConfirmModal = !this.isOpenCloseProjectConfirmModal;
   }
 }

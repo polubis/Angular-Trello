@@ -1,0 +1,17 @@
+<app-modal 
+(onClosingModal)="closePrompt()" [width]="'600px'">
+  <header class="prompt-header">
+    <i class="material-icons">{{icon}}</i>
+    <span>{{header}}</span>
+  </header>
+
+  <div class="prompt-content">
+    <p>{{subHeader}}</p>
+
+    <div>
+        <button (click)="confirm()" [class]="operationBtnClass">{{btnTitle}}</button>
+        <button (click)="closePrompt()" [class]="denyBtnClass">DENY</button>
+    </div>
+
+  </div>
+</app-modal>

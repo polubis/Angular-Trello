@@ -105,4 +105,9 @@ input{
     padding: 15px 35px;
     border: 2px solid #D47D7D;
     font-weight: bolder;
+    &:hover{
+        border-color: transparent;
+        background: #D47D7D;
+        color: white;
+    }
 }

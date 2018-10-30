@@ -1,5 +1,5 @@
 <div class="modal" [style.width]="width" [style.height]="height">
-  <h5 [style.background]="background">{{modalTitle}}</h5>
+  <h5 *ngIf="modalTitle" [style.background]="background">{{modalTitle}}</h5>
   <ng-content></ng-content>
 </div>
 

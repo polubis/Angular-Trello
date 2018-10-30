@@ -10,7 +10,7 @@
         <span>YOUR PROJECTS</span> 
         <button debounceClick (click)="togleAddProjectModal()" class="label-btn">ADD PROJECT</button>
 
-        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate" (click)="closeProject()" class="label-btn">CLOSE PROJECT</button>
+        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate" (click)="togleCloseProjectConfirmModal()" class="label-btn">CLOSE PROJECT</button>
         <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate" (click)="togleEditProjectModal()" class="label-btn">EDIT PROJECT</button>
       </p>
 
@@ -71,3 +71,11 @@
       </app-form>
   </div>
 </app-modal>
+
+<app-confirm-prompt *ngIf="isOpenCloseProjectConfirmModal" [btnTitle]="'Close project'" [icon]="'delete'" 
+(onConfirm)="closeProject()"
+(onClosingPrompt)="togleCloseProjectConfirmModal()"
+[header]="'Are you sure you want close this project?'"
+[subHeader]="'This operation is permanent and cannot be denied'">
+
+</app-confirm-prompt>
