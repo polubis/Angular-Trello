@@ -11,6 +11,7 @@ export class FormComponent implements OnInit {
   @Input() formClass: string;
   @Input() submitMethod: Function;
   @Input() isDoingRequest: boolean; 
+  @Input() submitButtonTitle: string = "Confirm";
 
   constructor(private formService: FormService){}
   formStateItems: any[] = [];

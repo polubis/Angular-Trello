@@ -24,15 +24,20 @@ export class ProjectsComponent implements OnInit {
   projects: ProjectModel[] = [];
   isAddProjectModalOpen: boolean = false;
   isFetchingProjects: boolean = true;
-  addProjectFormSettings: FormModel[] = addProjectFormSettings;
+  addProjectFormSettings: FormModel[] = [...addProjectFormSettings];
+  editProjectFormSettings: FormModel[] = [...addProjectFormSettings];
+
   isAddingProject: boolean = false;
   isDeletingProject: boolean = false;
+  isEditingProject: boolean = false;
+  isEditProjectModalOpen: boolean = false;
 
   leftRange: number = -1;
   rightRange: number = 1;
   limit: number = 5;
 
   actualWatchedProject: number = -1;
+  projectIndexInArray: number = -1;
 
   isFullViewActivate: boolean = false;
 
@@ -44,11 +49,16 @@ export class ProjectsComponent implements OnInit {
 
         if(this.isDeletingProject)
           this.isDeletingProject = false;
+        if(this.isEditingProject){
+          this.isEditingProject = false;
+          this.operationsService.removeAllAfterDelay(3000);
+        }
       }
     );
 
     this.projectsService.onChangeCurrentWatchedProjectId.subscribe((currentWatchedProjectId: number) => {
       this.actualWatchedProject = currentWatchedProjectId;
+      this.projectIndexInArray = this.projects.findIndex(project => project.id === currentWatchedProjectId);
     })
 
     this.projectsService.onChangeLastAddedProjectId.subscribe(
@@ -86,5 +96,27 @@ export class ProjectsComponent implements OnInit {
   closeProject(){
     this.isDeletingProject = true;
     this.projectsService.closeProject();
+  }
+
+  togleEditProjectModal(){
+    let copiedEditFormItems: FormModel[] = [...this.editProjectFormSettings];
+    
+    if(!this.isAddProjectModalOpen){
+      const indexOfProject: number = this.projects.findIndex(proj => proj.id === this.actualWatchedProject);
+      copiedEditFormItems[0].initialValue = this.projects[indexOfProject].name;
+      copiedEditFormItems[1].initialValue = this.projects[indexOfProject].description;
+      copiedEditFormItems[2].initialValue = this.projects[indexOfProject].color;
+    }else{
+      copiedEditFormItems[0].initialValue = null;
+      copiedEditFormItems[1].initialValue = null;
+      copiedEditFormItems[2].initialValue = null;
+    }
+    this.editProjectFormSettings = copiedEditFormItems;
+    this.isEditProjectModalOpen = !this.isEditProjectModalOpen;
+  }
+
+  editProject = (formData: any) => {
+    this.isEditingProject = true;
+    this.projectsService.editProject(this.actualWatchedProject, formData);
   }
 }

@@ -19,7 +19,15 @@ export class RequestService {
         projects: { url: "Project", needsAuth: true },
         addProject: { url: "Project/Add", needsAuth: true, requestKeys: ["Name", "Description", "Color"] },
         projectDetails: { url: "Project/Details/", needsAuth: true },
-        closeProject: { url: "Project/Close/", needsAuth: true }
+        closeProject: { url: "Project/Close/", needsAuth: true },
+        editProject: { url: "Project/Edit/", needsAuth: true, requestKeys: ["Name", "Description", "Color"] },
+        addPersonToProject: { url: "Project/AddPersonToProject", needsAuth: true },
+
+        addTaskToProject: { url: "Task/Add/", needsAuth: true },
+        deleteTaskFromProject: { url: "Task/Delete/", needsAuth: true },
+        editTaskInProject: { url: "Task/Edit/", needsAuth: true },
+        assignTaskToPerson: { url: "Task/", needsAuth: true }
+        
     }
 
     prepareKeysForRequest(keys: string[], values: any[]){

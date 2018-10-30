@@ -10,7 +10,8 @@
         <span>YOUR PROJECTS</span> 
         <button debounceClick (click)="togleAddProjectModal()" class="label-btn">ADD PROJECT</button>
 
-        <button debounceClick *ngIf="actualWatchedProject !== -1" (click)="closeProject()" class="label-btn">CLOSE PROJECT</button>
+        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate" (click)="closeProject()" class="label-btn">CLOSE PROJECT</button>
+        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate" (click)="togleEditProjectModal()" class="label-btn">EDIT PROJECT</button>
       </p>
 
       <app-pagination [items]="projects" [limit]="limit"></app-pagination>
@@ -59,4 +60,14 @@
 
         </app-form>
     </div>
+</app-modal>
+
+<app-modal *ngIf="isEditProjectModalOpen" [modalTitle]="'Editing selected project'"
+(onClosingModal)="togleEditProjectModal()" [width]="'500px'">
+  <div class="add-project-form-container">
+      <app-form [isDoingRequest]="isEditingProject" [submitMethod]="editProject"
+        [formClass]="'stnd-form'" [formSettings]="editProjectFormSettings">
+
+      </app-form>
+  </div>
 </app-modal>

@@ -3,7 +3,7 @@
 <form [class]="formClass" (submit)="handleSubmit($event)" [ngClass]="{'scalled-form': isDoingRequest}">
   <div class="inputs-container">
     <section class="row" *ngFor="let item of formSettings; let i = index" [ngClass]="{'invalid-input': formStateItems[i].isAllErrorsResolved === false, 'correct-input': formStateItems[i].isAllErrorsResolved === true}">
-        <input (focus)="fillErrorsOnFocusedInput(i)" (input)="handleTyping(i, $event)" (blur)="removeErrorList()" 
+        <input [value]="formStateItems[i].value" (focus)="fillErrorsOnFocusedInput(i)" (input)="handleTyping(i, $event)" (blur)="removeErrorList()" 
           [type]="item.type" [placeholder]="item.placeholder" />   
           
       <div (click)="openErrorList(i)" [ngClass]="{'margined-span': formStateItems[i].isAllErrorsResolved !== null}">
@@ -39,6 +39,6 @@
           </ul>
         </ng-template>
     </div>
-    <button [disabled]="(isFormDirty && !isFormReadyToSubmit) || isDoingRequest" type="submit" class="letter-btn">Log in</button>
+    <button [disabled]="(isFormDirty && !isFormReadyToSubmit) || isDoingRequest" type="submit" class="letter-btn">{{submitButtonTitle}}</button>
   </div>
 </form>

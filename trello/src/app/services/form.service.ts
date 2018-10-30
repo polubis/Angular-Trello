@@ -82,10 +82,11 @@ export class FormService {
         return !specifiedValue.test(value);
     }
 
+
     createFormItems(settings: FormModel[]): any[]{
         return settings.map(setting => {
            const keys = Object.keys(setting.validationSettings);
-            return { value: "", isAllErrorsResolved: null, contents: keys.map(key => {
+            return { value: (setting.initialValue === undefined || setting.initialValue === null) ? "" : setting.initialValue, isAllErrorsResolved: null, contents: keys.map(key => {
                 return { isError: null, content: errorsNamingFunctions[key](setting.label, setting.validationSettings[key]) }
             }) } 
         });
