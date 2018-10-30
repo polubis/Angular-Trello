@@ -11,9 +11,7 @@
         <button (click)="togleAddProjectModal()" class="label-btn">ADD PROJECT</button>
       </p>
 
-      <app-pagination [items]="projects" [limit]="limit">
-
-      </app-pagination>
+      <app-pagination [items]="projects" [limit]="limit"></app-pagination>
       
       <ul>
         <li *ngFor="let project of projects; let i = index" 
@@ -45,6 +43,8 @@
       <button (click)="togleAddProjectModal()" class="circle-btn">Add new project</button>
     </div>
   </ng-template>
+
+  <router-outlet *ngIf="!isFetchingProjects"></router-outlet>
 </div>
 
 <app-modal *ngIf="isAddProjectModalOpen" [modalTitle]="'Add new project'"

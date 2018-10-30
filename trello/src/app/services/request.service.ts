@@ -14,7 +14,9 @@ export class RequestService {
         login: { url: "Account/Login", needsAuth: false, requestKeys: ["login", "password"] } ,
         register: { url: "Account/Register", needsAuth: false, requestKeys: ["email", "password", "confirmPassword", "userName", "firstName", "lastName"] },
         projects: { url: "Project", needsAuth: true },
-        addProject: { url: "Project/Add", needsAuth: true, requestKeys: ["Name", "Description", "Color"] }
+        addProject: { url: "Project/Add", needsAuth: true, requestKeys: ["Name", "Description", "Color"] },
+        projectDetails: { url: "Project/Details/", needsAuth: true },
+
     }
 
     prepareKeysForRequest(keys: string[], values: any[]){
@@ -26,13 +28,16 @@ export class RequestService {
         return model;
     }
 
-    executeRequest = (requestName: string, requestType: string, payload: any = {}, succOperationContent: string = "") => {
+    executeRequest = (requestName: string, requestType: string, payload: any = {}, succOperationContent: string = "", params: string = "") => {
         return new Promise((resolve, reject) => {
             let modifiedPayload = {...payload};
             if(this.requests[requestName].requestKeys)
                 modifiedPayload = this.prepareKeysForRequest(this.requests[requestName].requestKeys, payload);
             
-            const requestPath: string = this.serverPath + this.requests[requestName].url;
+            let requestPath: string = this.serverPath + this.requests[requestName].url;
+
+            if(params !== "")
+                requestPath += params;
 
             const reqReference = requestType !== "get" ? this.http[requestType](requestPath, modifiedPayload, { withCredentials: true }) : 
                 this.http[requestType](requestPath,  { withCredentials: true });

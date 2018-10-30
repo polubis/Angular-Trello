@@ -20,6 +20,8 @@ import { LoggedUserGuard } from './services/logged-user-guard';
 import { NotLoggedUserGuard } from "src/app/services/not-logged-user-guard";
 import { LoggedNavigationComponent } from './components/common/logged-navigation/logged-navigation.component';
 import { PaginationComponent } from './components/common/pagination/pagination.component';
+import { ProjectDetailsComponent } from './components/projects/project-details/project-details.component';
+import { ProjectsService } from "src/app/services/projects.service";
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { PaginationComponent } from './components/common/pagination/pagination.c
     SpinnerComponent,
     OperationsComponent,
     LoggedNavigationComponent,
-    PaginationComponent
+    PaginationComponent,
+    ProjectDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,8 @@ import { PaginationComponent } from './components/common/pagination/pagination.c
     HttpModule,
     HttpClientModule
   ],
-  providers: [RequestService, FormService, OperationsService, AuthService, LoggedUserGuard, NotLoggedUserGuard],
+  providers: [RequestService, FormService, OperationsService, AuthService, LoggedUserGuard, NotLoggedUserGuard,
+    ProjectsService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
