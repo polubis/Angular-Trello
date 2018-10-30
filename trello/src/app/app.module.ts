@@ -22,6 +22,7 @@ import { LoggedNavigationComponent } from './components/common/logged-navigation
 import { PaginationComponent } from './components/common/pagination/pagination.component';
 import { ProjectDetailsComponent } from './components/projects/project-details/project-details.component';
 import { ProjectsService } from "src/app/services/projects.service";
+import { DebounceClick } from "src/app/directives/debounce-click";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ProjectsService } from "src/app/services/projects.service";
     OperationsComponent,
     LoggedNavigationComponent,
     PaginationComponent,
-    ProjectDetailsComponent
+    ProjectDetailsComponent,
+    DebounceClick
   ],
   imports: [
     BrowserModule,

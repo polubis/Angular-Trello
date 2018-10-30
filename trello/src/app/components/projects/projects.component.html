@@ -1,6 +1,6 @@
 <div class="main-container">
 
-  <app-logged-navigation></app-logged-navigation>
+  <app-logged-navigation [param]="actualWatchedProject" [path]="'/teammanage/project/'"></app-logged-navigation>
 
   <app-spinner [spinnerClass]="'spinner spinner-big page-spinner'" *ngIf="isFetchingProjects; else project_template"></app-spinner>
   
@@ -9,12 +9,14 @@
       <p>
         <span>YOUR PROJECTS</span> 
         <button (click)="togleAddProjectModal()" class="label-btn">ADD PROJECT</button>
+
+        <button *ngIf="actualWatchedProject !== -1" (click)="togleAddProjectModal()" class="label-btn">DELETE PROJECT</button>
       </p>
 
       <app-pagination [items]="projects" [limit]="limit"></app-pagination>
       
       <ul>
-        <li *ngFor="let project of projects; let i = index" 
+        <li *ngFor="let project of projects; let i = index" [ngClass]="{'closed-project': project.closingDate}"
         [ngStyle]="{'display': (i >= leftRange && i < rightRange && leftRange !== -1) 
           ? 'initial' : 'none'}">
           <div class="project-img">
@@ -22,12 +24,14 @@
           </div>
           <div class="title-container">
               <span class="project-title">{{project.name}}</span>
+              <span class="creation-date">created in: {{project.creationDate | date: 'medium'}}</span>
+              <span *ngIf="project.closingDate" class="closing-date">closed in: {{project.closingDate | date: 'medium'}}</span>
           </div>
           <article>
             {{project.description}}
           </article>
           <div class="go-to-btn-container">
-              <button (click)="changeProject(project.id)" class="label-btn">Go to</button>
+              <button debounceClick (click)="changeProject(project.id)" class="label-btn">Go to</button>
           </div>
   
           <div [ngClass]="{'actual-watched-project': project.id === actualWatchedProject}"></div>

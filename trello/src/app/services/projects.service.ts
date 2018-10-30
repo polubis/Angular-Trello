@@ -38,16 +38,18 @@ export class ProjectsService {
         "Project has been succesfuly added"
       )
       .then((response: { id: number }) => {
+        const creationDate = new Date();
         this.projects.push(
           new ProjectModel(
             addProjectData[0].value,
             response.id,
             [],
             1,
-            "dasdsad",
+            creationDate,
             addProjectData[1].value,
             "",
-            addProjectData[2].value
+            addProjectData[2].value,
+            null
           )
         );
         this.lastAddedProjetId = response.id;

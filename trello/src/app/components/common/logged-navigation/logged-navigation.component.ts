@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from "src/app/services/auth.service";
 import { Router } from "@angular/router";
 import { RequestService } from "src/app/services/request.service";
+import { Input } from "@angular/core";
 
 @Component({
   selector: 'app-logged-navigation',
@@ -9,11 +10,11 @@ import { RequestService } from "src/app/services/request.service";
   styleUrls: ['./logged-navigation.component.scss']
 })
 export class LoggedNavigationComponent implements OnInit {
-
+  @Input() path: string;
+  @Input() param: string;
   constructor(private authService: AuthService, private router: Router, private requestService: RequestService) { }
 
   ngOnInit() {
-
   }
 
   logout = () => {

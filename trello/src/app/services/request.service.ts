@@ -3,6 +3,9 @@ import { Http } from '@angular/http';
 import { OperationsService } from './operations.service';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/throttleTime';
+import 'rxjs/add/observable/fromEvent';
 @Injectable()
 export class RequestService {
     constructor(private http: Http, private operationsService: OperationsService, private authService: AuthService,
