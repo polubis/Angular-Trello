@@ -34,6 +34,8 @@ export class ProjectsComponent implements OnInit {
 
   actualWatchedProject: number = -1;
 
+  isFullViewActivate: boolean = false;
+
   ngOnInit() {
     this.projectsService.onChangeProjects.subscribe(
       (projects: ProjectModel[]) => {

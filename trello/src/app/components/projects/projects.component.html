@@ -1,6 +1,6 @@
 <div class="main-container">
 
-  <app-logged-navigation [param]="actualWatchedProject" [path]="'/teammanage/project/'"></app-logged-navigation>
+  <app-logged-navigation [param]="actualWatchedProject" [path]="'/teammanage/projects/'"></app-logged-navigation>
   <app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-big page-spinner'" *ngIf="isDeletingProject"></app-spinner>
   <app-spinner [spinnerClass]="'spinner spinner-big page-spinner'" *ngIf="isFetchingProjects; else project_template"></app-spinner>
   
@@ -34,7 +34,7 @@
               <button debounceClick (click)="changeProject(project.id, i)" class="label-btn">Go to</button>
           </div>
   
-          <div [ngClass]="{'actual-watched-project': project.id === actualWatchedProject}"></div>
+          <div [ngClass]="{'actual-watched-project': project.id === actualWatchedProject && !isFullViewActivate}"></div>
         </li>
       </ul>
       <footer>

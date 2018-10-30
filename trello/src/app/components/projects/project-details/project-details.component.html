@@ -4,8 +4,46 @@
 
 
   <ng-template #details_template>
-    <div class="project-details-container">
+    <div class="project-detail-content">
+      <div> 
+        <img src="assets/guitar.jpg" />
+        <p><span>CONTRIBUTORS</span></p>
+
+        <ul>
+          <li [style.backgroundImage]="'url('+ contributor.img +')'" *ngFor="let contributor of contributors">
+            <div *ngIf="!contributor.img">
+              <i class="material-icons">person</i>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+
+      <div>
+        <p>
+          <span>{{project.name}}</span> 
+          <span>{{project.creationDate | date: 'medium'}}</span>
+        </p>
+        <article>
+            {{project.description}}
+        </article>
+      </div>
+
+
+      <div>
+        <p>LAST ADDED TASKS</p>
+        <ul class="last-added-tasks" *ngIf="lastAddedTasks.length > 0">
+          <li *ngFor="let task of lastAddedTasks">
+            <span>{{task.id + 1}}</span> <span>{{task.content}}</span>
+          </li>
+        </ul>
+        <button class="label-btn">ADD NEW TASK</button>
+      </div>
       
+    </div>
+
+    <div class="btn-container">
+        <button class="circle-btn">Add new project</button>
     </div>
   </ng-template>
 
