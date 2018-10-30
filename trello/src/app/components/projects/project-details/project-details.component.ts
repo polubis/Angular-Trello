@@ -53,10 +53,12 @@ export class ProjectDetailsComponent implements OnInit {
   constructor(private projectsService: ProjectsService, private activatedRoute: ActivatedRoute) { }
   ngOnInit() {
     this.activatedRoute.params.subscribe(param => {
-      this.isLoadingProjectDetails = true;
-      this.projectsService.getProjectDetails(param.id).then(response => {
-        this.isLoadingProjectDetails = false;
-      }).catch(error => this.isLoadingProjectDetails = false);
+      if(this.projectsService.projects.length > 0){
+        this.isLoadingProjectDetails = true;
+        this.projectsService.getProjectDetails(param.id).then(response => {
+          this.isLoadingProjectDetails = false;
+        }).catch(error => this.isLoadingProjectDetails = false);
+      }
     })
   }
   

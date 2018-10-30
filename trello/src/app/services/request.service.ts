@@ -55,14 +55,14 @@ export class RequestService {
             reqReference.subscribe(
                 response => {
                     if(succOperationContent !== "")
-                        this.operationsService.addOperation("success", succOperationContent);
+                        this.operationsService.addOperation("success", succOperationContent, requestName);
 
                     resolve(this.parseResponse(response));
                 },
                 error => {
                     const parsedErrors = this.parseError(error);
                     for(let key in parsedErrors){
-                        this.operationsService.addOperation("error", parsedErrors[key]);
+                        this.operationsService.addOperation("error", parsedErrors[key], requestName);
                     }
                     reject(parsedErrors);
                 }

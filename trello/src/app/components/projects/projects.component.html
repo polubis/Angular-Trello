@@ -2,10 +2,9 @@
 
   <app-logged-navigation [param]="actualWatchedProject" [path]="'/teammanage/projects/'"></app-logged-navigation>
   <app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-big page-spinner'" *ngIf="isDeletingProject"></app-spinner>
-  <app-spinner [spinnerClass]="'spinner spinner-big page-spinner'" *ngIf="isFetchingProjects; else project_template"></app-spinner>
   
-  <ng-template #project_template>
-    <div class="project-list-container" *ngIf="projects.length > 0" [ngClass]="{'animate-slider': isSlideChanged}">
+  <app-error-handler [isLoading]="isFetchingProjects" [operationName]="'projects'">
+  <div class="project-list-container" *ngIf="projects.length > 0" [ngClass]="{'animate-slider': isSlideChanged}">
       <p>
         <span>YOUR PROJECTS</span> 
         <button debounceClick (click)="togleAddProjectModal()" class="label-btn">ADD PROJECT</button>
@@ -47,9 +46,12 @@
       <p>Your project list is empty. Please add new project first</p>
       <button (click)="togleAddProjectModal()" class="circle-btn">Add new project</button>
     </div>
-  </ng-template>
+  
+  
+    <router-outlet *ngIf="!isFetchingProjects"></router-outlet>
+  </app-error-handler>
 
-  <router-outlet *ngIf="!isFetchingProjects"></router-outlet>
+  
 </div>
 
 <app-modal *ngIf="isAddProjectModalOpen" [modalTitle]="'Add new project'"

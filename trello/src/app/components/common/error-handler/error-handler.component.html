@@ -1,0 +1,6 @@
+
+
+<app-spinner *ngIf="isLoading" [spinnerClass]="spinnerClasses"></app-spinner>
+
+<ng-content *ngIf="!isLoading && isError !== true">
+</ng-content>

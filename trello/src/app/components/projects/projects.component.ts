@@ -59,8 +59,8 @@ export class ProjectsComponent implements OnInit {
     );
 
     this.projectsService.onChangeCurrentWatchedProjectId.subscribe((currentWatchedProjectId: number) => {
-      this.actualWatchedProject = currentWatchedProjectId;
-      this.projectIndexInArray = this.projects.findIndex(project => project.id === currentWatchedProjectId);
+        this.actualWatchedProject = currentWatchedProjectId;
+        this.projectIndexInArray = this.projects.findIndex(project => project.id === currentWatchedProjectId);
     })
 
     this.projectsService.onChangeLastAddedProjectId.subscribe(

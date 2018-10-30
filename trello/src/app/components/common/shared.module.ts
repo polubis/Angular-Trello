@@ -11,16 +11,18 @@ import { SpinnerComponent } from "src/app/components/common/spinner/spinner.comp
 import { ToglerComponent } from "src/app/components/common/togler/togler.component";
 import { DebounceClick } from "src/app/directives/debounce-click";
 import { ConfirmPromptComponent } from './confirm-prompt/confirm-prompt.component';
+import { ErrorHandlerComponent } from './error-handler/error-handler.component';
 
 @NgModule({
     declarations: [ FormComponent, LoggedNavigationComponent, 
     LogoComponent, ModalComponent, OperationsComponent, PaginationComponent, 
-    SpinnerComponent, ToglerComponent, DebounceClick, ConfirmPromptComponent],
+    SpinnerComponent, ToglerComponent, DebounceClick, ConfirmPromptComponent, ErrorHandlerComponent],
     imports: [CommonModule],
     exports: [
         FormComponent, LoggedNavigationComponent, 
         LogoComponent, ModalComponent, OperationsComponent, PaginationComponent, 
-        SpinnerComponent, ToglerComponent, DebounceClick, ConfirmPromptComponent
+        SpinnerComponent, ToglerComponent, DebounceClick, ConfirmPromptComponent,
+        ErrorHandlerComponent
     ]
 })
 export class SharedModule {}

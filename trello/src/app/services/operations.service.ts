@@ -14,17 +14,17 @@ export class OperationsService{
         });
     }
 
-    addOperation(type: string, content: string){
+    addOperation(type: string, content: string, name: string){
         let currentOperations = [...this.operations];
         if(type === "success"){
             currentOperations = [];
-            currentOperations.push({ type, content });
+            currentOperations.push({ type, content, name });
         }
         else{
             if(currentOperations.length > this.limit){
                 currentOperations.splice(currentOperations.length-1, 1);
             }
-            currentOperations.unshift({type, content});
+            currentOperations.unshift({type, content, name});
         }
         
         this.operations = currentOperations;
