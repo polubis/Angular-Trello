@@ -48,8 +48,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   onPageChange: Subscription;
 
   ngOnInit() {
-  
-
     this.onChangeProjectsSub = this.projectsService.onChangeProjects.subscribe(
       (projects: ProjectModel[]) => {
         this.projects = projects;
@@ -82,6 +80,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
             this.limit,
             -1
           );
+          this.changeProject(addedProjectId);
           this.operationsService.removeAllAfterDelay(3000);
         }
       }
