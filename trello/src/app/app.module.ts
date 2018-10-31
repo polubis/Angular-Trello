@@ -15,16 +15,18 @@ import { NotLoggedUserGuard } from "src/app/services/not-logged-user-guard";
 import { ProjectDetailsComponent } from './components/projects/project-details/project-details.component';
 import { ProjectsService } from "src/app/services/projects.service";
 import { SharedModule } from "src/app/components/common/shared.module";
-import { TasksComponent } from './components/tasks/tasks.component';
+import { TasksComponent } from './components/manage/tasks/tasks.component';
 import { TasksService } from "src/app/services/tasks.service";
 import { ColorsService } from "src/app/services/colors.service";
+import { ManageComponent } from './components/manage/manage.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ProjectsComponent,
     ProjectDetailsComponent,
-    TasksComponent
+    TasksComponent,
+    ManageComponent
   ],
   imports: [
     BrowserModule,

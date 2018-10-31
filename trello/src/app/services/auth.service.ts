@@ -10,7 +10,6 @@ export class AuthService{
         this.isAuthenticated = isAuth !== "";
     }
 
-
     getASpecyficCookieValue(nameOfValue: string, cookies: string): string {
         const index = cookies.search(nameOfValue);
         let value = "";

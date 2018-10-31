@@ -12,7 +12,9 @@ export class AppComponent {
   isAuthenticated: boolean = false;
   subscription: Subscription;
   constructor(private authService: AuthService) {}
+
   ngOnInit() {
+    this.isAuthenticated = this.authService.isAuthenticated;
     this.subscription = this.authService.onAuthenticateChanges.subscribe((isAuth: boolean) => {
       this.isAuthenticated = isAuth;
     });

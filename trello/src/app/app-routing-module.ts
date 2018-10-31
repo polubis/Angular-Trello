@@ -5,12 +5,34 @@ import { ProjectsComponent } from './components/projects/projects.component';
 import { LoggedUserGuard } from './services/logged-user-guard';
 import { NotLoggedUserGuard } from "src/app/services/not-logged-user-guard";
 import { ProjectDetailsComponent } from './components/projects/project-details/project-details.component';
+import { ManageComponent } from "src/app/components/manage/manage.component";
+import { TasksComponent } from "src/app/components/manage/tasks/tasks.component";
 const routes: Routes = [
-    {path: '', component: HomeComponent, canActivate: [NotLoggedUserGuard] },
-    {path: 'projects', component: ProjectsComponent, canActivate: [LoggedUserGuard], children: [
-            { path: ':id', component: ProjectDetailsComponent, canActivate: [LoggedUserGuard] }
-        ]
-    }
+  { path: "", component: HomeComponent, canActivate: [NotLoggedUserGuard] },
+  {
+    path: "projects",
+    component: ProjectsComponent,
+    canActivate: [LoggedUserGuard],
+    children: [
+      {
+        path: ":id",
+        component: ProjectDetailsComponent,
+        canActivate: [LoggedUserGuard]
+      }
+    ]
+  },
+  {
+    path: "manage:id",
+    component: ManageComponent,
+    canActivate: [LoggedUserGuard],
+    children: [
+      {
+        path: "tasks",
+        component: TasksComponent,
+        canActivate: [LoggedUserGuard]
+      }
+    ]
+  }
 ];
 
 @NgModule({
