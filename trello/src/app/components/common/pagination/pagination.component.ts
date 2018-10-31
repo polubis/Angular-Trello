@@ -9,6 +9,7 @@ import { Input } from "@angular/core";
 })
 export class PaginationComponent implements OnInit {
   pages: number[] = [];
+  @Input() startPage: number = -1;
   @Input() items: any[];
   @Input() limit: number;
   
@@ -24,7 +25,7 @@ export class PaginationComponent implements OnInit {
       this.pages = page.pages;
     });
 
-    this.paginationService.createPages(this.items.length, this.limit);
+    this.paginationService.createPages(this.items.length, this.limit, this.startPage);
   }
 
   onChangePage(index: number){

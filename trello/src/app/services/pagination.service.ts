@@ -19,22 +19,20 @@ export class PaginationService {
     return pages;
   }
 
-  createPages(numberOfAllItems: number, limit: number){
+  createPages(numberOfAllItems: number, limit: number, startPage: number){
       const pages = this.createPagesSchema(numberOfAllItems, limit);
       if(pages.length > 0){
         this.pages = pages;
-        const currentSelectedPage = pages.length;
+        const currentSelectedPage = startPage === -1 ? pages.length : startPage;
+        
         const ranges = this.calculateRanges(numberOfAllItems, limit, currentSelectedPage);
         this.onPageChange.emit({selectedPage: currentSelectedPage, leftRange: ranges.leftRange, rightRange: ranges.rightRange, pages: pages});
       }
   }
 
   calculateRanges(numberOfAllItems: number, limit: number, currentSelectedPage: number): any{
-    // 9 allItems, limit 4, currentPage: 1
-    console.log(currentSelectedPage, numberOfAllItems);
     const leftRange: number = (currentSelectedPage - 1) * limit;
     const rightRange: number = currentSelectedPage * limit;
-    console.log(leftRange, rightRange);
     return { leftRange, rightRange };
   }
 
@@ -45,6 +43,10 @@ export class PaginationService {
     this.rightRange = ranges.rightRange;
     this.pages = this.createPagesSchema(numberOfAllItems, limit);
     this.onPageChange.emit({selectedPage: index, leftRange: this.leftRange, rightRange: this.rightRange, pages: this.pages});
+  }
+
+  calculateStartPage(items: any[], key: string): number{
+    return 0;
   }
 
 

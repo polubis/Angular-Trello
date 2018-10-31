@@ -83,7 +83,7 @@ export const addTaskFormSettings: FormModel[] = [
             maxLength: 125
         } 
     },
-    { label: "Color", placeholder: "type your task color in hex format (#fff323)...", type: "input", mode: "input",initialValue: null,
+    { label: "Color", placeholder: "type your task color in hex format (#fff323)...", type: "input", mode: "input", initialValue: null,
         validationSettings: {
             isCorrectFormat: patterns.hex
         } 

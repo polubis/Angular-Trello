@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TaskModel } from "src/app/models/task.model";
 import { Input } from "@angular/core";
-import { addProjectFormSettings } from '../../../constants/constants';
+import { addTaskFormSettings } from '../../../constants/constants';
 import FormModel from "src/app/models/form.model";
 import { TasksService } from "src/app/services/tasks.service";
 import { ProjectsService } from "src/app/services/projects.service";
@@ -26,8 +26,8 @@ export class TasksListComponent implements OnInit, OnDestroy {
   isDeletingTask: boolean = false;
   isAddingTask: boolean = false;
   isAddTaskModalOpen: boolean = false;
-  editTaskFormSettings: FormModel[] = [...addProjectFormSettings];
-  addTaskFormSettings: FormModel[] = [...addProjectFormSettings];
+  editTaskFormSettings: FormModel[] = [...addTaskFormSettings];
+  addTaskFormSettings: FormModel[] = [...addTaskFormSettings];
 
   taskToChange: number = -1;
   constructor(private tasksService: TasksService, private projectsService: ProjectsService, 
@@ -83,6 +83,8 @@ export class TasksListComponent implements OnInit, OnDestroy {
       copiedItem.color = formData[2].value;
       this.items[this.taskToChange] = copiedItem;
       this.isEditingTask = false;
+      this.operationsService.removeAllAfterDelay(3000);
+      
     }).catch((error) => this.isEditingTask = false);
 
   }

@@ -4,9 +4,10 @@
   <ul *ngIf="items.length > 0; else empty_content">
     <li *ngFor="let item of items; let i = index">
       <div class="task-operations">
-        <app-colors [isPaleteOpen]="currentOpenedColorsIndex === i" [isSavingColor]="isSavingTaskColor" (onColorSaved)="saveTaskColor($event)"
+        <app-colors 
+        [isPaleteOpen]="currentOpenedColorsIndex === i" [isSavingColor]="isSavingTaskColor" 
+        (onColorSaved)="saveTaskColor($event)"
         (onCloseColors)="togleColorPalette(i)" (colorChanged)="changeTaskColor($event, i)">
-
         </app-colors>
         <i (click)="togleEditTaskModal(i)" class="material-icons edit-color animated-icon">edit</i>
         <i (click)="togleDeleteTaskPrompt(i)" class="material-icons delete-color animated-icon">delete</i>
