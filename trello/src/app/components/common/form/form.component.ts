@@ -22,17 +22,26 @@ export class FormComponent implements OnInit {
   isFormDirty: boolean = false;
   shouldShowErrorsSpecifications: boolean = false;
   errorsSpecifications: any[] = [];
+  currentOpenedColorsIndex: number = -1;
   ngOnInit() {
     this.formStateItems = this.formService.createFormItems(this.formSettings);
     this.numberOfFormItems = this.formSettings.length;
   }
-
-  handleTyping(index: number, e){
-    this.formStateItems[index] = this.formService.validate(this.formStateItems[index], e.target.value, 
+  togleColorPalete(index: number){
+    this.currentOpenedColorsIndex = this.currentOpenedColorsIndex === index ? -1 : index;
+  }
+  changeColor(color: string, index: number){
+    this.handleValueSetting(index, color);
+  }
+  handleValueSetting(index: number, value: any){
+    this.formStateItems[index] = this.formService.validate(this.formStateItems[index], value, 
       this.formSettings[index].validationSettings);
+
     this.isFormReadyToSubmit = this.formStateItems.filter(item => item.isAllErrorsResolved).length === this.numberOfFormItems;
-    
     if(this.isFormDirty) this.handleCreatingSpecifications();
+  }
+  handleTyping(index: number, e){
+    this.handleValueSetting(index, e.target.value);
   }
 
   fillErrorsOnFocusedInput(index: number){
@@ -79,6 +88,9 @@ export class FormComponent implements OnInit {
     if(!this.isFormDirty) this.isFormDirty = true;
 
     if(this.isFormReadyToSubmit){
+      if(this.currentOpenedColorsIndex !== -1)
+        this.currentOpenedColorsIndex = -1;
+      
       this.submitMethod(this.formStateItems);
     }
     else{

@@ -3,10 +3,18 @@
 <form [class]="formClass" (submit)="handleSubmit($event)" [ngClass]="{'scalled-form': isDoingRequest}">
   <div class="inputs-container">
     <section class="row" *ngFor="let item of formSettings; let i = index" [ngClass]="{'invalid-input': formStateItems[i].isAllErrorsResolved === false, 'correct-input': formStateItems[i].isAllErrorsResolved === true}">
-        <input [value]="formStateItems[i].value" (focus)="fillErrorsOnFocusedInput(i)" (input)="handleTyping(i, $event)" (blur)="removeErrorList()" 
+        <input *ngIf="item.mode === 'input'" [value]="formStateItems[i].value" (focus)="fillErrorsOnFocusedInput(i)" (input)="handleTyping(i, $event)" (blur)="removeErrorList()" 
           [type]="item.type" [placeholder]="item.placeholder" />   
-          
-      <div (click)="openErrorList(i)" [ngClass]="{'margined-span': formStateItems[i].isAllErrorsResolved !== null}">
+        <div *ngIf="item.mode === 'color-input'" class="colors-palete-input-container">
+            <input [value]="formStateItems[i].value" (focus)="fillErrorsOnFocusedInput(i)" (input)="handleTyping(i, $event)" (blur)="removeErrorList()" 
+              [type]="item.type" [placeholder]="item.placeholder" />
+            <app-colors [shouldHaveSaveButton]="false" [shouldIconBeColored]="true" [initialColorIcon]="'black'"
+            [isPaleteOpen]="currentOpenedColorsIndex === i"
+            (onColorSaved)="saveTaskColor($event)"
+            (onCloseColors)="togleColorPalete(i)" (colorChanged)="changeColor($event, i)">
+            </app-colors>
+        </div>
+      <div [ngClass]="{'margined-span': formStateItems[i].isAllErrorsResolved !== null}">
         <i *ngIf="formStateItems[i].isAllErrorsResolved === false" class="material-icons">lock_outline</i>
         <i *ngIf="formStateItems[i].isAllErrorsResolved === true" class="material-icons">lock_open</i>
         

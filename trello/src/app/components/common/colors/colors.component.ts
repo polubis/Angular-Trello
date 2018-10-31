@@ -14,6 +14,9 @@ export class ColorsComponent implements OnInit, OnChanges {
   colorsArray: string[] = [];
   constructor(private colorsService: ColorsService) { }
   @Input() isPaleteOpen: boolean;
+  @Input() shouldHaveSaveButton: boolean = true;
+  @Input() shouldIconBeColored: boolean = false;
+  @Input() initialColorIcon: string = "white";
   @Output() colorChanged = new EventEmitter<string>();
   @Output() onCloseColors = new EventEmitter<void>();
   @Output() onColorSaved = new EventEmitter<string>();
