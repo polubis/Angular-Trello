@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
+import { EventEmitter } from "@angular/core";
 
 @Injectable()
 export class AuthService{
     isAuthenticated: boolean = false;
+    onAuthenticateChanges = new EventEmitter<boolean>();
     constructor(){
         const isAuth = this.getASpecyficCookieValue("auth", document.cookie);
         this.isAuthenticated = isAuth !== "";
@@ -33,9 +35,11 @@ export class AuthService{
         const expireDate = "expires=" + date.toUTCString();
         document.cookie = name + "=" + value + ";" + expireDate + ";path=" + path;
         this.isAuthenticated = true;
+        this.onAuthenticateChanges.emit(true);
     }
     deleteCookie(name, expDate = "Thu, 01 Jan 1970 00:00:01 GMT"){
         document.cookie = name + "=; expires=" + expDate;
         this.isAuthenticated = false;
+        this.onAuthenticateChanges.emit(false);
     }
 }

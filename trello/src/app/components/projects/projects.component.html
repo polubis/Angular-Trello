@@ -1,6 +1,5 @@
 <div class="main-container">
 
-  <app-logged-navigation [param]="actualWatchedProject" [path]="'/teammanage/projects/'"></app-logged-navigation>
   <app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-big page-spinner'" *ngIf="isDeletingProject"></app-spinner>
   
   <app-error-handler [isLoading]="isFetchingProjects" [operationName]="'projects'">
