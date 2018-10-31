@@ -1,0 +1,12 @@
+<div class="colors-selector-container">
+  <i (click)="closeColors()" class="material-icons animated-icon">color_lens</i>
+  
+  <div *ngIf="isPaleteOpen">
+    <ul class="selector">
+      <li (click)="changeColor(color)" [style.background]="color" *ngFor="let color of colorsArray; let i = index">
+      </li>
+    </ul>
+    <button *ngIf="lastSelectedColor !== ''" (click)="saveColor()" class="label-btn">Save color</button>
+    <app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-small spinner-form'" *ngIf="isSavingColor"></app-spinner>
+  </div>
+</div>

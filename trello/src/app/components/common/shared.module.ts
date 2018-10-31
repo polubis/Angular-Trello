@@ -14,13 +14,15 @@ import { ConfirmPromptComponent } from './confirm-prompt/confirm-prompt.componen
 import { ErrorHandlerComponent } from './error-handler/error-handler.component';
 import { LengthPipe } from "src/app/directives/length-pipe";
 import { TasksListComponent } from './tasks-list/tasks-list.component';
+import { ColorsComponent } from './colors/colors.component';
 
 @NgModule({
     declarations: [ FormComponent, LoggedNavigationComponent, 
     LogoComponent, ModalComponent, OperationsComponent, PaginationComponent, 
     SpinnerComponent, ToglerComponent, DebounceClick, ConfirmPromptComponent, ErrorHandlerComponent,
     LengthPipe,
-    TasksListComponent],
+    TasksListComponent,
+    ColorsComponent],
     imports: [CommonModule],
     exports: [
         FormComponent, LoggedNavigationComponent, 

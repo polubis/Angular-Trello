@@ -22,4 +22,8 @@ export class TasksService {
   editTask(formData: any, taskId: number){
     return this.requestService.executeRequest("editTaskInProject", "put", formData, "Task has been succesfully edited", taskId.toString());
   }
+
+  editColor(payload: any, taskId: number){
+    return this.requestService.executeRequest("editTaskColorInProject", "put", payload, "Task color has been successfuly edited", taskId.toString());
+  }
 }

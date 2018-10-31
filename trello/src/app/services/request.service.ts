@@ -25,6 +25,7 @@ export class RequestService {
         addTaskToProject: { url: "Task/Add/", needsAuth: true, requestKeys: ["Name", "Description", "Color"] },
         deleteTaskFromProject: { url: "Task/Delete/", needsAuth: true },
         editTaskInProject: { url: "Task/Edit/", needsAuth: true, requestKeys: ["Name", "Description", "Color"] },
+        editTaskColorInProject: { url: "Task/Edit/", needsAuth: true },
         assignTaskToPerson: { url: "Task/", needsAuth: true }
     }
 

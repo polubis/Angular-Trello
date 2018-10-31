@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TaskModel } from "src/app/models/task.model";
 import { Input } from "@angular/core";
 import { addProjectFormSettings } from '../../../constants/constants';
@@ -6,16 +6,20 @@ import FormModel from "src/app/models/form.model";
 import { TasksService } from "src/app/services/tasks.service";
 import { ProjectsService } from "src/app/services/projects.service";
 import { OperationsService } from "src/app/services/operations.service";
+import { ActivatedRoute } from "@angular/router";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'app-tasks-list',
   templateUrl: './tasks-list.component.html',
   styleUrls: ['./tasks-list.component.scss']
 })
-export class TasksListComponent implements OnInit {
+export class TasksListComponent implements OnInit, OnDestroy {
   @Input() items: TaskModel[];
   @Input() limit: number;
 
+  isSavingTaskColor: boolean = false;
+  currentOpenedColorsIndex: number = -1;
   isDeleteTaskPromptOpen: boolean = false;
   isEditTaskModalOpen: boolean = false;
   isEditingTask: boolean = false;
@@ -26,9 +30,38 @@ export class TasksListComponent implements OnInit {
   addTaskFormSettings: FormModel[] = [...addProjectFormSettings];
 
   taskToChange: number = -1;
-  constructor(private tasksService: TasksService, private projectsService: ProjectsService, private operationsService: OperationsService) { }
+  constructor(private tasksService: TasksService, private projectsService: ProjectsService, 
+    private operationsService: OperationsService, private activatedRoute: ActivatedRoute) { }
+
+  private subscription: Subscription; 
 
   ngOnInit() {
+    this.subscription = this.activatedRoute.params.subscribe(param => {
+      if(this.currentOpenedColorsIndex !== -1)
+        this.currentOpenedColorsIndex = -1;
+    })
+  }
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+  }
+
+  saveTaskColor = (color: string) => {
+    const name: string = this.items[this.currentOpenedColorsIndex].name;
+    const description: string = this.items[this.currentOpenedColorsIndex].description;
+    this.isSavingTaskColor = true;
+    this.tasksService.editColor({name, description, color}, this.items[this.currentOpenedColorsIndex].id)
+    .then((response: any) => {
+      this.isSavingTaskColor = false;
+      this.currentOpenedColorsIndex = -1;
+    }).catch(error => this.isSavingTaskColor = false);
+  }
+
+  togleColorPalette(index: number){
+    this.currentOpenedColorsIndex = this.currentOpenedColorsIndex !== index ? index : -1;
+  }
+
+  changeTaskColor(color: string, index: number){
+    this.items[index].color = color;
   }
 
   deleteTask(){

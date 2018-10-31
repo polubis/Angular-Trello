@@ -17,7 +17,7 @@ import { ProjectsService } from "src/app/services/projects.service";
 import { SharedModule } from "src/app/components/common/shared.module";
 import { TasksComponent } from './components/tasks/tasks.component';
 import { TasksService } from "src/app/services/tasks.service";
-
+import { ColorsService } from "src/app/services/colors.service";
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +34,7 @@ import { TasksService } from "src/app/services/tasks.service";
     SharedModule
   ],
   providers: [RequestService, FormService, OperationsService, AuthService, LoggedUserGuard, NotLoggedUserGuard, TasksService
-    ,ProjectsService],
+    ,ProjectsService, ColorsService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

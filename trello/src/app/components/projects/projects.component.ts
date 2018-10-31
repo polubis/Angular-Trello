@@ -6,7 +6,6 @@ import FormModel from '../../models/form.model';
 import { OperationsService } from "src/app/services/operations.service";
 import { PaginationService } from "src/app/services/pagination.service";
 import { ProjectsService } from "src/app/services/projects.service";
-import { ActivatedRoute } from "@angular/router";
 @Component({
   selector: "app-main",
   templateUrl: "./projects.component.html",
@@ -18,8 +17,7 @@ export class ProjectsComponent implements OnInit {
     private router: Router,
     private operationsService: OperationsService,
     private paginationService: PaginationService,
-    private projectsService: ProjectsService,
-    private activatedRoute: ActivatedRoute
+    private projectsService: ProjectsService
   ) {}
   projects: ProjectModel[] = [];
   isAddProjectModalOpen: boolean = false;

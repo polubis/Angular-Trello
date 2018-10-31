@@ -3,13 +3,14 @@
 
   <ul *ngIf="items.length > 0; else empty_content">
     <li *ngFor="let item of items; let i = index">
-      <p class="task-operations">
-        <span>
-          <i class="material-icons animated-icon">color_lens</i>
-          <i (click)="togleEditTaskModal(i)" class="material-icons edit-color animated-icon">edit</i>
-          <i (click)="togleDeleteTaskPrompt(i)" class="material-icons delete-color animated-icon">delete</i>
-        </span>
-      </p>
+      <div class="task-operations">
+        <app-colors [isPaleteOpen]="currentOpenedColorsIndex === i" [isSavingColor]="isSavingTaskColor" (onColorSaved)="saveTaskColor($event)"
+        (onCloseColors)="togleColorPalette(i)" (colorChanged)="changeTaskColor($event, i)">
+
+        </app-colors>
+        <i (click)="togleEditTaskModal(i)" class="material-icons edit-color animated-icon">edit</i>
+        <i (click)="togleDeleteTaskPrompt(i)" class="material-icons delete-color animated-icon">delete</i>
+      </div>
       <div class="main-task-content">
         <div class="task-content">
           <span>{{i+1}}</span> 
@@ -30,6 +31,7 @@
       </div>
 
       <p class="interactive-operations">
+          <span [style.background]="item.color"></span>
           <i class="material-icons animated-icon">comment</i>
       </p>
       <div class="user-label">
