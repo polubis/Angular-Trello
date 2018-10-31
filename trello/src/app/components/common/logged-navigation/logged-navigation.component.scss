@@ -4,6 +4,9 @@
     nav{
         width: 1200px;
         margin: 0 auto;
+        button{
+            margin-right: 15px;
+        }
     }
     & > button{
         position: absolute;
@@ -12,6 +15,12 @@
         color: #D47D7D;
         &:hover{
             border-bottom-color: #D47D7D;
+        }
+    }
+    .active{
+        border-bottom-color: #98EE99;
+        &:hover{
+            border-bottom-color: initial;
         }
     }
 }

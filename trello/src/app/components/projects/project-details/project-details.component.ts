@@ -5,12 +5,14 @@ import { ProjectModel } from "src/app/models/project.model";
 import FormModel from "src/app/models/form.model";
 import { OperationsService } from "src/app/services/operations.service";
 import { PaginationService } from "src/app/services/pagination.service";
+import { OnDestroy } from "@angular/core";
+import { Subscription } from "rxjs";
 @Component({
   selector: "app-project-details",
   templateUrl: "./project-details.component.html",
   styleUrls: ["./project-details.component.scss"]
 })
-export class ProjectDetailsComponent implements OnInit {
+export class ProjectDetailsComponent implements OnInit, OnDestroy {
   isLoadingProjectDetails: boolean = false;
   isAddTaskModalOpen: boolean = false;
   project: ProjectModel;
@@ -24,7 +26,7 @@ export class ProjectDetailsComponent implements OnInit {
     { img: null, sex: "male" },
     { img: null, sex: "male" }
   ];
-
+  routeSubscription: Subscription;
   constructor(
     private projectsService: ProjectsService,
     private activatedRoute: ActivatedRoute,
@@ -35,12 +37,16 @@ export class ProjectDetailsComponent implements OnInit {
     const startPageNumber: number = this.paginationService.calculateStartPage(
       this.projectsService.projects,
       "id",
-      Number(this.activatedRoute.snapshot.params['id']),
+      Number(this.activatedRoute.snapshot.params["id"]),
       this.paginationService.limit
     );
-    this.paginationService.changePage(startPageNumber, this.projectsService.projects.length, this.paginationService.limit);
-    
-    this.activatedRoute.params.subscribe(param => {
+    this.paginationService.changePage(
+      startPageNumber,
+      this.projectsService.projects.length,
+      this.paginationService.limit
+    );
+
+    this.routeSubscription = this.activatedRoute.params.subscribe(param => {
       if (this.projectsService.projects.length > 0) {
         this.isLoadingProjectDetails = true;
         this.projectsService
@@ -59,5 +65,11 @@ export class ProjectDetailsComponent implements OnInit {
           .catch(error => (this.isLoadingProjectDetails = false));
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.projectsService.currentWatchedProjectId = -1;
+    this.projectsService.onChangeCurrentWatchedProjectId.emit(-1);
+    this.routeSubscription.unsubscribe();
   }
 }

@@ -15,6 +15,7 @@ import { ErrorHandlerComponent } from './error-handler/error-handler.component';
 import { LengthPipe } from "src/app/directives/length-pipe";
 import { TasksListComponent } from './tasks-list/tasks-list.component';
 import { ColorsComponent } from './colors/colors.component';
+import { AppRoutingModule } from "src/app/app-routing-module";
 
 @NgModule({
     declarations: [ FormComponent, LoggedNavigationComponent, 
@@ -23,7 +24,7 @@ import { ColorsComponent } from './colors/colors.component';
     LengthPipe,
     TasksListComponent,
     ColorsComponent],
-    imports: [CommonModule],
+    imports: [CommonModule, AppRoutingModule],
     exports: [
         FormComponent, LoggedNavigationComponent, 
         LogoComponent, ModalComponent, OperationsComponent, PaginationComponent, 
