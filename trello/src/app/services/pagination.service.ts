@@ -7,9 +7,8 @@ export class PaginationService {
   pages: number[] = [];
   leftRange: number = -1;
   rightRange: number = -1;
-
+  limit: number = -1;
   onPageChange = new EventEmitter<any>();
-
 
   createPagesSchema(numberOfAllItems: number, limit: number){
     const pages: number[] = [];
@@ -24,7 +23,7 @@ export class PaginationService {
       if(pages.length > 0){
         this.pages = pages;
         const currentSelectedPage = startPage === -1 ? pages.length : startPage;
-        
+        this.limit = limit;
         const ranges = this.calculateRanges(numberOfAllItems, limit, currentSelectedPage);
         this.onPageChange.emit({selectedPage: currentSelectedPage, leftRange: ranges.leftRange, rightRange: ranges.rightRange, pages: pages});
       }
@@ -45,8 +44,9 @@ export class PaginationService {
     this.onPageChange.emit({selectedPage: index, leftRange: this.leftRange, rightRange: this.rightRange, pages: this.pages});
   }
 
-  calculateStartPage(items: any[], key: string): number{
-    return 0;
+  calculateStartPage(items: any[], key: string, valueToIdentify: any, limit: number): number{
+    const indexOfElement = items.findIndex(item => item[key] === valueToIdentify); // mam indeks obiektu w tablicy
+    return indexOfElement === -1 ? -1 : Math.ceil((indexOfElement+1) / limit);
   }
 
 

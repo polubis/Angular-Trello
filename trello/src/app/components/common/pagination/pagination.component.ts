@@ -24,7 +24,6 @@ export class PaginationComponent implements OnInit {
       this.currentSelectedPage = page.selectedPage;
       this.pages = page.pages;
     });
-
     this.paginationService.createPages(this.items.length, this.limit, this.startPage);
   }
 
