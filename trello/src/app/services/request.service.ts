@@ -24,9 +24,8 @@ export class RequestService {
 
         addTaskToProject: { url: "Task/Add/", needsAuth: true, requestKeys: ["Name", "Description", "Color"] },
         deleteTaskFromProject: { url: "Task/Delete/", needsAuth: true },
-        editTaskInProject: { url: "Task/Edit/", needsAuth: true },
+        editTaskInProject: { url: "Task/Edit/", needsAuth: true, requestKeys: ["Name", "Description", "Color"] },
         assignTaskToPerson: { url: "Task/", needsAuth: true }
-        
     }
 
     prepareKeysForRequest(keys: string[], values: any[]){
@@ -34,7 +33,6 @@ export class RequestService {
         keys.forEach(function(part, index){
             model[part] = values[index].value
         });
-
         return model;
     }
 

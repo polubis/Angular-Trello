@@ -106,3 +106,22 @@ input{
     border: 2px solid #D47D7D;
     font-weight: bolder;
 }
+.delete-color{
+    color: #D47D7D;
+}
+.edit-color{
+    color: #89B8D6;
+}
+
+.animated-icon{
+    transform: rotate(0);
+    transition: .3s;
+    cursor: pointer;
+    &:hover{
+        transform: rotate(30deg);
+    }
+}
+
+.operation-color{
+    color: #FFEEEE;
+}

@@ -35,7 +35,6 @@
         <app-tasks-list [items]="project.tasks" [limit]="'10'">
 
         </app-tasks-list>
-        <button (click)="togleAddTaskModal()" class="label-btn">ADD NEW TASK</button>
       </div>
       
     </div>
@@ -48,12 +47,3 @@
 
 </div>
     
-<app-modal *ngIf="isAddTaskModalOpen" [modalTitle]="'Add new task'"
-(onClosingModal)="togleAddTaskModal()" [width]="'500px'">
-  <div class="add-task-container">
-      <app-form [isDoingRequest]="isAddingTask" [submitMethod]="addTask" 
-      [formClass]="'stnd-form'" [formSettings]="addTaskFormSettings">
-
-      </app-form>
-  </div>
-</app-modal>

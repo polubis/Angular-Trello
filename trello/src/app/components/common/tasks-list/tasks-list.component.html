@@ -1,6 +1,15 @@
 <div class="tasks-list-container">
+  <app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-small spinner-form'" *ngIf="isDeletingTask"></app-spinner>
+
   <ul *ngIf="items.length > 0; else empty_content">
     <li *ngFor="let item of items; let i = index">
+      <p class="task-operations">
+        <span>
+          <i class="material-icons animated-icon">color_lens</i>
+          <i (click)="togleEditTaskModal(i)" class="material-icons edit-color animated-icon">edit</i>
+          <i (click)="togleDeleteTaskPrompt(i)" class="material-icons delete-color animated-icon">delete</i>
+        </span>
+      </p>
       <div class="main-task-content">
         <div class="task-content">
           <span>{{i+1}}</span> 
@@ -20,6 +29,9 @@
         </p>
       </div>
 
+      <p class="interactive-operations">
+          <i class="material-icons animated-icon">comment</i>
+      </p>
       <div class="user-label">
         <i class="material-icons">person</i>
         <span>TOMASZ NOWOCZESNY</span>
@@ -35,4 +47,35 @@
       </p>
     </div>
   </ng-template>
+  <div class="row">
+    <button (click)="togleAddTaskModal()" class="label-btn operation-color">ADD NEW TASK</button>
+  </div>
 </div>
+
+<app-modal *ngIf="isEditTaskModalOpen" [modalTitle]="'Editing selected task'"
+(onClosingModal)="togleEditTaskModal()" [width]="'500px'">
+  <div class="task-form">
+      <app-form [isDoingRequest]="isEditingTask" [submitMethod]="editTask"
+        [formClass]="'stnd-form'" [formSettings]="editTaskFormSettings">
+
+      </app-form>
+  </div>
+</app-modal>
+
+<app-confirm-prompt *ngIf="isDeleteTaskPromptOpen" [btnTitle]="'Delete task'" [icon]="'delete'" 
+(onConfirm)="deleteTask()"
+(onClosingPrompt)="togleDeleteTaskPrompt()"
+[header]="'Are you sure you want delete this task?'"
+[subHeader]="'This operation is permanent and cannot be denied'">
+
+</app-confirm-prompt>
+
+<app-modal *ngIf="isAddTaskModalOpen" [modalTitle]="'Add new task'"
+(onClosingModal)="togleAddTaskModal()" [width]="'500px'">
+  <div class="task-form">
+      <app-form [isDoingRequest]="isAddingTask" [submitMethod]="addTask" 
+      [formClass]="'stnd-form'" [formSettings]="addTaskFormSettings">
+
+      </app-form>
+  </div>
+</app-modal>
