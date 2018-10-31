@@ -1,0 +1,38 @@
+<div class="tasks-list-container">
+  <ul *ngIf="items.length > 0; else empty_content">
+    <li *ngFor="let item of items; let i = index">
+      <div class="main-task-content">
+        <div class="task-content">
+          <span>{{i+1}}</span> 
+          <div>
+            <b>{{item.name}}</b>
+            <span>{{item.description}}</span>
+          </div>
+        </div>
+    
+        <p class="task-params testers">
+          <b>TESTERS</b> <span class="testers"></span>
+        </p>
+        <p class="time-to-end">
+          <i class="material-icons">av_timer</i>
+          <b>1 dzień 11h</b>
+          <span>pozostało</span>
+        </p>
+      </div>
+
+      <div class="user-label">
+        <i class="material-icons">person</i>
+        <span>TOMASZ NOWOCZESNY</span>
+      </div>
+    </li>
+  </ul>
+
+  <ng-template #empty_content>
+    <div class="empty-tasks">
+      <i class="material-icons">do_not_disturb_alt</i>
+      <p>
+        Right now you doesn't have any tasks in progress for this project
+      </p>
+    </div>
+  </ng-template>
+</div>

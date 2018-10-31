@@ -71,3 +71,21 @@ export const addProjectFormSettings: FormModel[] = [
         } 
     }
 ];
+
+export const addTaskFormSettings: FormModel[] = [
+    { label: "Name", placeholder: "type your task name...", type: "input", mode: "input", initialValue: null,
+    validationSettings: {
+        minLength: 2, maxLength: 40, required: true 
+    }
+    },
+    { label: "Description", placeholder: "type your task description...", type: "input", mode: "input",initialValue: null,
+        validationSettings: {
+            maxLength: 125
+        } 
+    },
+    { label: "Color", placeholder: "type your task color in hex format (#fff323)...", type: "input", mode: "input",initialValue: null,
+        validationSettings: {
+            isCorrectFormat: patterns.hex
+        } 
+    }
+];

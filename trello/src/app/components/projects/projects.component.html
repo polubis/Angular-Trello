@@ -28,7 +28,7 @@
               <span *ngIf="project.closingDate" class="closing-date">closed in: {{project.closingDate | date: 'medium'}}</span>
           </div>
           <article>
-            {{project.description}}
+            {{project.description | shorten: '30'}}
           </article>
           <div class="go-to-btn-container">
               <button debounceClick (click)="changeProject(project.id, i)" class="label-btn">Go to</button>

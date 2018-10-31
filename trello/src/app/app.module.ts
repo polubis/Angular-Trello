@@ -15,13 +15,16 @@ import { NotLoggedUserGuard } from "src/app/services/not-logged-user-guard";
 import { ProjectDetailsComponent } from './components/projects/project-details/project-details.component';
 import { ProjectsService } from "src/app/services/projects.service";
 import { SharedModule } from "src/app/components/common/shared.module";
+import { TasksComponent } from './components/tasks/tasks.component';
+import { TasksService } from "src/app/services/tasks.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ProjectsComponent,
-    ProjectDetailsComponent
+    ProjectDetailsComponent,
+    TasksComponent
   ],
   imports: [
     BrowserModule,
@@ -30,8 +33,8 @@ import { SharedModule } from "src/app/components/common/shared.module";
     AppRoutingModule,
     SharedModule
   ],
-  providers: [RequestService, FormService, OperationsService, AuthService, LoggedUserGuard, NotLoggedUserGuard,
-    ProjectsService],
+  providers: [RequestService, FormService, OperationsService, AuthService, LoggedUserGuard, NotLoggedUserGuard, TasksService
+    ,ProjectsService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

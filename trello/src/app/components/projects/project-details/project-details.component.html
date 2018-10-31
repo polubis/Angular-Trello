@@ -31,13 +31,11 @@
 
 
       <div>
-        <p>LAST ADDED TASKS</p>
-        <ul class="last-added-tasks" *ngIf="lastAddedTasks.length > 0">
-          <li *ngFor="let task of lastAddedTasks">
-            <span>{{task.id + 1}}</span> <span>{{task.content}}</span>
-          </li>
-        </ul>
-        <button class="label-btn">ADD NEW TASK</button>
+        <p><span>TASKS CURRENTLY IN PROGRESS STATUS</span></p>
+        <app-tasks-list [items]="project.tasks" [limit]="'10'">
+
+        </app-tasks-list>
+        <button (click)="togleAddTaskModal()" class="label-btn">ADD NEW TASK</button>
       </div>
       
     </div>
@@ -45,8 +43,17 @@
     <div class="btn-container">
         <button class="circle-btn">Add new project</button>
     </div>
+
   </ng-template>
 
 </div>
+    
+<app-modal *ngIf="isAddTaskModalOpen" [modalTitle]="'Add new task'"
+(onClosingModal)="togleAddTaskModal()" [width]="'500px'">
+  <div class="add-task-container">
+      <app-form [isDoingRequest]="isAddingTask" [submitMethod]="addTask" 
+      [formClass]="'stnd-form'" [formSettings]="addTaskFormSettings">
 
-
+      </app-form>
+  </div>
+</app-modal>

@@ -12,17 +12,21 @@ import { ToglerComponent } from "src/app/components/common/togler/togler.compone
 import { DebounceClick } from "src/app/directives/debounce-click";
 import { ConfirmPromptComponent } from './confirm-prompt/confirm-prompt.component';
 import { ErrorHandlerComponent } from './error-handler/error-handler.component';
+import { LengthPipe } from "src/app/directives/length-pipe";
+import { TasksListComponent } from './tasks-list/tasks-list.component';
 
 @NgModule({
     declarations: [ FormComponent, LoggedNavigationComponent, 
     LogoComponent, ModalComponent, OperationsComponent, PaginationComponent, 
-    SpinnerComponent, ToglerComponent, DebounceClick, ConfirmPromptComponent, ErrorHandlerComponent],
+    SpinnerComponent, ToglerComponent, DebounceClick, ConfirmPromptComponent, ErrorHandlerComponent,
+    LengthPipe,
+    TasksListComponent],
     imports: [CommonModule],
     exports: [
         FormComponent, LoggedNavigationComponent, 
         LogoComponent, ModalComponent, OperationsComponent, PaginationComponent, 
         SpinnerComponent, ToglerComponent, DebounceClick, ConfirmPromptComponent,
-        ErrorHandlerComponent
+        ErrorHandlerComponent, LengthPipe, TasksListComponent
     ]
 })
 export class SharedModule {}

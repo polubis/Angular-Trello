@@ -10,9 +10,8 @@ import 'rxjs/add/observable/fromEvent';
 export class RequestService {
     constructor(private http: Http, private operationsService: OperationsService, private authService: AuthService,
         private router: Router){ }
-        
     serverPath: string =  "http://localhost:60965/";
-
+    
     requests = {
         login: { url: "Account/Login", needsAuth: false, requestKeys: ["login", "password"] } ,
         register: { url: "Account/Register", needsAuth: false, requestKeys: ["email", "password", "confirmPassword", "userName", "firstName", "lastName"] },
@@ -23,7 +22,7 @@ export class RequestService {
         editProject: { url: "Project/Edit/", needsAuth: true, requestKeys: ["Name", "Description", "Color"] },
         addPersonToProject: { url: "Project/AddPersonToProject", needsAuth: true },
 
-        addTaskToProject: { url: "Task/Add/", needsAuth: true },
+        addTaskToProject: { url: "Task/Add/", needsAuth: true, requestKeys: ["Name", "Description", "Color"] },
         deleteTaskFromProject: { url: "Task/Delete/", needsAuth: true },
         editTaskInProject: { url: "Task/Edit/", needsAuth: true },
         assignTaskToPerson: { url: "Task/", needsAuth: true }
