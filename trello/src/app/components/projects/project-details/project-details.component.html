@@ -40,7 +40,9 @@
     </div>
 
     <div class="btn-container">
-        <button class="circle-btn">Add new project</button>
+        <button class="circle-btn">
+          <a [routerLink]="['/manage', project.id]">Go to manage</a>
+        </button>
     </div>
 
   </ng-template>

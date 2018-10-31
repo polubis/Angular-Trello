@@ -1,3 +1,18 @@
-<p>
-  manage works!
-</p>
+<div class="manage-container">
+  <div class="side-nav-place-holder"></div>
+  <div class="side-navigation" [ngClass]="{'expanded-side': isSideBarExpanded}">
+    <span (click)="togleSideBar()"><i class="material-icons">chevron_right</i></span>
+    <span><i class="material-icons">comment</i><b>Statistics</b></span>
+    <span routerLinkActive="active">
+      <a [routerLink]="['tasks']">
+          <i class="material-icons">comment</i>
+      </a>
+      <b>Comments</b>
+    </span>
+    <span><i class="material-icons">comment</i><b>Overall</b></span>
+  </div>
+
+  <div class="outlet-container">
+    <router-outlet></router-outlet>  
+  </div>
+</div>

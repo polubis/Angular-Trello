@@ -10,6 +10,18 @@ import { TasksComponent } from "src/app/components/manage/tasks/tasks.component"
 const routes: Routes = [
   { path: "", component: HomeComponent, canActivate: [NotLoggedUserGuard] },
   {
+    path: "manage/:id",
+    component: ManageComponent,
+    canActivate: [LoggedUserGuard],
+    children: [
+      {
+        path: "tasks", pathMatch: 'full',
+        component: TasksComponent,
+        canActivate: [LoggedUserGuard]
+      }
+    ]
+  },
+  {
     path: "projects",
     component: ProjectsComponent,
     canActivate: [LoggedUserGuard],
@@ -17,18 +29,6 @@ const routes: Routes = [
       {
         path: ":id",
         component: ProjectDetailsComponent,
-        canActivate: [LoggedUserGuard]
-      }
-    ]
-  },
-  {
-    path: "manage:id",
-    component: ManageComponent,
-    canActivate: [LoggedUserGuard],
-    children: [
-      {
-        path: "tasks",
-        component: TasksComponent,
         canActivate: [LoggedUserGuard]
       }
     ]
