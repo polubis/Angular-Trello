@@ -14,7 +14,7 @@ import { ConfirmPromptComponent } from './confirm-prompt/confirm-prompt.componen
 import { ErrorHandlerComponent } from './error-handler/error-handler.component';
 import { LengthPipe } from "src/app/directives/length-pipe";
 import { TasksListComponent } from './tasks-list/tasks-list.component';
-import { ColorsComponent } from './colors/colors.component';
+import { SelectorComponent } from '../common/selector/selector.component'
 import { AppRoutingModule } from "src/app/app-routing-module";
 
 @NgModule({
@@ -23,13 +23,13 @@ import { AppRoutingModule } from "src/app/app-routing-module";
     SpinnerComponent, ToglerComponent, DebounceClick, ConfirmPromptComponent, ErrorHandlerComponent,
     LengthPipe,
     TasksListComponent,
-    ColorsComponent],
+    SelectorComponent],
     imports: [CommonModule, AppRoutingModule],
     exports: [
         FormComponent, LoggedNavigationComponent, 
         LogoComponent, ModalComponent, OperationsComponent, PaginationComponent, 
         SpinnerComponent, ToglerComponent, DebounceClick, ConfirmPromptComponent,
-        ErrorHandlerComponent, LengthPipe, TasksListComponent
+        ErrorHandlerComponent, LengthPipe, TasksListComponent, SelectorComponent
     ]
 })
 export class SharedModule {}

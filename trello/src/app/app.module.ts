@@ -19,6 +19,7 @@ import { TasksComponent } from './components/manage/tasks/tasks.component';
 import { TasksService } from "src/app/services/tasks.service";
 import { ColorsService } from "src/app/services/colors.service";
 import { ManageComponent } from './components/manage/manage.component';
+import { IconsService } from "src/app/services/icons.service";
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,8 +36,18 @@ import { ManageComponent } from './components/manage/manage.component';
     AppRoutingModule,
     SharedModule
   ],
-  providers: [RequestService, FormService, OperationsService, AuthService, LoggedUserGuard, NotLoggedUserGuard, TasksService
-    ,ProjectsService, ColorsService],
+  providers: [
+    RequestService,
+    FormService,
+    OperationsService,
+    AuthService,
+    LoggedUserGuard,
+    NotLoggedUserGuard,
+    TasksService,
+    ProjectsService,
+    ColorsService,
+    IconsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -69,6 +69,10 @@ export class ProjectsService {
       });
   }
 
+  addLabelIntoProject(projectId: number){
+    
+  }
+
   addProject = (addProjectData: any) => {
     this.requestService
       .executeRequest(

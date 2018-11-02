@@ -1,0 +1,15 @@
+<div class="selector-container">
+  <i [ngStyle]="{'color': shouldIconBeColored ? lastSelectedItem : initialColorIcon}" (click)="closePicker()" 
+  class="material-icons animated-icon">{{pickerIcon}}</i>
+  
+  <div *ngIf="isPaleteOpen">
+    <ul class="selector">
+      <li (click)="changeItem(item)" 
+      [ngStyle]="{'background-color': !isSelectingIcons ? item : 'initial'}" 
+      *ngFor="let item of items; let i = index">
+      </li>
+    </ul>
+    <button *ngIf="lastSelectedColor !== '' && shouldHaveSaveButton" (click)="saveItem()" class="label-btn">{{operationTitle}}</button>
+    <app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-small spinner-form'" *ngIf="isSavingItem"></app-spinner>
+  </div>
+</div>

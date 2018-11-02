@@ -8,11 +8,11 @@
         <div *ngIf="item.mode === 'color-input'" class="colors-palete-input-container">
             <input [value]="formStateItems[i].value" (focus)="fillErrorsOnFocusedInput(i)" (input)="handleTyping(i, $event)" (blur)="removeErrorList()" 
               [type]="item.type" [placeholder]="item.placeholder" />
-            <app-colors [shouldHaveSaveButton]="false" [shouldIconBeColored]="true" [initialColorIcon]="'black'"
+            <app-selector [shouldHaveSaveButton]="false" [shouldIconBeColored]="true" [initialColorIcon]="'black'"
             [isPaleteOpen]="currentOpenedColorsIndex === i"
-            (onColorSaved)="saveTaskColor($event)"
-            (onCloseColors)="togleColorPalete(i)" (colorChanged)="changeColor($event, i)">
-            </app-colors>
+            (onSavedItem)="saveTaskColor($event)"
+            (onCloseItems)="togleColorPalete(i)" (itemChanged)="changeColor($event, i)">
+            </app-selector>
         </div>
       <div [ngClass]="{'margined-span': formStateItems[i].isAllErrorsResolved !== null}">
         <i *ngIf="formStateItems[i].isAllErrorsResolved === false" class="material-icons">lock_outline</i>
