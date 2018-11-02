@@ -21,6 +21,8 @@ export class RequestService {
         closeProject: { url: "Project/Close/", needsAuth: true },
         editProject: { url: "Project/Edit/", needsAuth: true, requestKeys: ["Name", "Description", "Color"] },
         addLabelIntoProject: { url: "Label/Add/", needsAuth: true, requestKeys: ["Name", "Color", "Icon"] },
+        editLabelInProject: { url: "Label/Edit/", needsAuth: true, requestKeys: ["Name", "Color", "Icon"] },
+        deleteLabel: {url: "Label/Delete/", needsAuth: true, },
         addPersonToProject: { url: "Project/AddPersonToProject", needsAuth: true },
 
         addTaskToProject: { url: "Task/Add/", needsAuth: true, requestKeys: ["Name", "Description", "Color"] },

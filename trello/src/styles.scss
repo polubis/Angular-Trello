@@ -141,3 +141,11 @@ input{
 .form-wrapper{
     padding: 0 20px 20px 20px;
 }
+.empty-content{
+    color: #707070;
+    display: flex;
+    align-items: center;
+    i{
+        margin-left: 10px;
+    }
+}

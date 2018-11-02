@@ -90,6 +90,20 @@ export class ProjectsService {
     );
   }
 
+  editLabelInProject(labelId: number, formData: any){
+    return this.requestService.executeRequest(
+      "editLabelInProject",
+      "put",
+      formData,
+      "Label has been succesfully edited project",
+      labelId.toString()
+    );
+  }
+
+  deleteLabel(labelId: number){
+    return this.requestService.executeRequest("deleteLabel", "delete", {}, "Label has been succesfully deleted", labelId.toString());
+  }
+
   addProject = (addProjectData: any) => {
     this.requestService
       .executeRequest(

@@ -17,13 +17,19 @@
   <div class="legend">
     <p>LEGEND</p>
     <div class="legends-container">
-
+        <div class="task-label" *ngIf="projectLabels.length === 0">
+            <span class="empty-content">this project doesn't have any labels... <i class="material-icons">do_not_disturb_alt</i></span>
+        </div>
         <div [style.color]="label.color" *ngFor="let label of projectLabels" class="task-label">
           <span>{{label.name | uppercase}}</span> <i class="material-icons">{{label.icon}}</i>
+          <p class="label-operations">
+            <i (click)="togleEditLabelModal(label)" class="material-icons edit-color animated-icon">edit</i>
+            <i (click)="togleDeleteLabelModal(label.id)" class="material-icons delete-color animated-icon">delete</i>
+          </p>
         </div>
     </div>
     <p>
-      <button (click)="togleAddLabelModal()" class="label-btn"><i class="material-icons">label</i> ADD LABEL</button>
+      <button (click)="togleAddLabelModal()" class="label-btn"><i class="material-icons animated-icon">label</i> ADD LABEL</button>
     </p>
   </div>
   <div class="tasks-lists-container">
@@ -46,10 +52,30 @@
 (onClosingModal)="togleAddLabelModal()" [width]="'500px'">
   <div class="form-wrapper">
       <app-form [isDoingRequest]="isAddingLabel" [submitMethod]="addLabel"
-        [formClass]="'stnd-form'" [formSettings]="labelFormSettings">
+        [formClass]="'stnd-form'" [formSettings]="addLabelFormSettings">
 
       </app-form>
   </div>
 </app-modal>
+
+<app-modal *ngIf="labelIdToEdit !== -1" [modalTitle]="'Edit selected label'"
+(onClosingModal)="togleEditLabelModal()" [width]="'500px'">
+  <div class="form-wrapper">
+      <app-form [isDoingRequest]="isEditingLabel" [submitMethod]="editLabel"
+        [formClass]="'stnd-form'" [formSettings]="editLabelFormSettings">
+
+      </app-form>
+  </div>
+</app-modal>
+
+<app-confirm-prompt *ngIf="labelIdToDelete !== -1" [btnTitle]="'Delete label'" [icon]="'delete'" 
+(onConfirm)="deleteLabel()"
+(onClosingPrompt)="togleDeleteLabelModal()"
+[header]="'Are you sure you want delete this label?'"
+[subHeader]="'This operation is permanent and cannot be denied'">
+<app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-small spinner-form'" *ngIf="isDeletingLabel"></app-spinner>
+
+</app-confirm-prompt>
+
 
 </app-error-handler>
