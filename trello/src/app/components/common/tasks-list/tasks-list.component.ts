@@ -185,4 +185,5 @@ export class TasksListComponent implements OnInit, OnDestroy {
   //     })
   //     .catch(error => (this.isAssigningToTask = false));
   // };
+  }
 }
