@@ -1,7 +1,6 @@
 
 <div class="project-details-container">
-  <app-spinner [spinnerClass]="'spinner spinner-big spinner-form'" *ngIf="isLoadingProjectDetails; else details_template"></app-spinner>
-
+  <app-spinner [spinnerClass]="'spinner spinner-big spinner-fixed-bottom'" *ngIf="isLoadingProjectDetails; else details_template"></app-spinner>
 
   <ng-template #details_template>
     <div class="project-detail-content">

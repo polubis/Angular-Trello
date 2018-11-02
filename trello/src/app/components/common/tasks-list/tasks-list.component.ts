@@ -53,6 +53,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
     .then((response: any) => {
       this.isSavingTaskColor = false;
       this.currentOpenedColorsIndex = -1;
+      this.operationsService.removeAllAfterDelay(3000);
     }).catch(error => this.isSavingTaskColor = false);
   }
 

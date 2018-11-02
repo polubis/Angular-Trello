@@ -89,3 +89,21 @@ export const addTaskFormSettings: FormModel[] = [
         } 
     }
 ];
+
+export const labelFormSettings: FormModel[] = [
+    { label: "Name", placeholder: "type your label name...", type: "input", mode: "input", initialValue: null,
+        validationSettings: {
+            minLength: 2, maxLength: 20, required: true 
+        }
+    },
+    { label: "Color", placeholder: "type your label color in hex format (#fff323)...", type: "input", mode: "color-input", initialValue: null,
+        validationSettings: {
+            isCorrectFormat: patterns.hex
+        } 
+    },
+    { label: "Icon", placeholder: "choose your label icon...", type: "input", mode: "icon-picker", initialValue: null,
+        validationSettings: {
+            required: true
+        } 
+    }
+];

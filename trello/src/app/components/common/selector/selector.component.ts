@@ -28,7 +28,7 @@ export class SelectorComponent implements OnInit, OnChanges {
   @Input() isSavingItem: boolean;
   lastSelectedItem: string = "";
   ngOnInit() {
-    this.items = this.colorsService.colorsArray;
+    this.items = this.isSelectingIcons ? this.iconsService.icons : this.colorsService.colorsArray;
   }
   ngOnChanges(changes: SimpleChanges){
     if(!changes.currentValue)

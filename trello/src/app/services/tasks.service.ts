@@ -40,8 +40,8 @@ export class TasksService {
       this.projectId.toString())
       .then((response: any) => {
         this.buckets = this.createBuckets(response.tasks);
-        this.onChangeTasks.next(this.buckets);
-      }).catch(error => this.onChangeTasks.next(this.buckets));
+        this.onChangeTasks.next({buckets: this.buckets, labels: response.labels});
+      }).catch(error => this.onChangeTasks.next({buckets: this.buckets, labels: []}));
   }
 
   addTask(formData: any, projectId: number){

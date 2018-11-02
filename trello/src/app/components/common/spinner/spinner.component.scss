@@ -7,6 +7,11 @@
     width: 100%;
     height: 100%;
 }
+.spinner-fixed-bottom{
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+}
 .spinner{
     border-radius: 50%;
     border-right-color: transparent;

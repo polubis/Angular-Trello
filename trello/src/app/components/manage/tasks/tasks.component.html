@@ -17,12 +17,13 @@
   <div class="legend">
     <p>LEGEND</p>
     <div class="legends-container">
-        <div class="task-label"><span>TESTERS</span> <i class="material-icons">build</i></div>
-        <div class="task-label"><span>FRONTEND</span> <i class="material-icons">my_location</i></div>
-        <div class="task-label"><span>BACKEND</span> <i class="material-icons">dns</i></div>
+
+        <div [style.color]="label.color" *ngFor="let label of projectLabels" class="task-label">
+          <span>{{label.name | uppercase}}</span> <i class="material-icons">{{label.icon}}</i>
+        </div>
     </div>
     <p>
-      <button class="label-btn"><i class="material-icons">add</i> ADD LABEL</button>
+      <button (click)="togleAddLabelModal()" class="label-btn"><i class="material-icons">label</i> ADD LABEL</button>
     </p>
   </div>
   <div class="tasks-lists-container">
@@ -39,4 +40,16 @@
 
 </div>
   
+
+
+<app-modal *ngIf="isAddLabelModalOpen" [modalTitle]="'Add label into this project'"
+(onClosingModal)="togleAddLabelModal()" [width]="'500px'">
+  <div class="form-wrapper">
+      <app-form [isDoingRequest]="isAddingLabel" [submitMethod]="addLabel"
+        [formClass]="'stnd-form'" [formSettings]="labelFormSettings">
+
+      </app-form>
+  </div>
+</app-modal>
+
 </app-error-handler>

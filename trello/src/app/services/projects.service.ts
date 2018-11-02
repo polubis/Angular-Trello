@@ -19,19 +19,30 @@ export class ProjectsService {
     private operationsService: OperationsService
   ) {}
 
-  editProject(id: number, formData: any){
-    this.requestService.executeRequest("editProject", "put", 
-      formData, "Project has been succesfully edited", id.toString())
-    .then(response => {
-      const projectIndex: number = this.projects.findIndex(project => project.id === id);
-      const copiedProject: ProjectModel = { ...this.projects[projectIndex] };
-      copiedProject.name = formData[0].value; copiedProject.description = formData[1].value; copiedProject.color = formData[2].value;
-      
-      this.projects[projectIndex] = copiedProject;
-      this.onChangeProjects.emit(this.projects);
-    }).catch(error => {
-      this.onChangeProjects.emit(this.projects);
-    });
+  editProject(id: number, formData: any) {
+    this.requestService
+      .executeRequest(
+        "editProject",
+        "put",
+        formData,
+        "Project has been succesfully edited",
+        id.toString()
+      )
+      .then(response => {
+        const projectIndex: number = this.projects.findIndex(
+          project => project.id === id
+        );
+        const copiedProject: ProjectModel = { ...this.projects[projectIndex] };
+        copiedProject.name = formData[0].value;
+        copiedProject.description = formData[1].value;
+        copiedProject.color = formData[2].value;
+
+        this.projects[projectIndex] = copiedProject;
+        this.onChangeProjects.emit(this.projects);
+      })
+      .catch(error => {
+        this.onChangeProjects.emit(this.projects);
+      });
   }
 
   getProjects() {
@@ -69,8 +80,14 @@ export class ProjectsService {
       });
   }
 
-  addLabelIntoProject(projectId: number){
-    
+  addLabelIntoProject(projectId: number, formData: any) {
+    return this.requestService.executeRequest(
+      "addLabelIntoProject",
+      "post",
+      formData,
+      "Label has been succesfully added into project",
+      projectId.toString()
+    );
   }
 
   addProject = (addProjectData: any) => {

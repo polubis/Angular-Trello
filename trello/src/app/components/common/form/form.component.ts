@@ -23,15 +23,28 @@ export class FormComponent implements OnInit {
   shouldShowErrorsSpecifications: boolean = false;
   errorsSpecifications: any[] = [];
   currentOpenedColorsIndex: number = -1;
+  currentOpenedIconPalete: number = -1;
   ngOnInit() {
     this.formStateItems = this.formService.createFormItems(this.formSettings);
     this.numberOfFormItems = this.formSettings.length;
   }
+  togleIconPalete(index: number){
+    this.currentOpenedIconPalete = this.currentOpenedIconPalete === index ? -1 : index;
+    if(this.currentOpenedColorsIndex !== -1)
+      this.currentOpenedColorsIndex = -1;
+  }
+
   togleColorPalete(index: number){
     this.currentOpenedColorsIndex = this.currentOpenedColorsIndex === index ? -1 : index;
+    if(this.currentOpenedIconPalete !== -1)
+      this.currentOpenedIconPalete = -1;
   }
   changeColor(color: string, index: number){
     this.handleValueSetting(index, color);
+  }
+
+  changeIcon(icon: string, index: number){
+    this.handleValueSetting(index, icon);
   }
   handleValueSetting(index: number, value: any){
     this.formStateItems[index] = this.formService.validate(this.formStateItems[index], value, 
@@ -45,6 +58,9 @@ export class FormComponent implements OnInit {
   }
 
   fillErrorsOnFocusedInput(index: number){
+    if(this.currentOpenedColorsIndex !== -1) this.currentOpenedColorsIndex = -1;
+    if(this.currentOpenedIconPalete !== -1) this.currentOpenedIconPalete = -1;
+    
     this.currentFocusedInput = index;
     this.showListWithErrorsCounters = false;
   }
