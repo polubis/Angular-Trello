@@ -1,7 +1,4 @@
-<div class="main-container">
-
-  <app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-big page-spinner'" *ngIf="isDeletingProject"></app-spinner>
-  
+<div class="main-container">  
   <app-error-handler [isLoading]="isFetchingProjects" [operationName]="'projects'">
   <div class="project-list-container" *ngIf="projects.length > 0" [ngClass]="{'animate-slider': isSlideChanged}">
       <p>
@@ -11,7 +8,8 @@
         <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate" (click)="togleCloseProjectConfirmModal()" class="label-btn">CLOSE PROJECT</button>
         <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate" (click)="togleEditProjectModal()" class="label-btn">EDIT PROJECT</button>
       </p>
-
+      <app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-small spinner-form'" *ngIf="isDeletingProject"></app-spinner>
+  
       <app-pagination [items]="projects" [limit]="limit"></app-pagination>
       
       <ul>

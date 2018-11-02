@@ -16,7 +16,7 @@ export class TasksService {
   }
 
   deleteTask(taskId: number){
-    return this.requestService.executeRequest("deleteTaskFromProject", "put", {}, "Task has been successfuly deleted", taskId.toString())
+    return this.requestService.executeRequest("deleteTaskFromProject", "delete", {}, "Task has been successfuly deleted", taskId.toString())
   }
 
   editTask(formData: any, taskId: number){
