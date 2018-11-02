@@ -16,12 +16,13 @@ import { LengthPipe } from "src/app/directives/length-pipe";
 import { TasksListComponent } from './tasks-list/tasks-list.component';
 import { SelectorComponent } from '../common/selector/selector.component'
 import { AppRoutingModule } from "src/app/app-routing-module";
+import { SortingPipe } from "src/app/directives/sorting-pipe";
 
 @NgModule({
     declarations: [ FormComponent, LoggedNavigationComponent, 
     LogoComponent, ModalComponent, OperationsComponent, PaginationComponent, 
     SpinnerComponent, ToglerComponent, DebounceClick, ConfirmPromptComponent, ErrorHandlerComponent,
-    LengthPipe,
+    LengthPipe, SortingPipe,
     TasksListComponent,
     SelectorComponent],
     imports: [CommonModule, AppRoutingModule],
@@ -29,7 +30,7 @@ import { AppRoutingModule } from "src/app/app-routing-module";
         FormComponent, LoggedNavigationComponent, 
         LogoComponent, ModalComponent, OperationsComponent, PaginationComponent, 
         SpinnerComponent, ToglerComponent, DebounceClick, ConfirmPromptComponent,
-        ErrorHandlerComponent, LengthPipe, TasksListComponent, SelectorComponent
+        ErrorHandlerComponent, LengthPipe, TasksListComponent, SelectorComponent, SortingPipe
     ]
 })
 export class SharedModule {}

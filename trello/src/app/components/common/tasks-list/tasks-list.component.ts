@@ -46,10 +46,12 @@ export class TasksListComponent implements OnInit, OnDestroy {
   }
 
   saveTaskColor = (color: string) => {
-    const name: string = this.items[this.currentOpenedColorsIndex].name;
-    const description: string = this.items[this.currentOpenedColorsIndex].description;
+    const index = this.items.findIndex(item => item.id === this.currentOpenedColorsIndex);
+    
+    const name: string = this.items[index].name;
+    const description: string = this.items[index].description;
     this.isSavingTaskColor = true;
-    this.tasksService.editColor({name, description, color}, this.items[this.currentOpenedColorsIndex].id)
+    this.tasksService.editColor({name, description, color}, this.items[index].id)
     .then((response: any) => {
       this.isSavingTaskColor = false;
       this.currentOpenedColorsIndex = -1;
@@ -57,11 +59,12 @@ export class TasksListComponent implements OnInit, OnDestroy {
     }).catch(error => this.isSavingTaskColor = false);
   }
 
-  togleColorPalette(index: number){
-    this.currentOpenedColorsIndex = this.currentOpenedColorsIndex !== index ? index : -1;
+  togleColorPalette(id: number){
+    this.currentOpenedColorsIndex = this.currentOpenedColorsIndex !== id ? id : -1;
   }
 
-  changeTaskColor(color: string, index: number){
+  changeTaskColor(color: string, id: number){
+    const index = this.items.findIndex(item => item.id === id);
     this.items[index].color = color;
   }
 
@@ -89,9 +92,9 @@ export class TasksListComponent implements OnInit, OnDestroy {
     }).catch((error) => this.isEditingTask = false);
 
   }
-  togleEditTaskModal(index: number){
+  togleEditTaskModal(id: number){
     const copiedEditFormSettings: FormModel[] = [...this.editTaskFormSettings];
-    
+    const index = this.items.findIndex(item => item.id === id);
     if(!this.isEditTaskModalOpen){
       copiedEditFormSettings[0].initialValue = this.items[index].name;
       copiedEditFormSettings[1].initialValue = this.items[index].description;
@@ -107,8 +110,9 @@ export class TasksListComponent implements OnInit, OnDestroy {
 
     this.isEditTaskModalOpen = !this.isEditTaskModalOpen;
   }
-  togleDeleteTaskPrompt(index: number){
-    this.taskToChange = index;
+  togleDeleteTaskPrompt(id: number){
+    this.taskToChange = this.items.findIndex(item => item.id === id);
+    
     this.isDeleteTaskPromptOpen = !this.isDeleteTaskPromptOpen;
   }
 

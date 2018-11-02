@@ -2,15 +2,15 @@
   <app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-small spinner-form'" *ngIf="isDeletingTask"></app-spinner>
 
   <ul *ngIf="items.length > 0; else empty_content">
-    <li *ngFor="let item of items; let i = index">
+    <li *ngFor="let item of items | sort : 'name' : 'asc'; let i = index">
       <div class="task-operations">
         <app-selector
-        [isPaleteOpen]="currentOpenedColorsIndex === i" [isSavingItem]="isSavingTaskColor" 
+        [isPaleteOpen]="currentOpenedColorsIndex === item.id" [isSavingItem]="isSavingTaskColor" 
         (onSavedItem)="saveTaskColor($event)"
-        (onCloseItems)="togleColorPalette(i)" (itemChanged)="changeTaskColor($event, i)">
+        (onCloseItems)="togleColorPalette(item.id)" (itemChanged)="changeTaskColor($event, item.id)">
         </app-selector>
-        <i (click)="togleEditTaskModal(i)" class="material-icons edit-color animated-icon">edit</i>
-        <i (click)="togleDeleteTaskPrompt(i)" class="material-icons delete-color animated-icon">delete</i>
+        <i (click)="togleEditTaskModal(item.id)" class="material-icons edit-color animated-icon">edit</i>
+        <i (click)="togleDeleteTaskPrompt(item.id)" class="material-icons delete-color animated-icon">delete</i>
       </div>
       <div class="main-task-content">
         <div class="task-content">

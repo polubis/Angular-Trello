@@ -3,6 +3,7 @@ import { RequestService } from "src/app/services/request.service";
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
 import { TaskModel } from "src/app/models/task.model";
+import * as _ from 'lodash';
 
 
 @Injectable()
@@ -63,7 +64,5 @@ export class TasksService {
 
   createTasksArrays(allTasks: any[]){
     const categories: string[] = [];
-
-
   }
 }
