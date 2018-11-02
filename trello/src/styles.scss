@@ -129,3 +129,11 @@ input{
 .operation-color{
     color: #FFEEEE;
 }
+
+.task-label{
+    display: flex;
+    align-items: center;
+    span{
+        margin-right: 5px;
+    }
+}

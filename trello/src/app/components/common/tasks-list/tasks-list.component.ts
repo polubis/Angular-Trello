@@ -17,7 +17,7 @@ import { Subscription } from "rxjs";
 export class TasksListComponent implements OnInit, OnDestroy {
   @Input() items: TaskModel[];
   @Input() limit: number;
-
+  @Input() projectId: number;
   isSavingTaskColor: boolean = false;
   currentOpenedColorsIndex: number = -1;
   isDeleteTaskPromptOpen: boolean = false;
@@ -114,11 +114,13 @@ export class TasksListComponent implements OnInit, OnDestroy {
   togleAddTaskModal(){
     this.isAddTaskModalOpen = !this.isAddTaskModalOpen;
   }
+  
 
   addTask = (formData: any) => {
     this.isAddingTask = true;
+    const idOfProject = this.projectId ? this.projectId : this.projectsService.currentWatchedProjectId;
     this.tasksService
-      .addTask(formData, this.projectsService.currentWatchedProjectId)
+      .addTask(formData, idOfProject)
       .then((response: TaskModel) => {
         this.items.push(response);
         this.isAddingTask = false;

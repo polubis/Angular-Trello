@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
+import { TasksService } from "src/app/services/tasks.service";
 
 @Component({
   selector: 'app-manage',
@@ -6,11 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./manage.component.scss']
 })
 export class ManageComponent implements OnInit {
-  id: number = 30142;
   isSideBarExpanded: boolean = false;
-  constructor() { }
+  constructor(private activatedRoute: ActivatedRoute, private tasksService: TasksService) { }
 
   ngOnInit() {
+    this.tasksService.setProjectId(this.activatedRoute.snapshot.params['id']);
   }
 
   togleSideBar(){

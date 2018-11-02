@@ -1,13 +1,47 @@
 
-
 import { RequestService } from "src/app/services/request.service";
 import { Injectable } from "@angular/core";
+import { Subject } from "rxjs";
+import { TaskModel } from "src/app/models/task.model";
 
 
 @Injectable()
 export class TasksService {
+  projectId: number;
+  buckets: any = {
+    Todo: [],
+    InProgress: [],
+    Done: [],
+  }
+  onChangeTasks = new Subject();
   constructor(private requestService: RequestService) {
 
+  }
+
+  setProjectId(projectId: number){
+    this.projectId = projectId;
+  }
+
+  createBuckets(tasks: any[]): any{
+    const buckets: any = {...this.buckets};
+    const bucketKeys = Object.keys(buckets).map(key => key.trim().toUpperCase());
+    for(let key in tasks){
+      bucketKeys.forEach(function(part){
+        if(tasks[key].bucket.trim().toUpperCase() === part){
+          buckets[tasks[key].bucket].push(tasks[key]);
+        }
+      })
+    }
+    return buckets;
+  }
+  
+  getTasksForProject(){
+    this.requestService.executeRequest("projectDetails", "get", {}, "",
+      this.projectId.toString())
+      .then((response: any) => {
+        this.buckets = this.createBuckets(response.tasks);
+        this.onChangeTasks.next(this.buckets);
+      }).catch(error => this.onChangeTasks.next(this.buckets));
   }
 
   addTask(formData: any, projectId: number){
@@ -25,5 +59,11 @@ export class TasksService {
 
   editColor(payload: any, taskId: number){
     return this.requestService.executeRequest("editTaskColorInProject", "put", payload, "Task color has been successfuly edited", taskId.toString());
+  }
+
+  createTasksArrays(allTasks: any[]){
+    const categories: string[] = [];
+
+
   }
 }

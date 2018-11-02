@@ -1,4 +1,5 @@
 
+<app-error-handler [isLoading]="isDownloadingTasks" [operationName]="'projectDetails'">
 <nav>
   <div class="left-nav-content">
     <button class="label-btn">BOARD</button>
@@ -13,4 +14,29 @@
 </nav>
 
 <div class="tasks-container">
+  <div class="legend">
+    <p>LEGEND</p>
+    <div class="legends-container">
+        <div class="task-label"><span>TESTERS</span> <i class="material-icons">build</i></div>
+        <div class="task-label"><span>FRONTEND</span> <i class="material-icons">my_location</i></div>
+        <div class="task-label"><span>BACKEND</span> <i class="material-icons">dns</i></div>
+    </div>
+    <p>
+      <button class="label-btn"><i class="material-icons">add</i> ADD LABEL</button>
+    </p>
+  </div>
+  <div class="tasks-lists-container">
+      
+      <div class="list-container" *ngFor="let name of bucketsListsKeys; let i = index">
+          <p>
+              <span><b>{{bucketsNames[i] | uppercase}}</b> <i>status</i></span> 
+          </p>
+          <app-tasks-list [projectId]="projectId" [items]="buckets[name]" [limit]="'10'">
+            </app-tasks-list>
+      </div>
+    
+  </div>
+
 </div>
+  
+</app-error-handler>

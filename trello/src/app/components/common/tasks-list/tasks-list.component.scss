@@ -58,26 +58,8 @@
                         flex-flow: column;
                     }
                 }
-                .testers{
-                    b{
-                        color: #83B472;
-                    }
-                    span{
-                        background: #83B472;
-                        transform: rotate(45deg);
-                    } 
-                }
-                .task-params{
-                    margin-left: auto;
-                    display: flex;
-                    align-items: center;
-                    span{
-                        width: 15px;
-                        height: 15px;
-                        display: block;
-                        margin-left: 10px;
-                    }
-                   
+                .task-label{
+                    margin: 0 0 15px auto;
                 }
             }
             .time-to-end{

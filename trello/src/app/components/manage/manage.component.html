@@ -2,17 +2,18 @@
   <div class="side-nav-place-holder"></div>
   <div class="side-navigation" [ngClass]="{'expanded-side': isSideBarExpanded}">
     <span (click)="togleSideBar()"><i class="material-icons">chevron_right</i></span>
-    <span><i class="material-icons">comment</i><b>Statistics</b></span>
+    <span><i class="material-icons">home</i><b>Home</b></span>
     <span routerLinkActive="active">
       <a [routerLink]="['tasks']">
-          <i class="material-icons">comment</i>
+          <i class="material-icons">view_column</i>
       </a>
-      <b>Comments</b>
+      <b>Tasks</b>
     </span>
-    <span><i class="material-icons">comment</i><b>Overall</b></span>
+    <span><i class="material-icons">equalizer</i><b>Overall</b></span>
   </div>
 
   <div class="outlet-container">
+    <div *ngIf="isSideBarExpanded" class="outlet-backdrop"></div>
     <router-outlet></router-outlet>  
   </div>
 </div>

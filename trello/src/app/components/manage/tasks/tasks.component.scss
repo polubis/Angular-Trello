@@ -36,7 +36,66 @@
     }
 }
 .tasks-container{
-    width: 95%;
+    width: 96%;
     margin: 0 auto;
-    height: 100%;
+    padding: 15px;
+    .legend{
+        margin: 30px 30px 20px 30px;
+        border-bottom: 1px solid #BEBEBE;
+        p{
+            color: #424242;
+            font-size: 22px;
+            font-weight: 400;
+        }
+        .legends-container{
+            padding: 0 30px;
+            display: flex;
+            flex-flow: wrap;
+            div{
+                margin: 10px;
+                font-weight: bolder;
+            }
+        }
+        .label-btn{
+            color: #424242;
+            font-weight: bolder;
+            align-items: center;
+            display: flex;
+        }
+        p:last-of-type{
+            .label-btn{
+                margin-left: auto;
+            }
+        }
+        
+    }
+    .tasks-lists-container{
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin: 20px 30px;
+        .list-container{
+            width: 30%;
+            p{
+                margin-bottom: 35px;
+                span{
+                    color: #424242;
+                    position: relative;
+                    padding: 0 55px 10px 0;
+                    border-bottom: 4px solid #424242;
+                    position: relative;
+                    b{
+                        font-size: 26px;
+                    }
+                    i{
+                        color: #BEBEBE;
+                        font-style: unset;
+                        position: absolute;
+                        margin-left: 10px;
+                        top: -25px;
+                    }
+                }
+            }
+        }
+    }
 }
