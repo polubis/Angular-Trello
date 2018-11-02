@@ -9,6 +9,7 @@
         (onSavedItem)="saveTaskColor($event)"
         (onCloseItems)="togleColorPalette(item.id)" (itemChanged)="changeTaskColor($event, item.id)">
         </app-selector>
+        <i (click)="togleAssignToTaskPersonModal(item.id)" class="material-icons animated-icon">assignment_returned</i>
         <i (click)="togleEditTaskModal(item.id)" class="material-icons edit-color animated-icon">edit</i>
         <i (click)="togleDeleteTaskPrompt(item.id)" class="material-icons delete-color animated-icon">delete</i>
       </div>
@@ -77,6 +78,17 @@
   <div class="task-form">
       <app-form [isDoingRequest]="isAddingTask" [submitMethod]="addTask" 
       [formClass]="'stnd-form'" [formSettings]="addTaskFormSettings">
+
+      </app-form>
+  </div>
+</app-modal>
+
+
+<app-modal *ngIf="idOfTaskToAssign !== -1" [modalTitle]="'Assign person to task'"
+(onClosingModal)="togleAssignToTaskPersonModal()" [width]="'500px'">
+  <div class="task-form">
+      <app-form [isDoingRequest]="(isAssigningToTask || isLoadingUsers) ? true : false" [submitMethod]="assignToTaskPerson" 
+      [formClass]="'stnd-form'" [formSettings]="findUserFormSettings">
 
       </app-form>
   </div>

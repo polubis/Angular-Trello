@@ -20,6 +20,7 @@ import { TasksService } from "src/app/services/tasks.service";
 import { ColorsService } from "src/app/services/colors.service";
 import { ManageComponent } from './components/manage/manage.component';
 import { IconsService } from "src/app/services/icons.service";
+import { UsersService } from "src/app/services/users.service";
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +43,7 @@ import { IconsService } from "src/app/services/icons.service";
     OperationsService,
     AuthService,
     LoggedUserGuard,
+    UsersService,
     NotLoggedUserGuard,
     TasksService,
     ProjectsService,

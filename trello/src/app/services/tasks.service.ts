@@ -62,7 +62,7 @@ export class TasksService {
     return this.requestService.executeRequest("editTaskColorInProject", "put", payload, "Task color has been successfuly edited", taskId.toString());
   }
 
-  createTasksArrays(allTasks: any[]){
-    const categories: string[] = [];
+  assignPersonToTask(formData: any){
+    return this.requestService.executeRequest("assignPersonToTask", "put", formData, "Task has been succesfully assigned", this.projectId.toString());
   }
 }

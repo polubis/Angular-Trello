@@ -24,6 +24,7 @@ export class RequestService {
         editLabelInProject: { url: "Label/Edit/", needsAuth: true, requestKeys: ["Name", "Color", "Icon"] },
         deleteLabel: {url: "Label/Delete/", needsAuth: true, },
         addPersonToProject: { url: "Project/AddPersonToProject", needsAuth: true },
+        getUsersFromProject: { url: "Project/GetAllMembers/", needsAuth: true },
 
         addTaskToProject: { url: "Task/Add/", needsAuth: true, requestKeys: ["Name", "Description", "Color"] },
         deleteTaskFromProject: { url: "Task/Delete/", needsAuth: true },

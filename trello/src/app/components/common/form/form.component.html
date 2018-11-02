@@ -26,18 +26,32 @@
             </app-selector>
         </div>
 
-      <div [ngClass]="{'margined-span': formStateItems[i].isAllErrorsResolved !== null}">
-        <i *ngIf="formStateItems[i].isAllErrorsResolved === false" class="material-icons">lock_outline</i>
-        <i *ngIf="formStateItems[i].isAllErrorsResolved === true" class="material-icons">lock_open</i>
+        <div class="type-ahead-container" *ngIf="item.mode === 'type-ahead-with-existing-data'">
+          <input [value]="formStateItems[i].value" (focus)="fillErrorsOnFocusedInput(i)" (input)="handleTyping(i, $event)" 
+            (blur)="removeErrorList()" 
+            [type]="item.type" [placeholder]="item.placeholder" />
+          <ul class="result-list shadow" *ngIf="formStateItems[i].isAllErrorsResolved">
+            <li *ngFor="let element of item.listElements" (click)="addListElementIntoInputValue(element.firstName + element.lastName, i)">
+              {{element.firstName}} {{element.lastName}}
+            </li>
+          </ul>
+        </div>
+
+        <div [ngClass]="{'margined-span': formStateItems[i].isAllErrorsResolved !== null}">
+          <i *ngIf="formStateItems[i].isAllErrorsResolved === false" class="material-icons">lock_outline</i>
+          <i *ngIf="formStateItems[i].isAllErrorsResolved === true" class="material-icons">lock_open</i>
+          
+          <ul class="errors-list" *ngIf="formStateItems[i].isAllErrorsResolved === false && (i === currentFocusedInput || 
+          currentOpenedIconPalete === i || currentOpenedColorsIndex === i)">
+            <li *ngFor="let content of formStateItems[i].contents">
+                <i *ngIf="content.isError === false" [style.color]="'#6ECF8E'" class="material-icons">check</i>
+                <i *ngIf="content.isError === true" [style.color]="'#F35F5F'" class="material-icons">error_outline</i>
+                <span>{{content.content}}</span>
+            </li>
+          </ul>
+        </div>
+
         
-        <ul class="errors-list" *ngIf="formStateItems[i].isAllErrorsResolved === false && i === currentFocusedInput">
-          <li *ngFor="let content of formStateItems[i].contents">
-              <i *ngIf="content.isError === false" [style.color]="'#6ECF8E'" class="material-icons">check</i>
-              <i *ngIf="content.isError === true" [style.color]="'#F35F5F'" class="material-icons">error_outline</i>
-              <span>{{content.content}}</span>
-          </li>
-        </ul>
-      </div>
     </section>
   </div>
   <ng-content></ng-content>

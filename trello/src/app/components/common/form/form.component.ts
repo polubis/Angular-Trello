@@ -43,6 +43,10 @@ export class FormComponent implements OnInit {
     this.handleValueSetting(index, color);
   }
 
+  addListElementIntoInputValue(item: any, index: number){
+    this.handleValueSetting(index, item);
+  }
+
   changeIcon(icon: string, index: number){
     this.handleValueSetting(index, icon);
   }

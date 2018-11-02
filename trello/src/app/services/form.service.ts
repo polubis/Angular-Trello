@@ -110,6 +110,4 @@ export class FormService {
             return this.validate(item, item.value, formSettings[index].validationSettings);
         });
     }
-
-    
 }
