@@ -1,0 +1,25 @@
+<ul>
+  <li (mouseenter)="popUpUserDetails()" (mouseleave)="hideUserDetails()" [style.backgroundImage]="'url('+ 'assets/guitar.jpg' +')'" *ngFor="let user of users">
+    <div *ngIf="user === 'tomasz'" class="avatar">
+      <i class="material-icons">person</i>
+    </div>
+
+    <div *ngIf="isUserCartOpen" class="user-details-cart">
+      <div class="user-header">
+        <img class="shadow" src="assets/guitar.jpg" />
+      </div>
+
+      <div class="user-data">
+        <p><b>Username</b><span>Tomasz</span></p>
+        <p><b>Email</b><span>tomasz@wp.pl</span></p>
+        <p><b>First name</b><span>Tomasz</span></p>
+        <p><b>Last name</b><span>Tomaszkiewicz</span></p>
+        <p><b>Number of tasks</b><span>13</span></p>
+        <p><b>Number of projects</b><span>16</span></p>
+      </div>
+      <button class="circle-btn">
+        Send message
+      </button>
+    </div>
+  </li>
+</ul>
