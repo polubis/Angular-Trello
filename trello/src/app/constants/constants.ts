@@ -113,7 +113,7 @@ export const findUserFormSettings: FormModel[] = [
     { label: "User", placeholder: "type for start searching users by firstname, lastname or nickname...", type: "input", 
         mode: "type-ahead-with-existing-data", initialValue: null, 
         validationSettings: {
-            required: true, minLength: 2, maxLength: 30
+            required: true, maxLength: 30
         } ,
         listElements: []
     }

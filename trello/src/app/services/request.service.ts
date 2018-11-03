@@ -43,6 +43,7 @@ export class RequestService {
 
     executeRequest = (requestName: string, requestType: string, payload: any = {}, succOperationContent: string = "", params: string = "") => {
         return new Promise((resolve, reject) => {
+            //console.log(requestName, requestType, payload, succOperationContent, params);
             let modifiedPayload = {...payload};
             if(this.requests[requestName].requestKeys)
                 modifiedPayload = this.prepareKeysForRequest(this.requests[requestName].requestKeys, payload);

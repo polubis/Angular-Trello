@@ -82,6 +82,20 @@ export class FormService {
         return !specifiedValue.test(value);
     }
 
+    createFormListFormat(items: any, keysToSelect: string[]): any[]{
+        return items.map(item => {
+            let objectToReturn = {content: null, id: null};
+            let stringContent: string = "";
+            keysToSelect.forEach(element => {
+                if(item[element])
+                    stringContent += item[element] + " ";
+            });
+            stringContent = stringContent.slice(0, stringContent.length - 1);
+            objectToReturn.content = stringContent;
+            objectToReturn.id = item.id;
+            return objectToReturn;
+        });
+    }
 
     createFormItems(settings: FormModel[]): any[]{
         return settings.map(setting => {

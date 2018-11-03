@@ -9,6 +9,7 @@ import { OperationsService } from "src/app/services/operations.service";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { UsersService } from "src/app/services/users.service";
+import { FormService } from "src/app/services/form.service";
 @Component({
   selector: "app-tasks-list",
   templateUrl: "./tasks-list.component.html",
@@ -40,7 +41,8 @@ export class TasksListComponent implements OnInit, OnDestroy {
     private projectsService: ProjectsService,
     private operationsService: OperationsService,
     private activatedRoute: ActivatedRoute,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private formService: FormService
   ) {}
 
   private subscription: Subscription;
@@ -163,7 +165,8 @@ export class TasksListComponent implements OnInit, OnDestroy {
       this.usersService
         .getUsers(idOfProject)
         .then((response: any) => {
-          this.findUserFormSettings[0].listElements = response.members;
+          this.findUserFormSettings[0].listElements = this.formService.createFormListFormat(response.members, 
+            ["id"]);
           this.isLoadingUsers = false;
         })
         .catch(error => {
@@ -175,15 +178,22 @@ export class TasksListComponent implements OnInit, OnDestroy {
   };
 
   assignToTaskPerson = (formData: any) => {
-    console.log(formData);
     this.isAssigningToTask = true;
-  //   const model = { taskId: this.idOfTaskToAssign, userId: formData[0].value };
-  //   this.tasksService
-  //     .assignPersonToTask(model)
-  //     .then(response => {
-  //       this.isAssigningToTask = false;
-  //     })
-  //     .catch(error => (this.isAssigningToTask = false));
-  // };
+    
+    const idOfProject = this.projectId
+    ? this.projectId
+    : this.projectsService.currentWatchedProjectId;
+
+      const model = { taskId: this.idOfTaskToAssign, userId: formData[0].value };
+      this.tasksService
+      .assignPersonToTask(model, idOfProject)
+      .then(response => {
+        const index = this.items.findIndex(item => item.id === this.idOfTaskToAssign);
+        this.isAssigningToTask = false;
+        this.isAddTaskModalOpen = false;
+        this.items[index].userId = formData[0].value;
+        this.operationsService.removeAllAfterDelay(3000);
+      })
+      .catch(error => (this.isAssigningToTask = false));
   }
 }

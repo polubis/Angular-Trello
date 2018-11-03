@@ -24,6 +24,7 @@ export class FormComponent implements OnInit {
   errorsSpecifications: any[] = [];
   currentOpenedColorsIndex: number = -1;
   currentOpenedIconPalete: number = -1;
+  currentOpenedListIndex: number = -1;
   ngOnInit() {
     this.formStateItems = this.formService.createFormItems(this.formSettings);
     this.numberOfFormItems = this.formSettings.length;
@@ -44,7 +45,14 @@ export class FormComponent implements OnInit {
   }
 
   addListElementIntoInputValue(item: any, index: number){
-    this.handleValueSetting(index, item);
+    this.handleValueSetting(index, item.id);
+    this.currentOpenedListIndex = -1;
+  }
+  handleTypingWithList(index: number, e){
+    this.handleValueSetting(index, e.target.value);
+    if(this.formStateItems[index].isAllErrorsResolved){
+      this.currentOpenedListIndex = index;
+    }
   }
 
   changeIcon(icon: string, index: number){
@@ -117,4 +125,5 @@ export class FormComponent implements OnInit {
       this.handleCreatingSpecifications();
     }
   }
+
 }

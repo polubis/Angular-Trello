@@ -62,7 +62,8 @@ export class TasksService {
     return this.requestService.executeRequest("editTaskColorInProject", "put", payload, "Task color has been successfuly edited", taskId.toString());
   }
 
-  assignPersonToTask(formData: any){
-    return this.requestService.executeRequest("assignPersonToTask", "put", formData, "Task has been succesfully assigned", this.projectId.toString());
+  assignPersonToTask = (formData: any, projectId: number) => {
+    return this.requestService.executeRequest("assignTaskToPerson", "put", formData, "Task has been succesfully assigned", 
+      projectId.toString() + "/AssignPersonToTask");
   }
 }

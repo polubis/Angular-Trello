@@ -36,8 +36,10 @@
           <i class="material-icons animated-icon">comment</i>
       </p>
       <div class="user-label">
-        <i class="material-icons">person</i>
-        <span>TOMASZ NOWOCZESNY</span>
+        <i class="material-icons" *ngIf="item.userId">person</i>
+        <span *ngIf="item.userId">{{item.userId}}</span>
+        <span *ngIf="!item.userId">This task doesn't have assigned user</span>
+        
       </div>
     </li>
   </ul>

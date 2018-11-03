@@ -27,12 +27,13 @@
         </div>
 
         <div class="type-ahead-container" *ngIf="item.mode === 'type-ahead-with-existing-data'">
-          <input [value]="formStateItems[i].value" (focus)="fillErrorsOnFocusedInput(i)" (input)="handleTyping(i, $event)" 
+          <input [value]="formStateItems[i].value" (focus)="fillErrorsOnFocusedInput(i)" (input)="handleTypingWithList(i, $event)" 
             (blur)="removeErrorList()" 
             [type]="item.type" [placeholder]="item.placeholder" />
-          <ul class="result-list shadow" *ngIf="formStateItems[i].isAllErrorsResolved">
-            <li *ngFor="let element of item.listElements" (click)="addListElementIntoInputValue(element.firstName + element.lastName, i)">
-              {{element.firstName}} {{element.lastName}}
+          <ul class="result-list shadow" *ngIf="formStateItems[i].isAllErrorsResolved && currentOpenedListIndex === i">
+            <li *ngFor="let element of item.listElements | sort : 'content' : 'asc'" 
+            (click)="addListElementIntoInputValue(element, i)">
+              {{element.content}}
             </li>
           </ul>
         </div>
