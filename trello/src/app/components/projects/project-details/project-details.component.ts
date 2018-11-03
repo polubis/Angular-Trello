@@ -16,16 +16,7 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   isLoadingProjectDetails: boolean = false;
   isAddTaskModalOpen: boolean = false;
   project: ProjectModel;
-  contributors: any[] = [
-    { img: "assets/guitar.jpg", sex: "male" },
-    { img: "assets/guitar.jpg", sex: "male" },
-    { img: "assets/guitar.jpg", sex: "male" },
-    { img: "assets/guitar.jpg", sex: "male" },
-    { img: null, sex: "male" },
-    { img: null, sex: "male" },
-    { img: null, sex: "male" },
-    { img: null, sex: "male" }
-  ];
+  isUserCartOpen: boolean = false;
   routeSubscription: Subscription;
   constructor(
     private projectsService: ProjectsService,
@@ -33,6 +24,12 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
     private operationsService: OperationsService,
     private paginationService: PaginationService
   ) {}
+  popUpUserDetails(){
+    this.isUserCartOpen = true;
+  }
+  hideUserDetails(){
+    this.isUserCartOpen = false;
+  }
   ngOnInit() {
     const startPageNumber: number = this.paginationService.calculateStartPage(
       this.projectsService.projects,
@@ -45,7 +42,6 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
       this.projectsService.projects.length,
       this.paginationService.limit
     );
-
     this.routeSubscription = this.activatedRoute.params.subscribe(param => {
       if (this.projectsService.projects.length > 0) {
         this.isLoadingProjectDetails = true;
@@ -61,6 +57,8 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
             copiedProject.tasks = response.tasks;
             this.project = copiedProject;
             this.isLoadingProjectDetails = false;
+            console.log(this.project);
+            
           })
           .catch(error => (this.isLoadingProjectDetails = false));
       }
