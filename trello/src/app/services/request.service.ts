@@ -25,7 +25,8 @@ export class RequestService {
         deleteLabel: {url: "Label/Delete/", needsAuth: true, },
         addPersonToProject: { url: "Project/AddPersonToProject", needsAuth: true },
         getUsersFromProject: { url: "Project/GetAllMembers/", needsAuth: true },
-
+        getUsersByQuery: { url: "/Project/UserSearcher?query=", needsAuth: true },
+        
         addTaskToProject: { url: "Task/Add/", needsAuth: true, requestKeys: ["Name", "Description", "Color"] },
         deleteTaskFromProject: { url: "Task/Delete/", needsAuth: true },
         editTaskInProject: { url: "Task/Edit/", needsAuth: true, requestKeys: ["Name", "Description", "Color"] },

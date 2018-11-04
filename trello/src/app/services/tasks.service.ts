@@ -14,6 +14,9 @@ export class TasksService {
     InProgress: [],
     Done: [],
   }
+  bucketIndexes: any = {
+    Todo: "0", InProgress: "1", Done: "2"
+  }
   onChangeTasks = new Subject();
   constructor(private requestService: RequestService) {
 
@@ -25,13 +28,13 @@ export class TasksService {
 
   createBuckets(tasks: any[]): any{
     const buckets: any = {...this.buckets};
-    const bucketKeys = Object.keys(buckets).map(key => key.trim().toUpperCase());
+    const indexesKeys = Object.keys(this.bucketIndexes);
     for(let key in tasks){
-      bucketKeys.forEach(function(part){
-        if(tasks[key].bucket.trim().toUpperCase() === part){
-          buckets[tasks[key].bucket].push(tasks[key]);
+      indexesKeys.forEach(element => {
+        if(tasks[key].bucket === this.bucketIndexes[element]){
+          buckets[element].push(tasks[key]);
         }
-      })
+      });
     }
     return buckets;
   }

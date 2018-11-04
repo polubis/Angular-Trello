@@ -3,10 +3,25 @@
   <div class="project-list-container" *ngIf="projects.length > 0" [ngClass]="{'animate-slider': isSlideChanged}">
       <p>
         <span>YOUR PROJECTS</span> 
-        <button debounceClick (click)="togleAddProjectModal()" class="label-btn">ADD PROJECT</button>
+        <button debounceClick (click)="togleAddProjectModal()" 
+        class="label-btn">
+          <i class="material-icons animated-icon">add</i> ADD PROJECT
+        </button>
 
-        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate" (click)="togleCloseProjectConfirmModal()" class="label-btn">CLOSE PROJECT</button>
-        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate" (click)="togleEditProjectModal()" class="label-btn">EDIT PROJECT</button>
+        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate" 
+        (click)="togleCloseProjectConfirmModal()" class="label-btn">
+          <i class="material-icons animated-icon">close</i> CLOSE PROJECT
+        </button>
+        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate" 
+        (click)="togleEditProjectModal()" class="label-btn">
+          <i class="material-icons animated-icon">edit</i> EDIT PROJECT
+        </button>
+
+        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate" (click)="togleUserSearcher()" 
+        class="label-btn">
+          <i class="material-icons animated-icon">search</i> ADD USER TO PROJECT
+        </button>
+        
       </p>
       <app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-small spinner-form'" *ngIf="isDeletingProject"></app-spinner>
   

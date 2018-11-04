@@ -101,6 +101,11 @@ input{
     text-transform: uppercase;
     background: transparent;
     border: none;
+    display: flex;
+    align-items: center;
+    i{
+        margin-right: 5px;
+    }
 }
 .circle-btn{
     color: #D47D7D;

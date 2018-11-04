@@ -36,8 +36,8 @@ export class TasksListComponent implements OnInit, OnDestroy {
 
   isLoadingUsers: boolean = false;
   bucketTypes: {} = {
-    "To do": 0,
-    "In progress": 1,
+    "Todo": 0,
+    "InProgress": 1,
     "Done": 2
   }
   taskToChange: number = -1;

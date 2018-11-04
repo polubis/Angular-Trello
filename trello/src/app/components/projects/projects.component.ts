@@ -41,6 +41,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   isFullViewActivate: boolean = false;
 
   isOpenCloseProjectConfirmModal: boolean = false;
+  isUserSearchedOpen: boolean = false;
 
   onChangeProjectsSub: Subscription;
   onChangeCurrentWatchedProjectSub: Subscription;
@@ -97,7 +98,9 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   changeProject(id: number) {
     this.router.navigate(["/projects", id]);
   }
-
+  togleUserSearcher(){
+    this.isUserSearchedOpen = !this.isUserSearchedOpen;
+  }
   togleAddProjectModal = () => {
     this.isAddProjectModalOpen = !this.isAddProjectModalOpen;
   };

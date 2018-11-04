@@ -38,8 +38,8 @@
           <p>
               <span><b>{{bucketsNames[i] | uppercase}}</b> <i>status</i></span> 
           </p>
-          <app-tasks-list [projectId]="projectId" [items]="buckets[name]" [limit]="'10'">
-            </app-tasks-list>
+          <app-tasks-list [projectId]="projectId" [items]="buckets[name]" [limit]="'10'" [bucket]="name">
+          </app-tasks-list>
       </div>
     
   </div>
