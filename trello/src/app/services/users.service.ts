@@ -11,6 +11,6 @@ export class UsersService {
     }
 
     getUsers(projectId: number){
-        return this.requestService.executeRequest("getUsersFromProject", "get", {}, "", projectId.toString());
+        return this.requestService.executeRequest("getUsersFromProject", "get", {}, "", projectId.toString(), {});
     }
 }

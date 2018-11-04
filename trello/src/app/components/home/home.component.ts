@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
   logIn = (loginData: any) => {
     this.isDoingRequest = true;
     this.requestService
-      .executeRequest("login", "post", loginData)
+      .executeRequest("login", "post", loginData, "", "", {})
       .then(response => {
         this.authService.setCookie("auth", 1, "/", "true");
         this.isDoingRequest = false;
@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
   register = (registerData: any) => {
     this.isDoingRequest = true;
     this.requestService
-      .executeRequest("register", "post", registerData, "Pomyślnie udało się zarejestrować")
+      .executeRequest("register", "post", registerData, "Pomyślnie udało się zarejestrować", "", {})
       .then(response => {
         this.isDoingRequest = false;
         this.isRegisterModalOpen = false;

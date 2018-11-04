@@ -41,13 +41,16 @@ export class RequestService {
         return model;
     }
 
-    executeRequest = (requestName: string, requestType: string, payload: any = {}, succOperationContent: string = "", params: string = "") => {
+    executeRequest = (requestName: string, requestType: string, payload: any = {}, succOperationContent: string = "", params: string = "", objectToSpread: any) => {
         return new Promise((resolve, reject) => {
             //console.log(requestName, requestType, payload, succOperationContent, params);
             let modifiedPayload = {...payload};
             if(this.requests[requestName].requestKeys)
                 modifiedPayload = this.prepareKeysForRequest(this.requests[requestName].requestKeys, payload);
             
+            if(objectToSpread)
+                modifiedPayload = { ...modifiedPayload, ...objectToSpread };
+
             let requestPath: string = this.serverPath + this.requests[requestName].url;
 
             if(params !== "")

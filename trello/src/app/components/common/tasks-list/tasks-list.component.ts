@@ -19,6 +19,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   @Input() items: TaskModel[];
   @Input() limit: number;
   @Input() projectId: number;
+  @Input() bucket: string;
   isSavingTaskColor: boolean = false;
   currentOpenedColorsIndex: number = -1;
   isDeleteTaskPromptOpen: boolean = false;
@@ -34,7 +35,11 @@ export class TasksListComponent implements OnInit, OnDestroy {
   isAssigningToTask: boolean = false;
 
   isLoadingUsers: boolean = false;
-
+  bucketTypes: {} = {
+    "To do": 0,
+    "In progress": 1,
+    "Done": 2
+  }
   taskToChange: number = -1;
   constructor(
     private tasksService: TasksService,
@@ -58,15 +63,18 @@ export class TasksListComponent implements OnInit, OnDestroy {
   }
 
   saveTaskColor = (color: string) => {
+    this.isSavingTaskColor = true;
+    
     const index = this.items.findIndex(
       item => item.id === this.currentOpenedColorsIndex
     );
 
     const name: string = this.items[index].name;
     const description: string = this.items[index].description;
-    this.isSavingTaskColor = true;
+    const bucket = this.bucketTypes[this.bucket];
+    
     this.tasksService
-      .editColor({ name, description, color }, this.items[index].id)
+      .editColor({ name, description, color, bucket }, this.items[index].id)
       .then((response: any) => {
         this.isSavingTaskColor = false;
         this.currentOpenedColorsIndex = -1;
@@ -100,8 +108,9 @@ export class TasksListComponent implements OnInit, OnDestroy {
 
   editTask = (formData: any) => {
     this.isEditingTask = true;
+    const objectToSpread = {bucket: this.bucketTypes[this.bucket]};
     this.tasksService
-      .editTask(formData, this.items[this.taskToChange].id)
+      .editTask(formData, this.items[this.taskToChange].id, objectToSpread)
       .then((response: TaskModel) => {
         const copiedItem = { ...this.items[this.taskToChange] };
         copiedItem.name = formData[0].value;
@@ -145,8 +154,9 @@ export class TasksListComponent implements OnInit, OnDestroy {
     const idOfProject = this.projectId
       ? this.projectId
       : this.projectsService.currentWatchedProjectId;
+    const objectToSpread = {bucket: this.bucketTypes[this.bucket]};
     this.tasksService
-      .addTask(formData, idOfProject)
+      .addTask(formData, idOfProject, objectToSpread)
       .then((response: TaskModel) => {
         this.items.push(response);
         this.isAddingTask = false;

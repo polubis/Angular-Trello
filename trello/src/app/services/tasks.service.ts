@@ -38,32 +38,33 @@ export class TasksService {
   
   getTasksForProject(){
     this.requestService.executeRequest("projectDetails", "get", {}, "",
-      this.projectId.toString())
+      this.projectId.toString(), {})
       .then((response: any) => {
         this.buckets = this.createBuckets(response.tasks);
         this.onChangeTasks.next({buckets: this.buckets, labels: response.labels});
       }).catch(error => this.onChangeTasks.next({buckets: this.buckets, labels: []}));
   }
 
-  addTask(formData: any, projectId: number){
+  addTask(formData: any, projectId: number, objectToSpread: any){
     return this.requestService.executeRequest("addTaskToProject", "post", formData, "Task has been succesfully added into project", 
-        projectId.toString());
+        projectId.toString(), objectToSpread);
   }
 
   deleteTask(taskId: number){
-    return this.requestService.executeRequest("deleteTaskFromProject", "delete", {}, "Task has been successfuly deleted", taskId.toString())
+    return this.requestService.executeRequest("deleteTaskFromProject", "delete", {}, "Task has been successfuly deleted", taskId.toString(), {})
   }
 
-  editTask(formData: any, taskId: number){
-    return this.requestService.executeRequest("editTaskInProject", "put", formData, "Task has been succesfully edited", taskId.toString());
+  editTask(formData: any, taskId: number, objectToSpread: any){
+    return this.requestService.executeRequest("editTaskInProject", "put", formData, "Task has been succesfully edited", taskId.toString(), objectToSpread);
   }
 
   editColor(payload: any, taskId: number){
-    return this.requestService.executeRequest("editTaskColorInProject", "put", payload, "Task color has been successfuly edited", taskId.toString());
+    return this.requestService.executeRequest("editTaskColorInProject", "put", payload, 
+      "Task color has been successfuly edited", taskId.toString(), {});
   }
 
   assignPersonToTask = (formData: any, projectId: number) => {
     return this.requestService.executeRequest("assignTaskToPerson", "put", formData, "Task has been succesfully assigned", 
-      projectId.toString() + "/AssignPersonToTask");
+      projectId.toString() + "/AssignPersonToTask", {});
   }
 }

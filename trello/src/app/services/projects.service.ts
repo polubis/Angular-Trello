@@ -26,7 +26,7 @@ export class ProjectsService {
         "put",
         formData,
         "Project has been succesfully edited",
-        id.toString()
+        id.toString(), {}
       )
       .then(response => {
         const projectIndex: number = this.projects.findIndex(
@@ -47,7 +47,7 @@ export class ProjectsService {
 
   getProjects() {
     this.requestService
-      .executeRequest("projects", "get")
+      .executeRequest("projects", "get", {}, "", "", {})
       .then((response: any[]) => {
         this.projects = response;
         this.onChangeProjects.emit(this.projects);
@@ -64,7 +64,7 @@ export class ProjectsService {
         "put",
         {},
         "Project has been succesfully closed",
-        this.currentWatchedProjectId.toString()
+        this.currentWatchedProjectId.toString(), {}
       )
       .then((response: any) => {
         const closeDate = new Date();
@@ -86,7 +86,7 @@ export class ProjectsService {
       "post",
       formData,
       "Label has been succesfully added into project",
-      projectId.toString()
+      projectId.toString(), {}
     );
   }
 
@@ -96,12 +96,12 @@ export class ProjectsService {
       "put",
       formData,
       "Label has been succesfully edited project",
-      labelId.toString()
+      labelId.toString(), {}
     );
   }
 
   deleteLabel(labelId: number){
-    return this.requestService.executeRequest("deleteLabel", "delete", {}, "Label has been succesfully deleted", labelId.toString());
+    return this.requestService.executeRequest("deleteLabel", "delete", {}, "Label has been succesfully deleted", labelId.toString(), {});
   }
 
   addProject = (addProjectData: any) => {
@@ -110,7 +110,7 @@ export class ProjectsService {
         "addProject",
         "post",
         addProjectData,
-        "Project has been succesfuly added"
+        "Project has been succesfuly added", "", {}
       )
       .then((response: { id: number }) => {
         const creationDate = new Date();
@@ -145,7 +145,7 @@ export class ProjectsService {
       "get",
       {},
       "",
-      id.toString()
+      id.toString(), {}
     );
   }
 }
