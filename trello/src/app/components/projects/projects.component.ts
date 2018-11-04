@@ -89,16 +89,18 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
     this.projectsService.getProjects();
 
-    this.onPageChange = this.paginationService.onPageChange.subscribe((page: any) => {
-      this.leftRange = page.leftRange;
-      this.rightRange = page.rightRange;
-    });
+    this.onPageChange = this.paginationService.onPageChange.subscribe(
+      (page: any) => {
+        this.leftRange = page.leftRange;
+        this.rightRange = page.rightRange;
+      }
+    );
   }
 
   changeProject(id: number) {
     this.router.navigate(["/projects", id]);
   }
-  togleUserSearcher(){
+  togleUserSearcher() {
     this.isUserSearchedOpen = !this.isUserSearchedOpen;
   }
   togleAddProjectModal = () => {

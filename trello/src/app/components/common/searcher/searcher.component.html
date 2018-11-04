@@ -1,0 +1,21 @@
+<div class="searcher-container">
+  <header>
+    <div class="search-inpt-container">
+        <input type="text" placeholder="start typing..." (input)="startSearch($event)"/>
+        <div>
+          <i *ngIf="!isSearching" class="material-icons">search</i>
+          <app-spinner *ngIf="isSearching" [spinnerClass]="'spinner spinner-small searcher-spinner'"></app-spinner>
+          
+        </div>
+    </div>
+  </header>
+
+  <div class="searched-content">
+    <ul>
+      <li *ngFor="let result of results">
+        {{result.id}}
+      </li>
+    </ul>
+  </div>
+
+</div>

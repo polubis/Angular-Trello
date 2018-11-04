@@ -1,3 +1,6 @@
+<app-searcher *ngIf="isUserSearchedOpen">
+</app-searcher>
+
 <div class="main-container">  
   <app-error-handler [isLoading]="isFetchingProjects" [operationName]="'projects'">
   <div class="project-list-container" *ngIf="projects.length > 0" [ngClass]="{'animate-slider': isSlideChanged}">
