@@ -141,7 +141,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       copiedEditFormItems[2].initialValue = null;
     }
     this.editProjectFormSettings = copiedEditFormItems;
-    console.log(this.editProjectFormSettings, this.addProjectFormSettings);
     this.isEditProjectModalOpen = !this.isEditProjectModalOpen;
   }
 

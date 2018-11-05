@@ -14,7 +14,6 @@ export class FilterPipe implements PipeTransform {
                 filteredItems.push(element);
             }
         });
-        console.log(filteredItems);
 
         return _.sortBy(filteredItems, [sortBy], [sortOrder])
     }

@@ -114,7 +114,6 @@ export class TasksComponent implements OnInit, OnDestroy {
   moveTaskIntoAnotherBoard(eventData: any){
     const task: TaskModel = {...eventData.eventData};
     const bucket: string = eventData.bucket;
-    console.log(task, bucket);
     this.tasksService.getTasksForProject();
 
   }
