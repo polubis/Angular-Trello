@@ -16,7 +16,7 @@ export class RequestService {
         login: { url: "Account/Login", needsAuth: false, requestKeys: ["login", "password"] } ,
         register: { url: "Account/Register", needsAuth: false, requestKeys: ["email", "password", "confirmPassword", "userName", "firstName", "lastName"] },
         projects: { url: "Project", needsAuth: true },
-        addProject: { url: "Project/Add", needsAuth: true, requestKeys: ["Name", "Description", "Color"] },
+        addProject: { url: "Project/Add", needsAuth: true, requestKeys: ["Name", "Description", "Color"], formData: true },
         projectDetails: { url: "Project/Details/", needsAuth: true },
         closeProject: { url: "Project/Close/", needsAuth: true },
         editProject: { url: "Project/Edit/", needsAuth: true, requestKeys: ["Name", "Description", "Color"] },
@@ -45,13 +45,23 @@ export class RequestService {
     executeRequest = (requestName: string, requestType: string, payload: any = {}, succOperationContent: string = "", params: string = "", objectToSpread: any) => {
         return new Promise((resolve, reject) => {
             //console.log(requestName, requestType, payload, succOperationContent, params);
-            let modifiedPayload = {...payload};
+            let modifiedPayload: any = {...payload};
             if(this.requests[requestName].requestKeys)
                 modifiedPayload = this.prepareKeysForRequest(this.requests[requestName].requestKeys, payload);
             
-            if(objectToSpread)
+            if(objectToSpread && !this.requests[requestName].formData)
                 modifiedPayload = { ...modifiedPayload, ...objectToSpread };
-
+            else{
+                let formData = new FormData();
+                const numberOfItems = this.requests[requestName].requestKeys.length;
+                for(let i = 0; i < numberOfItems; i++){
+                    const key = this.requests[requestName].requestKeys[i];
+                    formData.set(key, modifiedPayload[key]);
+                }
+                formData.set('File', "");
+                modifiedPayload = formData;
+            }
+                
             let requestPath: string = this.serverPath + this.requests[requestName].url;
 
             if(params !== "")

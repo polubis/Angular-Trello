@@ -31,13 +31,19 @@ ul{
             bottom: 0;
             padding-bottom: 25px;
             height: 100%;
-            background: rgba(0,0,0,.6);
+            background: rgba(66, 66, 66, 0.75);
             color: white;
             display: flex;
             flex-flow: column;
             .circle-btn{
                 margin: auto auto 0 auto;
                 width: 90%;
+                color: #FFEEEE;
+                border-color: #FFEEEE;
+            }
+            .label-btn{
+                color: #FFEEEE;
+                margin: 25px auto 0 auto;
             }
             .user-header{
 

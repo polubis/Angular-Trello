@@ -10,11 +10,9 @@ export class UsersListComponent implements OnInit {
   @Input() users: any[];
   isUserCartOpen: boolean = false;
   constructor() { }
-  hideUserDetails(){
-    this.isUserCartOpen = false;
-  }
-  popUpUserDetails(){
-    this.isUserCartOpen = true;
+  togleUserDetails(event){
+    event.stopPropagation();
+    this.isUserCartOpen = !this.isUserCartOpen;
   }
   ngOnInit() {
   }

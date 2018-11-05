@@ -148,4 +148,8 @@ export class ProjectsService {
       id.toString(), {}
     );
   }
+
+  addPersonToProject(payload: any){
+    return this.requestService.executeRequest("addPersonToProject", "post", payload, "Person has been succesfully added into project", "", {});
+  }
 }

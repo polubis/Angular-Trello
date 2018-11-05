@@ -1,7 +1,7 @@
 <div class="togler">
   <button (click)="togleList()" [class]="btnClass">{{title}} <i class="material-icons" [ngClass]="{rotated: isOpen === true}">expand_less</i></button>
   <ul class="shadow" *ngIf="isOpen">
-    <li *ngFor="let item of items">
+    <li (click)="selectItem(item)" *ngFor="let item of items">
       <i class="material-icons">{{item.icon}}</i>
       <span>{{item.name}}</span>
     </li>

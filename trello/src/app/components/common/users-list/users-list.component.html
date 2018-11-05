@@ -1,12 +1,12 @@
 <ul>
-  <li (mouseenter)="popUpUserDetails()" (mouseleave)="hideUserDetails()" [style.backgroundImage]="'url('+ 'assets/guitar.jpg' +')'" *ngFor="let user of users">
+  <li (click)="togleUserDetails($event)" [style.backgroundImage]="'url('+ 'assets/guitar.jpg' +')'" *ngFor="let user of users">
     <div *ngIf="user === 'tomasz'" class="avatar">
       <i class="material-icons">person</i>
     </div>
 
     <div *ngIf="isUserCartOpen" class="user-details-cart">
       <div class="user-header">
-        <img class="shadow" src="assets/guitar.jpg" />
+        <img src="assets/guitar.jpg" />
       </div>
 
       <div class="user-data">
@@ -19,6 +19,11 @@
       </div>
       <button class="circle-btn">
         Send message
+      </button>
+
+      <button (click)="togleUserDetails($event)" class="label-btn">
+        <i class="material-icons animated-icon">close</i>
+        CLOSE
       </button>
     </div>
   </li>

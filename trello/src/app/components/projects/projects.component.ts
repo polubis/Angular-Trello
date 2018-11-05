@@ -97,6 +97,12 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     );
   }
 
+  addContributor(contributorData: any){
+    const index = this.projects.findIndex(project => project.id === this.actualWatchedProject);
+    this.projects[index].collaborators.push(contributorData);
+    console.log(this.projects[index].collaborators);
+  }
+
   changeProject(id: number) {
     this.router.navigate(["/projects", id]);
   }

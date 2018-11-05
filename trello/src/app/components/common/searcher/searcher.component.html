@@ -1,19 +1,33 @@
 <div class="searcher-container">
   <header>
     <div class="search-inpt-container">
-        <input type="text" placeholder="start typing..." (input)="startSearch($event)"/>
+        <input type="text" placeholder="start typing..." (input)="handleType($event)"/>
         <div>
           <i *ngIf="!isSearching" class="material-icons">search</i>
           <app-spinner *ngIf="isSearching" [spinnerClass]="'spinner spinner-small searcher-spinner'"></app-spinner>
           
         </div>
     </div>
+    <i (click)="closeSearcher()" class="material-icons">close</i>
   </header>
 
   <div class="searched-content">
     <ul>
-      <li *ngFor="let result of results">
-        {{result.id}}
+      <li *ngFor="let result of results; let i = index" class="shadow">
+        <div class="image-container">
+          <img src="assets/guitar.jpg" alt="picture"/>
+          <span>{{result.id}}</span>
+        </div>
+
+        <p>
+          <i class="material-icons">person</i>
+          <span> {{result.firstName}} {{result.lastName}}</span> 
+          <i class="material-icons">email</i>
+          <span>{{result.email}}</span>
+        </p>
+        <app-togler (onSelectItem)="assignTaskToPerson($event, result, i)" [items]="roles" title="ASSIGN TO PROJECT" btnClass="label-btn">
+        </app-togler>
+        <app-spinner [showBackdrop]="true" *ngIf="currentAssigningPerson === i" [spinnerClass]="'spinner spinner-small spinner-form'"></app-spinner>
       </li>
     </ul>
   </div>

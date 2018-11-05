@@ -1,4 +1,5 @@
-<app-searcher *ngIf="isUserSearchedOpen">
+<app-searcher *ngIf="isUserSearchedOpen" [projectId]="actualWatchedProject" (onSelectingRole)="addContributor($event)"
+[personsAlreadyInProject]="projects[projectIndexInArray].collaborators" (onCloseSearcher)="togleUserSearcher($event)">
 </app-searcher>
 
 <div class="main-container">  

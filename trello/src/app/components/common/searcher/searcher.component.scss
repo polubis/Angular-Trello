@@ -11,6 +11,13 @@
     flex-flow: column;
     header{
         padding: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        & > i{
+            margin-right: 10px;
+            cursor: pointer;
+        }
         .search-inpt-container{
             display: flex;
             align-items: center;
@@ -35,6 +42,52 @@
                 right: 10px;
                 i{
                     font-size: 28px;
+                }
+            }
+        }
+    }
+    .searched-content{
+        ul{
+            display: flex;
+            padding: 15px;
+            flex-flow: wrap;
+            li{
+                padding: 15px;
+                position: relative;
+                width: 30%;
+                box-sizing: border-box;
+                margin: 15px;
+                border-radius: 5px;
+                background: white;
+                color: black;
+                display: flex;
+                flex-flow: column;
+                .image-container{
+                    display: flex;
+                    align-items: center;
+                    span{
+                        margin-left: 15px;
+                        font-size: 22px;
+                    }
+                    img{
+                        width: 60px;
+                        height: 60px;
+                        border-radius: 50%;
+                    }
+                }
+                p{
+                    display: flex;
+                    align-items: center;
+                    span, i{
+                        color: #707070;
+                        font-size: 13px;
+                    }
+                    span{
+                        margin-right: 10px;
+                    }
+                    i{
+                        margin-right: 5px;
+                    }
                 }
             }
         }
