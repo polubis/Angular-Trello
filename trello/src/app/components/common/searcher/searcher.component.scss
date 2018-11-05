@@ -47,10 +47,13 @@
         }
     }
     .searched-content{
+        background: rgba(66, 66, 66, 0.63);
         ul{
             display: flex;
             padding: 15px;
             flex-flow: wrap;
+            height: 75vh;
+            overflow-y: auto;
             li{
                 padding: 15px;
                 position: relative;

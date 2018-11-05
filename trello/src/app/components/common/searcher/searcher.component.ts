@@ -41,7 +41,6 @@ export class SearcherComponent implements OnInit, OnDestroy {
   currentAssigningPerson: number = -1;
   selectRoleNavigationOpenedIn: number = -1;
   roles: any[] = [
-    { icon: "", name: "Project Owner", id: 1 },
     { icon: "", name: "Project Leader", id: 2 },
     { icon: "", name: "Project Collaborator", id: 3 }
   ];

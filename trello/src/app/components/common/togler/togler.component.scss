@@ -16,18 +16,26 @@
     .label-btn{
         margin-left: auto;
     }
+    .nav-togler{
+        right: -125px;
+        top: 25px;
+        li{
+            min-width: 125px;
+        }
+    }
+    .cart-list{
+        right: 0;
+        top: 35px;
+    }
     ul{
         z-index: 1;
         background: white;
         position: absolute;
         color: #424242;
-        right: -125px;
-        top: 25px;
         li{
             padding: 15px;
             cursor: pointer;
             display: flex;
-            min-width: 125px;
             align-items: center;
             &:hover{
                 background: #f2f2f2;

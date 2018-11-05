@@ -25,7 +25,7 @@
           <i class="material-icons">email</i>
           <span>{{result.email}}</span>
         </p>
-        <app-togler (onSelectItem)="assignTaskToPerson($event, result, i)" [items]="roles" title="ASSIGN TO PROJECT" btnClass="label-btn">
+        <app-togler [listClass]="'cart-list shadow'" (onSelectItem)="assignTaskToPerson($event, result, i)" [items]="roles" title="ASSIGN TO PROJECT" btnClass="label-btn">
         </app-togler>
         <app-spinner [showBackdrop]="true" *ngIf="currentAssigningPerson === i" [spinnerClass]="'spinner spinner-small spinner-form'"></app-spinner>
       </li>

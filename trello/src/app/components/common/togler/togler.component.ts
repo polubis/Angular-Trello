@@ -10,6 +10,7 @@ export class ToglerComponent {
   @Input() items: any[];
   @Input() title: string;
   @Input() btnClass: string;
+  @Input() listClass: string = "nav-togler shadow";
   @Output() onSelectItem = new EventEmitter<any>();
   isOpen: boolean = false;
 
