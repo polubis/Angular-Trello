@@ -20,7 +20,7 @@ import { SortingPipe } from "src/app/directives/sorting-pipe";
 import { FilterPipe } from "src/app/directives/filter-pipe";
 import { UsersListComponent } from './users-list/users-list.component';
 import { SearcherComponent } from './searcher/searcher.component';
-
+import { DragDropDirectiveModule} from "angular4-drag-drop";
 @NgModule({
     declarations: [ FormComponent, LoggedNavigationComponent, 
     LogoComponent, ModalComponent, OperationsComponent, PaginationComponent, 
@@ -30,7 +30,7 @@ import { SearcherComponent } from './searcher/searcher.component';
     SelectorComponent,
     UsersListComponent,
     SearcherComponent],
-    imports: [CommonModule, AppRoutingModule],
+    imports: [CommonModule, AppRoutingModule, DragDropDirectiveModule],
     exports: [
         FormComponent, LoggedNavigationComponent, 
         LogoComponent, ModalComponent, OperationsComponent, PaginationComponent, 

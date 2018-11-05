@@ -1,8 +1,8 @@
-<div class="tasks-list-container">
+<div class="tasks-list-container" dropDirective (dropEvent)="dropTask($event, bucket)">
   <app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-small spinner-form'" *ngIf="isDeletingTask"></app-spinner>
 
-  <ul cdkDropList (cdkDropListDropped)="handleDrop($event)" *ngIf="items.length > 0; else empty_content">
-    <li ckdDrag *ngFor="let item of items | sort : 'name' : 'asc'; let i = index">
+  <ul *ngIf="items.length > 0; else empty_content">
+    <li *ngFor="let item of items | sort : 'name' : 'asc'; let i = index" (startDrag)="startDrag(item, i, bucket)" [dragDirective]="item">
       <div class="task-operations" *ngIf="!isProjectClosed">
         <app-selector
         [isPaleteOpen]="currentOpenedColorsIndex === item.id" [isSavingItem]="isSavingTaskColor" 

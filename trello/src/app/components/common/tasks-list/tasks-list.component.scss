@@ -29,6 +29,7 @@
         }
         & > li{
             margin: 25px 0;
+            cursor: pointer;
             .task-operations{
                 display: flex;
                 align-items: center;

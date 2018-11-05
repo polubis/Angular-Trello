@@ -111,6 +111,14 @@ export class TasksComponent implements OnInit, OnDestroy {
     }).catch(error => this.isEditingLabel = false);
   }
 
+  moveTaskIntoAnotherBoard(eventData: any){
+    const task: TaskModel = {...eventData.eventData};
+    const bucket: string = eventData.bucket;
+    console.log(task, bucket);
+    this.tasksService.getTasksForProject();
+
+  }
+
   ngOnDestroy() {
     this.tasksSubscription.unsubscribe();
   }

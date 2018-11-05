@@ -22,12 +22,20 @@ export class TasksService {
 
   }
 
+  moveTaskIntoOtherBoard(payload: any, taskId: number){
+    return this.requestService.executeRequest("moveTask", "put", payload, "", taskId.toString(), {});
+  }
+
   setProjectId(projectId: number){
     this.projectId = projectId;
   }
 
   createBuckets(tasks: any[]): any{
-    const buckets: any = {...this.buckets};
+    const buckets: any = {
+      Todo: [],
+      InProgress: [],
+      Done: [],
+    };
     const indexesKeys = Object.keys(this.bucketIndexes);
     for(let key in tasks){
       indexesKeys.forEach(element => {

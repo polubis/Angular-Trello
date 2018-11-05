@@ -10,6 +10,8 @@ import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { UsersService } from "src/app/services/users.service";
 import { FormService } from "src/app/services/form.service";
+import { EventEmitter } from "@angular/core";
+import { Output } from "@angular/core";
 @Component({
   selector: "app-tasks-list",
   templateUrl: "./tasks-list.component.html",
@@ -21,6 +23,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   @Input() projectId: number;
   @Input() bucket: string;
   @Input() isProjectClosed: boolean = false;
+  @Output() onDropTask = new EventEmitter<any>();
   isSavingTaskColor: boolean = false;
   currentOpenedColorsIndex: number = -1;
   isDeleteTaskPromptOpen: boolean = false;
@@ -37,10 +40,10 @@ export class TasksListComponent implements OnInit, OnDestroy {
 
   isLoadingUsers: boolean = false;
   bucketTypes: {} = {
-    "Todo": 0,
-    "InProgress": 1,
-    "Done": 2
-  }
+    Todo: 0,
+    InProgress: 1,
+    Done: 2
+  };
   taskToChange: number = -1;
   constructor(
     private tasksService: TasksService,
@@ -65,7 +68,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
 
   saveTaskColor = (color: string) => {
     this.isSavingTaskColor = true;
-    
+
     const index = this.items.findIndex(
       item => item.id === this.currentOpenedColorsIndex
     );
@@ -73,7 +76,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
     const name: string = this.items[index].name;
     const description: string = this.items[index].description;
     const bucket = this.bucketTypes[this.bucket];
-    
+
     this.tasksService
       .editColor({ name, description, color, bucket }, this.items[index].id)
       .then((response: any) => {
@@ -109,7 +112,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
 
   editTask = (formData: any) => {
     this.isEditingTask = true;
-    const objectToSpread = {bucket: this.bucketTypes[this.bucket]};
+    const objectToSpread = { bucket: this.bucketTypes[this.bucket] };
     this.tasksService
       .editTask(formData, this.items[this.taskToChange].id, objectToSpread)
       .then((response: TaskModel) => {
@@ -149,13 +152,31 @@ export class TasksListComponent implements OnInit, OnDestroy {
   togleAddTaskModal() {
     this.isAddTaskModalOpen = !this.isAddTaskModalOpen;
   }
+  startDrag(task: TaskModel, taskIndex: number, bucket: string) {}
+
+  dropTask(eventData: any) {
+    const isTheSameBoard = this.items.find(item => item.id === eventData.id);
+    if(!isTheSameBoard){
+      const model = {
+        description: eventData.description,
+        name: eventData.name,
+        bucket: this.bucketTypes[this.bucket].toString(),
+        color: eventData.color,
+        labelId: eventData.labelId
+      };
+      this.tasksService.moveTaskIntoOtherBoard(model, eventData.id)
+      .then(response => {
+        this.onDropTask.emit({eventData, bucket: this.bucket});
+      });
+    }
+  }
 
   addTask = (formData: any) => {
     this.isAddingTask = true;
     const idOfProject = this.projectId
       ? this.projectId
       : this.projectsService.currentWatchedProjectId;
-    const objectToSpread = {bucket: this.bucketTypes[this.bucket]};
+    const objectToSpread = { bucket: this.bucketTypes[this.bucket] };
     this.tasksService
       .addTask(formData, idOfProject, objectToSpread)
       .then((response: TaskModel) => {
@@ -176,8 +197,10 @@ export class TasksListComponent implements OnInit, OnDestroy {
       this.usersService
         .getUsers(idOfProject)
         .then((response: any) => {
-          this.findUserFormSettings[0].listElements = this.formService.createFormListFormat(response.members, 
-            ["id"]);
+          this.findUserFormSettings[0].listElements = this.formService.createFormListFormat(
+            response.members,
+            ["id"]
+          );
           this.isLoadingUsers = false;
         })
         .catch(error => {
@@ -190,21 +213,23 @@ export class TasksListComponent implements OnInit, OnDestroy {
 
   assignToTaskPerson = (formData: any) => {
     this.isAssigningToTask = true;
-    
-    const idOfProject = this.projectId
-    ? this.projectId
-    : this.projectsService.currentWatchedProjectId;
 
-      const model = { taskId: this.idOfTaskToAssign, userId: formData[0].value };
-      this.tasksService
+    const idOfProject = this.projectId
+      ? this.projectId
+      : this.projectsService.currentWatchedProjectId;
+
+    const model = { taskId: this.idOfTaskToAssign, userId: formData[0].value };
+    this.tasksService
       .assignPersonToTask(model, idOfProject)
       .then(response => {
-        const index = this.items.findIndex(item => item.id === this.idOfTaskToAssign);
+        const index = this.items.findIndex(
+          item => item.id === this.idOfTaskToAssign
+        );
         this.isAssigningToTask = false;
         this.idOfTaskToAssign = -1;
         this.items[index].userId = formData[0].value;
         this.operationsService.removeAllAfterDelay(3000);
       })
       .catch(error => (this.isAssigningToTask = false));
-  }
+  };
 }
