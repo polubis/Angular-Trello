@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from "@angular/router";
-import { addProjectFormSettings } from '../../constants/constants';
+import { addProjectFormSettings, editProjectFormSettings } from '../../constants/constants';
 import { ProjectModel } from '../../models/project.model';
 import FormModel from '../../models/form.model';
 import { OperationsService } from "src/app/services/operations.service";
@@ -24,7 +24,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   isAddProjectModalOpen: boolean = false;
   isFetchingProjects: boolean = true;
   addProjectFormSettings: FormModel[] = [...addProjectFormSettings];
-  editProjectFormSettings: FormModel[] = [...addProjectFormSettings];
+  editProjectFormSettings: FormModel[] = [...editProjectFormSettings];
 
   isAddingProject: boolean = false;
   isDeletingProject: boolean = false;
@@ -100,7 +100,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   addContributor(contributorData: any){
     const index = this.projects.findIndex(project => project.id === this.actualWatchedProject);
     this.projects[index].collaborators.push(contributorData);
-    console.log(this.projects[index].collaborators);
   }
 
   changeProject(id: number) {
@@ -142,6 +141,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       copiedEditFormItems[2].initialValue = null;
     }
     this.editProjectFormSettings = copiedEditFormItems;
+    console.log(this.editProjectFormSettings, this.addProjectFormSettings);
     this.isEditProjectModalOpen = !this.isEditProjectModalOpen;
   }
 

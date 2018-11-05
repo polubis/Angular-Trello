@@ -72,6 +72,24 @@ export const addProjectFormSettings: FormModel[] = [
     }
 ];
 
+export const editProjectFormSettings: FormModel[] = [
+    { label: "Name", placeholder: "type your project name...", type: "input", mode: "input", initialValue: null,
+        validationSettings: {
+            minLength: 2, maxLength: 40, required: true 
+        },listElements: []
+    },
+    { label: "Description", placeholder: "type your project description...", type: "input", mode: "input",initialValue: null,
+        validationSettings: {
+            maxLength: 125
+        } ,listElements: []
+    },
+    { label: "Color", placeholder: "type your background color in hex format (#fff323)...", type: "input", mode: "color-input",initialValue: null,
+        validationSettings: {
+            isCorrectFormat: patterns.hex
+        } ,listElements: []
+    }
+];
+
 export const addTaskFormSettings: FormModel[] = [
     { label: "Name", placeholder: "type your task name...", type: "input", mode: "input", initialValue: null,
     validationSettings: {

@@ -32,7 +32,7 @@
       <app-pagination [items]="projects" [limit]="limit"></app-pagination>
       
       <ul>
-        <li *ngFor="let project of projects; let i = index" [ngClass]="{'closed-project': project.closingDate}"
+        <li *ngFor="let project of projects | sort: 'id': 'asc'; let i = index" [ngClass]="{'closed-project': project.closingDate}"
         [ngStyle]="{'display': (i >= leftRange && i < rightRange && leftRange !== -1) 
           ? 'initial' : 'none'}">
           <div class="project-img">
