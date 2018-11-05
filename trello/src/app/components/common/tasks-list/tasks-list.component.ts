@@ -201,7 +201,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
       .then(response => {
         const index = this.items.findIndex(item => item.id === this.idOfTaskToAssign);
         this.isAssigningToTask = false;
-        this.isAddTaskModalOpen = false;
+        this.idOfTaskToAssign = -1;
         this.items[index].userId = formData[0].value;
         this.operationsService.removeAllAfterDelay(3000);
       })
