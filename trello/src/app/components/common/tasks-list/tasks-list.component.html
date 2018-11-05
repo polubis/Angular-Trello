@@ -3,7 +3,7 @@
 
   <ul *ngIf="items.length > 0; else empty_content">
     <li *ngFor="let item of items | sort : 'name' : 'asc'; let i = index">
-      <div class="task-operations">
+      <div class="task-operations" *ngIf="!isProjectClosed">
         <app-selector
         [isPaleteOpen]="currentOpenedColorsIndex === item.id" [isSavingItem]="isSavingTaskColor" 
         (onSavedItem)="saveTaskColor($event)"
@@ -52,7 +52,7 @@
       </p>
     </div>
   </ng-template>
-  <div class="row">
+  <div class="row" *ngIf="!isProjectClosed">
     <button (click)="togleAddTaskModal()" class="label-btn operation-color">ADD NEW TASK</button>
   </div>
 </div>

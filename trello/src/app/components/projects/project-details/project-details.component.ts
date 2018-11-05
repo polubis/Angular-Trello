@@ -57,6 +57,7 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
             copiedProject.tasks = response.tasks.filter(task => task.bucket === "0");
             this.project = copiedProject;
             this.isLoadingProjectDetails = false;
+            console.log(this.project);
           })
           .catch(error => (this.isLoadingProjectDetails = false));
       }

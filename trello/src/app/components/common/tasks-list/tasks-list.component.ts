@@ -20,6 +20,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   @Input() limit: number;
   @Input() projectId: number;
   @Input() bucket: string;
+  @Input() isProjectClosed: boolean = false;
   isSavingTaskColor: boolean = false;
   currentOpenedColorsIndex: number = -1;
   isDeleteTaskPromptOpen: boolean = false;
