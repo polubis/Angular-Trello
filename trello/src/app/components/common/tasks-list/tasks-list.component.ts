@@ -157,7 +157,6 @@ export class TasksListComponent implements OnInit, OnDestroy {
   dropTask(eventData: any) {
     const isTheSameBoard = this.items.find(item => item.id === eventData.id);
     if(!isTheSameBoard){
-      console.log(this.bucketTypes[this.bucket])
       this.tasksService.moveTaskIntoOtherBoard(eventData.id, this.bucketTypes[this.bucket].toString())
       .then(response => {
         this.onDropTask.emit({eventData, bucket: this.bucket});
