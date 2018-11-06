@@ -22,8 +22,10 @@ export class TasksService {
 
   }
 
-  moveTaskIntoOtherBoard(payload: any, taskId: number){
-    return this.requestService.executeRequest("moveTask", "put", payload, "", taskId.toString(), {});
+  moveTaskIntoOtherBoard(taskId: number, bucket: string){
+    ///Task/MoveTask?Id=2&Bucket=2
+    const query: string = "?Id=" + taskId.toString() + "&Bucket=" + bucket;
+    return this.requestService.executeRequest("moveTask", "put", {}, "", query, {});
   }
 
   setProjectId(projectId: number){
@@ -39,7 +41,8 @@ export class TasksService {
     const indexesKeys = Object.keys(this.bucketIndexes);
     for(let key in tasks){
       indexesKeys.forEach(element => {
-        if(tasks[key].bucket === this.bucketIndexes[element]){
+        console.log(element);
+        if(tasks[key].bucket.toLowerCase() === element.toLowerCase()){
           buckets[element].push(tasks[key]);
         }
       });

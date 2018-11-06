@@ -48,13 +48,14 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
         this.projectsService
           .getProjectDetails(param.id)
           .then((response: any) => {
+            console.log(response);
             const indexOfProject: number = this.projectsService.projects.findIndex(
               project => project.id === Number(param.id)
             );
             const copiedProject: ProjectModel = {
               ...this.projectsService.projects[indexOfProject]
             };
-            copiedProject.tasks = response.tasks.filter(task => task.bucket === "0");
+            copiedProject.tasks = response.tasks.filter(task => task.bucket === "todo");
             this.project = copiedProject;
             this.isLoadingProjectDetails = false;
           })
