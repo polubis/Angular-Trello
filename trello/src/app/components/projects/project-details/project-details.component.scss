@@ -13,7 +13,7 @@
         min-height: 60vh;
         display: flex;
         justify-content: space-between;
-     
+
         & > div{
             display: flex;
             width: 30%;
@@ -23,16 +23,18 @@
             img{
                 height: auto;
                 width: 100%;
+                margin-bottom: 30px;
             }
             p{
-                padding: 15px 15px 0 15px;
+                padding: 0 15px 0 15px;
+                margin-top: 0;
                 span{
                     color: #707070;
                     font-weight: bolder;
                 }
             }
         }
-        div:nth-of-type(2), 
+        div:nth-of-type(2),
         div:nth-of-type(3){
             p{
                 line-height: 25px;

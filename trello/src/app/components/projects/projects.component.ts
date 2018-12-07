@@ -7,6 +7,7 @@ import { OperationsService } from "src/app/services/operations.service";
 import { PaginationService } from "src/app/services/pagination.service";
 import { ProjectsService } from "src/app/services/projects.service";
 import { Subscription } from "rxjs";
+import { projectPicturesBasePath } from '../../constants/constants';
 @Component({
   selector: "app-main",
   templateUrl: "./projects.component.html",
@@ -20,6 +21,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     private paginationService: PaginationService,
     private projectsService: ProjectsService
   ) {}
+  projectPicturesBasePath = projectPicturesBasePath;
   projects: ProjectModel[] = [];
   isAddProjectModalOpen: boolean = false;
   isFetchingProjects: boolean = true;
@@ -38,8 +40,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   actualWatchedProject: number = -1;
   projectIndexInArray: number = -1;
 
-  isFullViewActivate: boolean = false;
-
   isOpenCloseProjectConfirmModal: boolean = false;
   isUserSearchedOpen: boolean = false;
 
@@ -52,8 +52,8 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     this.onChangeProjectsSub = this.projectsService.onChangeProjects.subscribe(
       (projects: ProjectModel[]) => {
         this.projects = projects;
+        console.log(this.projects);
         this.isFetchingProjects = false;
-
         if (this.isDeletingProject) this.isDeletingProject = false;
         if (this.isEditingProject) {
           this.isEditingProject = false;

@@ -2,45 +2,49 @@
 [personsAlreadyInProject]="projects[projectIndexInArray].collaborators" (onCloseSearcher)="togleUserSearcher($event)">
 </app-searcher>
 
-<div class="main-container">  
+<div class="main-container">
   <app-error-handler [isLoading]="isFetchingProjects" [operationName]="'projects'">
   <div class="project-list-container" *ngIf="projects.length > 0" [ngClass]="{'animate-slider': isSlideChanged}">
-      <p>
-        <span>YOUR PROJECTS</span> 
-        <button debounceClick (click)="togleAddProjectModal()" 
+      <p *ngIf="projectIndexInArray !== -1">
+        <span>YOUR PROJECTS</span>
+        <button debounceClick (click)="togleAddProjectModal()"
         class="label-btn">
           <i class="material-icons animated-icon">add</i> ADD PROJECT
         </button>
 
-        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate" 
+        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate"
         (click)="togleCloseProjectConfirmModal()" class="label-btn">
           <i class="material-icons animated-icon">close</i> CLOSE PROJECT
         </button>
-        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate" 
+        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate"
         (click)="togleEditProjectModal()" class="label-btn">
           <i class="material-icons animated-icon">edit</i> EDIT PROJECT
         </button>
 
-        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate" (click)="togleUserSearcher()" 
+        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate" (click)="togleUserSearcher()"
         class="label-btn">
           <i class="material-icons animated-icon">search</i> ADD USER TO PROJECT
         </button>
-        
+
       </p>
       <app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-small spinner-form'" *ngIf="isDeletingProject"></app-spinner>
-  
+
       <app-pagination [items]="projects" [limit]="limit"></app-pagination>
-      
+
       <ul>
         <li *ngFor="let project of projects | sort: 'id': 'asc'; let i = index" [ngClass]="{'closed-project': project.closingDate}"
-        [ngStyle]="{'display': (i >= leftRange && i < rightRange && leftRange !== -1) 
+        [ngStyle]="{'display': (i >= leftRange && i < rightRange && leftRange !== -1)
           ? 'initial' : 'none'}">
-          <div class="project-img">
-              <img src="assets/guitar.jpg" />
+          <div *ngIf="project.picturePath" class="picture-container">
+            <img [src]="projectPicturesBasePath + project.picturePath" />
+          </div>
+
+          <div class="empty-picture" *ngIf="!project.picturePath">
+            <app-file-picker [btnClass]="'add-project-picture-btn'" [shouldShowAddedImage]="false"></app-file-picker>
           </div>
           <div class="title-container">
               <span class="project-title">{{project.name}}</span>
-              <span class="creation-date">created in: {{project.creationDate | date: 'medium'}}</span>
+              <span *ngIf="project.creationDate " class="creation-date">created in: {{project.creationDate | date: 'medium'}}</span>
               <span *ngIf="project.closingDate" class="closing-date">closed in: {{project.closingDate | date: 'medium'}}</span>
           </div>
           <article>
@@ -49,8 +53,8 @@
           <div class="go-to-btn-container">
               <button debounceClick (click)="changeProject(project.id, i)" class="label-btn">Go to</button>
           </div>
-  
-          <div [ngClass]="{'actual-watched-project': project.id === actualWatchedProject && !isFullViewActivate}"></div>
+
+          <div [ngClass]="{'actual-watched-project': project.id === actualWatchedProject}"></div>
         </li>
       </ul>
       <footer>
@@ -62,18 +66,18 @@
       <p>Your project list is empty. Please add new project first</p>
       <button (click)="togleAddProjectModal()" class="circle-btn">Add new project</button>
     </div>
-  
-  
+
+
     <router-outlet *ngIf="!isFetchingProjects"></router-outlet>
   </app-error-handler>
 
-  
+
 </div>
 
 <app-modal *ngIf="isAddProjectModalOpen" [modalTitle]="'Add new project'"
 (onClosingModal)="togleAddProjectModal()" [width]="'500px'">
     <div class="add-project-form-container">
-        <app-form [isDoingRequest]="isAddingProject" [submitMethod]="addProject" 
+        <app-form [isDoingRequest]="isAddingProject" [submitMethod]="addProject"
         [formClass]="'stnd-form'" [formSettings]="addProjectFormSettings">
 
         </app-form>
@@ -90,7 +94,7 @@
   </div>
 </app-modal>
 
-<app-confirm-prompt *ngIf="isOpenCloseProjectConfirmModal" [btnTitle]="'Close project'" [icon]="'delete'" 
+<app-confirm-prompt *ngIf="isOpenCloseProjectConfirmModal" [btnTitle]="'Close project'" [icon]="'delete'"
 (onConfirm)="closeProject()"
 (onClosingPrompt)="togleCloseProjectConfirmModal()"
 [header]="'Are you sure you want close this project?'"

@@ -44,7 +44,7 @@ export class SelectorComponent implements OnInit, OnChanges {
   closePicker(){
     if(!this.isSavingItem){
       this.onCloseItems.emit();
-    }      
+    }
   }
   saveItem(){
     this.onSavedItem.emit(this.lastSelectedItem);

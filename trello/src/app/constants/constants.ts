@@ -1,12 +1,16 @@
 import FormModel from '../models/form.model';
 
 const patterns = {
-    name: /^[A-Z][a-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]+$/i, 
+    name: /^[A-Z][a-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]+$/i,
     email: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     username: /^[a-zA-Z0-9]+$/,
     number: /^[0-9]/,
     hex: /^#([0-9a-f]{6}|[0-9a-f]{3})$/i
 };
+
+export const projectPicturesBasePath = "http://localhost:60965/ProjectPictures/";
+export const userPicturesBasePath = "http://localhost:60965/ProfilePictures/";
+
 
 export const registerFormSettings: FormModel[] = [
     { label: "Email", placeholder: "type your email adress...", type: "email", mode: "input", initialValue: null,
@@ -41,10 +45,10 @@ export const registerFormSettings: FormModel[] = [
     },
 ];
 
-export const loginFormSettings: FormModel[] = [ 
+export const loginFormSettings: FormModel[] = [
     { label: "Username", placeholder: "type your username...", type: "text", mode: "input", initialValue: null,
         validationSettings: {
-            minLength: 5, maxLength: 25, required: true 
+            minLength: 5, maxLength: 25, required: true
         },listElements: []
     },
     { label: "Password", placeholder: "type your password...", type: "password", mode: "input",initialValue: null,
@@ -57,7 +61,7 @@ export const loginFormSettings: FormModel[] = [
 export const addProjectFormSettings: FormModel[] = [
     { label: "Name", placeholder: "type your project name...", type: "input", mode: "input", initialValue: null,
         validationSettings: {
-            minLength: 2, maxLength: 40, required: true 
+            minLength: 2, maxLength: 40, required: true
         },listElements: []
     },
     { label: "Description", placeholder: "type your project description...", type: "input", mode: "input",initialValue: null,
@@ -69,13 +73,18 @@ export const addProjectFormSettings: FormModel[] = [
         validationSettings: {
             isCorrectFormat: patterns.hex
         } ,listElements: []
+    },
+    { label: "File", placeholder: "select your project image...", type: "file", mode: "single-file", initialValue: null,
+      validationSettings: {
+
+      } , listElements: []
     }
 ];
 
 export const editProjectFormSettings: FormModel[] = [
     { label: "Name", placeholder: "type your project name...", type: "input", mode: "input", initialValue: null,
         validationSettings: {
-            minLength: 2, maxLength: 40, required: true 
+            minLength: 2, maxLength: 40, required: true
         },listElements: []
     },
     { label: "Description", placeholder: "type your project description...", type: "input", mode: "input",initialValue: null,
@@ -93,7 +102,7 @@ export const editProjectFormSettings: FormModel[] = [
 export const addTaskFormSettings: FormModel[] = [
     { label: "Name", placeholder: "type your task name...", type: "input", mode: "input", initialValue: null,
     validationSettings: {
-        minLength: 2, maxLength: 40, required: true 
+        minLength: 2, maxLength: 40, required: true
     }
     ,listElements: []
     },
@@ -101,18 +110,13 @@ export const addTaskFormSettings: FormModel[] = [
         validationSettings: {
             maxLength: 125
         } ,listElements: []
-    },
-    { label: "Color", placeholder: "type your task color in hex format (#fff323)...", type: "input", mode: "color-input", initialValue: null,
-        validationSettings: {
-            isCorrectFormat: patterns.hex
-        } , listElements: []
     }
 ];
 
 export const labelFormSettings: FormModel[] = [
     { label: "Name", placeholder: "type your label name...", type: "input", mode: "input", initialValue: null,
         validationSettings: {
-            minLength: 2, maxLength: 20, required: true 
+            minLength: 2, maxLength: 20, required: true
         }, listElements: []
     },
     { label: "Color", placeholder: "type your label color in hex format (#fff323)...", type: "input", mode: "color-input", initialValue: null,
@@ -128,11 +132,38 @@ export const labelFormSettings: FormModel[] = [
 ];
 
 export const findUserFormSettings: FormModel[] = [
-    { label: "User", placeholder: "type for start searching users by firstname, lastname or nickname...", type: "input", 
-        mode: "type-ahead-with-existing-data", initialValue: null, 
+    { label: "User", placeholder: "type for start searching users by firstname, lastname or nickname...", type: "input",
+        mode: "type-ahead-with-existing-data", initialValue: null,
         validationSettings: {
             required: true, maxLength: 30
         } ,
         listElements: []
     }
+];
+
+export const addCommentFormSettings: FormModel[] = [
+  { label: "Comment content", placeholder: "write comment content...", type: "input",
+      mode: "textarea", initialValue: null,
+      validationSettings: {
+          required: true, maxLength: 400, minLength: 1
+      } ,
+      listElements: []
+  }
+];
+
+export const editUserDataFormSettings: FormModel[] = [
+  { label: "First Name", placeholder: "type your project name...", type: "input", mode: "input", initialValue: null,
+  validationSettings: {
+      minLength: 5, maxLength: 25, required: true, isCorrectFormat: patterns.name
+  },listElements: []
+  },
+  { label: "Last Name", placeholder: "type your project description...", type: "input", mode: "input",initialValue: null,
+    validationSettings: {
+        minLength: 5, maxLength: 25, required: true, isCorrectFormat: patterns.name
+    } ,listElements: []
+  },
+  { label: "Account Avatar", placeholder: "", type: "file", mode: "single-file",initialValue: null,
+    validationSettings: {
+    } ,listElements: []
+  }
 ];

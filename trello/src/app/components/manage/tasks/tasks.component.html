@@ -33,19 +33,20 @@
     </p>
   </div>
   <div class="tasks-lists-container">
-      
+
       <div class="list-container" *ngFor="let name of bucketsListsKeys; let i = index">
           <p>
-              <span><b>{{bucketsNames[i] | uppercase}}</b> <i>status</i></span> 
+              <span><b>{{bucketsNames[i] | uppercase}}</b> <i>status</i></span>
           </p>
-          <app-tasks-list (onDropTask)="moveTaskIntoAnotherBoard($event) " [projectId]="projectId" [items]="buckets[name]" [limit]="'10'" [bucket]="name">
+          <app-tasks-list [projectLabels]="projectLabels"
+          (onDropTask)="moveTaskIntoAnotherBoard($event) " [projectId]="projectId" [items]="buckets[name]" [limit]="'10'" [bucket]="name">
           </app-tasks-list>
       </div>
-    
+
   </div>
 
 </div>
-  
+
 
 
 <app-modal *ngIf="isAddLabelModalOpen" [modalTitle]="'Add label into this project'"
@@ -68,7 +69,7 @@
   </div>
 </app-modal>
 
-<app-confirm-prompt *ngIf="labelIdToDelete !== -1" [btnTitle]="'Delete label'" [icon]="'delete'" 
+<app-confirm-prompt *ngIf="labelIdToDelete !== -1" [btnTitle]="'Delete label'" [icon]="'delete'"
 (onConfirm)="deleteLabel()"
 (onClosingPrompt)="togleDeleteLabelModal()"
 [header]="'Are you sure you want delete this label?'"

@@ -6,26 +6,26 @@ import FormModel from "src/app/models/form.model";
 import { TasksService } from "src/app/services/tasks.service";
 import { ProjectsService } from "src/app/services/projects.service";
 import { OperationsService } from "src/app/services/operations.service";
-import { ActivatedRoute } from "@angular/router";
-import { Subscription } from "rxjs";
 import { UsersService } from "src/app/services/users.service";
 import { FormService } from "src/app/services/form.service";
 import { EventEmitter } from "@angular/core";
 import { Output } from "@angular/core";
+import { Label } from "src/app/models/label.model";
 @Component({
   selector: "app-tasks-list",
   templateUrl: "./tasks-list.component.html",
   styleUrls: ["./tasks-list.component.scss"]
 })
 export class TasksListComponent implements OnInit, OnDestroy {
+  @Input() shouldShowLabelSelector = true;
   @Input() items: TaskModel[];
   @Input() limit: number;
   @Input() projectId: number;
   @Input() bucket: string;
   @Input() isProjectClosed: boolean = false;
+  @Input() projectLabels: Label[];
   @Output() onDropTask = new EventEmitter<any>();
-  isSavingTaskColor: boolean = false;
-  currentOpenedColorsIndex: number = -1;
+  @Output() itemsChanged = new EventEmitter<TaskModel[]>();
   isDeleteTaskPromptOpen: boolean = false;
   isEditTaskModalOpen: boolean = false;
   isEditingTask: boolean = false;
@@ -37,7 +37,6 @@ export class TasksListComponent implements OnInit, OnDestroy {
   findUserFormSettings: FormModel[] = [...findUserFormSettings];
   idOfTaskToAssign: number = -1;
   isAssigningToTask: boolean = false;
-
   isLoadingUsers: boolean = false;
   bucketTypes: {} = {
     Todo: 0,
@@ -49,52 +48,13 @@ export class TasksListComponent implements OnInit, OnDestroy {
     private tasksService: TasksService,
     private projectsService: ProjectsService,
     private operationsService: OperationsService,
-    private activatedRoute: ActivatedRoute,
     private usersService: UsersService,
     private formService: FormService
   ) {}
-
-  private subscription: Subscription;
-
   ngOnInit() {
-    this.subscription = this.activatedRoute.params.subscribe(param => {
-      if (this.currentOpenedColorsIndex !== -1)
-        this.currentOpenedColorsIndex = -1;
-    });
+    console.log(this.projectId);
   }
   ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
-  saveTaskColor = (color: string) => {
-    this.isSavingTaskColor = true;
-
-    const index = this.items.findIndex(
-      item => item.id === this.currentOpenedColorsIndex
-    );
-
-    const name: string = this.items[index].name;
-    const description: string = this.items[index].description;
-    const bucket = this.bucketTypes[this.bucket];
-
-    this.tasksService
-      .editColor({ name, description, color, bucket }, this.items[index].id)
-      .then((response: any) => {
-        this.isSavingTaskColor = false;
-        this.currentOpenedColorsIndex = -1;
-        this.operationsService.removeAllAfterDelay(3000);
-      })
-      .catch(error => (this.isSavingTaskColor = false));
-  };
-
-  togleColorPalette(id: number) {
-    this.currentOpenedColorsIndex =
-      this.currentOpenedColorsIndex !== id ? id : -1;
-  }
-
-  changeTaskColor(color: string, id: number) {
-    const index = this.items.findIndex(item => item.id === id);
-    this.items[index].color = color;
   }
 
   deleteTask() {
@@ -119,7 +79,6 @@ export class TasksListComponent implements OnInit, OnDestroy {
         const copiedItem = { ...this.items[this.taskToChange] };
         copiedItem.name = formData[0].value;
         copiedItem.description = formData[1].value;
-        copiedItem.color = formData[2].value;
         this.items[this.taskToChange] = copiedItem;
         this.isEditingTask = false;
         this.operationsService.removeAllAfterDelay(3000);
@@ -132,13 +91,11 @@ export class TasksListComponent implements OnInit, OnDestroy {
     if (!this.isEditTaskModalOpen) {
       copiedEditFormSettings[0].initialValue = this.items[index].name;
       copiedEditFormSettings[1].initialValue = this.items[index].description;
-      copiedEditFormSettings[2].initialValue = this.items[index].color;
       this.editTaskFormSettings = copiedEditFormSettings;
       this.taskToChange = index;
     } else {
       copiedEditFormSettings[0].initialValue = null;
       copiedEditFormSettings[1].initialValue = null;
-      copiedEditFormSettings[2].initialValue = null;
     }
 
     this.isEditTaskModalOpen = !this.isEditTaskModalOpen;
@@ -225,4 +182,11 @@ export class TasksListComponent implements OnInit, OnDestroy {
       })
       .catch(error => (this.isAssigningToTask = false));
   };
+
+  refreshLabelState(label: Label, index: number) {
+    const buckets = {...this.tasksService.buckets};
+    buckets[this.bucket][index].label = label;
+    this.tasksService.getTasksForProject();
+  }
+
 }

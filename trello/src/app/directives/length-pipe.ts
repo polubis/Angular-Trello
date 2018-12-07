@@ -7,10 +7,17 @@ import { Pipe, PipeTransform } from "@angular/core";
     name: 'shorten'
 })
 export class LengthPipe implements PipeTransform {
-  transform(value: string, limit: number) {
-    if (value.length > limit) {
-      return value.substring(0, limit) + "...";
+  transform(value: any, limit: number) {
+    if(value) {
+      if (value.length > limit) {
+        return value.substring(0, limit) + "...";
+      }
+      else{
+        return value;
+      }
+    } else {
+      return 'this record is not populated...';
     }
-    return value;
+
   }
 }

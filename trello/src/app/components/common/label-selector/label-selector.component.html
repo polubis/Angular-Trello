@@ -1,0 +1,15 @@
+<div class="selector-container" *ngIf="labels.length > 0">
+  <i (click)="toglePalete()" [ngStyle]="{'color': currentSelectedLabel ? currentSelectedLabel.color : 'white'}"
+  class="material-icons animated-icon">{{currentSelectedLabel ? currentSelectedLabel.icon : 'label'}}</i>
+
+  <div *ngIf="isPaleteOpen" class="labels-container">
+    <ul class="selector">
+      <li (click)="chooseLabel(label)" [style.color]="label.color"
+      *ngFor="let label of labels; let i = index">
+        <span>{{label.name | uppercase}}</span> <i class="material-icons">{{label.icon}}</i>
+      </li>
+    </ul>
+    <button *ngIf="currentSelectedLabel && shouldHaveSaveButton" (click)="saveLabel()" class="label-btn">{{operationTitle}}</button>
+    <app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-small spinner-form'" *ngIf="isSavingItem"></app-spinner>
+  </div>
+</div>

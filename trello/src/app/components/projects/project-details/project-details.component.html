@@ -1,13 +1,13 @@
 
-    
+
 <div class="project-details-container">
   <app-spinner [spinnerClass]="'spinner spinner-big spinner-fixed-bottom'" *ngIf="isLoadingProjectDetails; else details_template"></app-spinner>
-  
+
   <ng-template #details_template>
-    <h3 *ngIf="project.closingDate">This project has been closed at {{project.closingDate | date: 'medium'}}</h3>  
+    <h3 *ngIf="project.closingDate">This project has been closed at {{project.closingDate | date: 'medium'}}</h3>
     <div class="project-detail-content">
-      <div> 
-        <img [ngStyle]="{'opacity': project.closingDate ? '.4' : '1'}" src="assets/guitar.jpg" />
+      <div>
+        <img *ngIf="project.picturePath" [ngStyle]="{'opacity': project.closingDate ? '.4' : '1'}" [src]="projectPicturesBasePath + project.picturePath" />
         <p><span>COLLABORATORS</span></p>
 
         <app-users-list [users]="project.collaborators">
@@ -16,7 +16,7 @@
 
       <div>
         <p>
-          <span>{{project.name}}</span> 
+          <span>{{project.name}}</span>
           <span>{{project.creationDate | date: 'medium'}}</span>
         </p>
         <article>
@@ -26,20 +26,21 @@
 
       <div>
         <p><span>LAST ADDED TASKS WITH TO DO STATUS</span></p>
-        <app-tasks-list [items]="project.tasks" [limit]="'10'" [bucket]="'Todo'" [isProjectClosed]="project.closingDate">
+        <app-tasks-list [projectId]="projectId" [shouldShowLabelSelector]="false"
+        [items]="project.tasks" [limit]="'10'" [bucket]="'Todo'" [isProjectClosed]="project.closingDate">
 
         </app-tasks-list>
       </div>
-      
+
     </div>
 
     <div class="btn-container">
         <button class="circle-btn">
-          <a [routerLink]="['/manage', project.id]">Go to manage</a>
+          <a [routerLink]="['/manage', project.id, 'tasks']">Go to manage</a>
         </button>
     </div>
 
   </ng-template>
 
 </div>
-    
+

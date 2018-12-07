@@ -45,14 +45,24 @@
                 .project-title, .closing-date, article{
                     color: #A2A2A2;
                 }
-                
+
             }
             li{
                 position: relative;
                 width: 300px;
-                margin: 10px 15px;  
+                margin: 10px 15px;
                 display: flex;
                 flex-flow: column;
+                .picture-container{
+                  height: 200px;
+                }
+                .empty-picture{
+                  height: 200px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: white;
+                }
                 img{
                     width: 100%;
                     height: auto;
@@ -95,7 +105,7 @@
                     left: 0;
                     right: 0;
                     margin: 0 auto;
-                    
+
                 }
             }
         }

@@ -1,0 +1,40 @@
+.file-select{
+  display: flex;
+  align-items: center;
+  .file-overview{
+    margin: 0 10px;
+  }
+  img{
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+    object-fit: cover;
+  }
+  button{
+    background: transparent;
+    border: none;
+    display: flex;
+    padding: 0;
+    align-items: center;
+  }
+}
+.add-file-btn{
+  i:last-of-type{
+    font-size: 14px;
+    margin-top: 15px;
+    margin-left: auto;
+  }
+  .i-on-blue{
+    color: rgb(5, 136, 220);
+  }
+}
+.add-project-picture-btn{
+  color: white;
+  i:first-of-type{
+    font-size: 48px;
+  }
+  i:last-of-type{
+    font-size: 20px;
+    margin-top: 30px;
+  }
+}

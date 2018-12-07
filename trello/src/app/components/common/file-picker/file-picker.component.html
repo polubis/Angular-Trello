@@ -1,0 +1,15 @@
+
+<div [class]="'file-select ' + classes">
+  <ng-container *ngIf="shouldShowAddedImage">
+    <img #imgRef src="" [style.opacity]="selectedFile ? '1' : '0'"/>
+    <div class="file-overview" *ngIf="selectedFile">
+      {{selectedFile.name ? selectedFile.name : 'select your file name...'}}
+    </div>
+  </ng-container>
+
+  <input type="file" [style.display]="'none'" (change)="addFile($event)" #inputRef/>
+  <button [class]="btnClass" (click)="openAddingFile()" type="button">
+    <i class="material-icons">image</i>
+    <i class="material-icons i-on-blue">add</i>
+  </button>
+</div>

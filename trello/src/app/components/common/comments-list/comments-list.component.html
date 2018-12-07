@@ -1,0 +1,45 @@
+
+<p class="interactive-operations">
+    <i (click)="togleAddingComments()" class="material-icons animated-icon">add_circle_outline</i>
+    <i *ngIf="!isLoading" (click)="togleComments()" class="material-icons animated-icon">comment</i>
+    <app-spinner [spinnerClass]="'spinner spinner-small interactive-options-spinner'" *ngIf="isLoading"></app-spinner>
+</p>
+<div class="comments" *ngIf="isCommentsShowed">
+  <ul *ngIf="comments.length > 0">
+    <li *ngFor="let comment of comments; let i = index">
+      <div class="user-label">
+        <i class="material-icons">person</i>
+        <span>{{comment.userId}}</span>
+        <i class="material-icons animated-icon delete-color" (click)="setCommentToDelete(i)">delete</i>
+      </div>
+      <div class="comment-content">{{comment.content}}</div>
+    </li>
+  </ul>
+
+  <div class="empty-tasks" *ngIf="!isLoading && comments.length === 0">
+    <i class="material-icons">do_not_disturb_alt</i>
+    <p>
+      Right now you doesn't have any comments for this task
+    </p>
+  </div>
+
+</div>
+
+<app-modal *ngIf="isAddingCommentModalOpen" [modalTitle]="'Add comment into project'"
+(onClosingModal)="togleAddingComments()" [width]="'500px'">
+  <div class="form-wrapper">
+      <app-form [isDoingRequest]="isAddingComment" [submitMethod]="addComment"
+        [formClass]="'stnd-form'" [formSettings]="addCommentFormSettings">
+
+      </app-form>
+  </div>
+</app-modal>
+
+<app-confirm-prompt *ngIf="commentToDelete !== -1" [btnTitle]="'Delete comment'" [icon]="'delete'"
+(onConfirm)="deleteComment()"
+(onClosingPrompt)="setCommentToDelete(-1)"
+[header]="'Are you sure you want delete this comment?'"
+[subHeader]="'This operation is permanent and cannot be denied'">
+  <app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-small spinner-form'" *ngIf="isDeletingComment"></app-spinner>
+
+</app-confirm-prompt>

@@ -11,29 +11,40 @@ export class RequestService {
     constructor(private http: Http, private operationsService: OperationsService, private authService: AuthService,
         private router: Router){ }
     serverPath: string =  "http://localhost:60965/";
-    
+
     requests = {
         login: { url: "Account/Login", needsAuth: false, requestKeys: ["login", "password"] } ,
         register: { url: "Account/Register", needsAuth: false, requestKeys: ["email", "password", "confirmPassword", "userName", "firstName", "lastName"] },
         projects: { url: "Project", needsAuth: true },
-        addProject: { url: "Project/Add", needsAuth: true, requestKeys: ["Name", "Description", "Color"], formData: true },
+        addProject: { url: "Project/Add", needsAuth: true, requestKeys: ["Name", "Description", "Color", "File"], formData: true },
         projectDetails: { url: "Project/Details/", needsAuth: true },
         closeProject: { url: "Project/Close/", needsAuth: true },
         editProject: { url: "Project/Edit/", needsAuth: true, requestKeys: ["Name", "Description", "Color"] },
-        addLabelIntoProject: { url: "Label/Add/", needsAuth: true, requestKeys: ["Name", "Color", "Icon"] },
-        editLabelInProject: { url: "Label/Edit/", needsAuth: true, requestKeys: ["Name", "Color", "Icon"] },
-        deleteLabel: {url: "Label/Delete/", needsAuth: true, },
+
         addPersonToProject: { url: "Project/AddPersonToProject", needsAuth: true },
         getUsersFromProject: { url: "Project/GetAllMembers/", needsAuth: true },
         getUsersByQuery: { url: "/Project/UserSearcher?query=", needsAuth: true },
-        
 
-        moveTask: {url: "Task/MoveTask/", needsAuth: true }, 
-        addTaskToProject: { url: "Task/Add/", needsAuth: true, requestKeys: ["Name", "Description", "Color"] },
+        //labels
+        addLabelIntoProject: { url: "Label/Add/", needsAuth: true, requestKeys: ["Name", "Color", "Icon"] },
+        editLabelInProject: { url: "Label/Edit/", needsAuth: true, requestKeys: ["Name", "Color", "Icon"] },
+        deleteLabel: {url: "Label/Delete/", needsAuth: true, },
+        //tasks
+        moveTask: {url: "Task/MoveTask/", needsAuth: true },
+        addTaskToProject: { url: "Task/Add/", needsAuth: true, requestKeys: ["Name", "Description"] },
         deleteTaskFromProject: { url: "Task/Delete/", needsAuth: true },
-        editTaskInProject: { url: "Task/Edit/", needsAuth: true, requestKeys: ["Name", "Description", "Color"] },
+        editTaskInProject: { url: "Task/Edit/", needsAuth: true, requestKeys: ["Name", "Description"] },
         editTaskColorInProject: { url: "Task/Edit/", needsAuth: true },
-        assignTaskToPerson: { url: "Task/", needsAuth: true }
+        assignTaskToPerson: { url: "Task/", needsAuth: true },
+        assignLabel: { url: "Task/AssignLabel/", needsAuth: true},
+
+        //comments
+        addComment: { url: "Comments", needsAuth: true, requestKeys: ['conntent'] },
+        deleteComment: { url: "Comments/Delete/", needsAuth: true },
+        getComments: { url: "Comments/Get/", needsAuth: true },
+
+        //users
+        editProfile: { url: "Account/EditProfile", needsAuth: true, requestKeys: ['FirstName', "LastName", "File"], formData: true },
     }
 
     prepareKeysForRequest(keys: string[], values: any[]){
@@ -46,11 +57,10 @@ export class RequestService {
 
     executeRequest = (requestName: string, requestType: string, payload: any = {}, succOperationContent: string = "", params: string = "", objectToSpread: any) => {
         return new Promise((resolve, reject) => {
-            //console.log(requestName, requestType, payload, succOperationContent, params);
             let modifiedPayload: any = {...payload};
             if(this.requests[requestName].requestKeys)
                 modifiedPayload = this.prepareKeysForRequest(this.requests[requestName].requestKeys, payload);
-            
+
             if(objectToSpread && !this.requests[requestName].formData)
                 modifiedPayload = { ...modifiedPayload, ...objectToSpread };
             else{
@@ -60,16 +70,14 @@ export class RequestService {
                     const key = this.requests[requestName].requestKeys[i];
                     formData.set(key, modifiedPayload[key]);
                 }
-                formData.set('File', "");
                 modifiedPayload = formData;
             }
-                
             let requestPath: string = this.serverPath + this.requests[requestName].url;
 
             if(params !== "")
                 requestPath += params;
 
-            const reqReference = (requestType !== "get" && requestType !== "delete") ? this.http[requestType](requestPath, modifiedPayload, { withCredentials: true }) : 
+            const reqReference = (requestType !== "get" && requestType !== "delete") ? this.http[requestType](requestPath, modifiedPayload, { withCredentials: true }) :
                 this.http[requestType](requestPath,  { withCredentials: true });
             reqReference.subscribe(
                 response => {
@@ -108,7 +116,7 @@ export class RequestService {
         if(error.status === 404){
             return ["Not found request parameters"];
         }
-       
+
         if(error._body !== undefined && error._body !== ""){
             const parsedBody = JSON.parse(error._body);
             return parsedBody.errors;

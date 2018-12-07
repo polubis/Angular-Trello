@@ -1,0 +1,33 @@
+.comments{
+  position: relative;
+  ul, .empty-tasks{
+    border-bottom: 1px solid #717171;
+    border-top: 1px solid #717171;
+  }
+  ul{
+    padding-bottom: 10px;
+  }
+  ul li{
+    padding: 10px 0;
+  }
+  ul li p{
+    margin: 0;
+  }
+}
+.interactive-operations{
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 15px 0;
+  min-height: 25px;
+  position: relative;
+  align-items: center;
+  i {
+    margin-left: 15px;
+  }
+}
+div.user-label{
+  padding: 10px 0;
+}
+.delete-color{
+  margin-left: auto;
+}

@@ -1,11 +1,11 @@
 <div class="selector-container">
-  <i [ngStyle]="{'color': shouldIconBeColored ? lastSelectedItem : initialColorIcon}" (click)="closePicker()" 
+  <i [ngStyle]="{'color': shouldIconBeColored ? lastSelectedItem : initialColorIcon}" (click)="closePicker()"
   class="material-icons animated-icon">{{pickerIcon}}</i>
-  
-  <div *ngIf="isPaleteOpen">
+
+  <div *ngIf="isPaleteOpen" class="selector-items-container">
     <ul class="selector">
-      <li (click)="changeItem(item)" 
-      [ngStyle]="{'background-color': !isSelectingIcons ? item : 'initial'}" 
+      <li (click)="changeItem(item)"
+      [ngStyle]="{'background-color': !isSelectingIcons ? item : 'initial'}"
       *ngFor="let item of items; let i = index">
         <i [style.color]="initialColorIcon" *ngIf="isSelectingIcons" class="material-icons">{{item}}</i>
       </li>

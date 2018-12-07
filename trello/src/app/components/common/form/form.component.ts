@@ -10,7 +10,7 @@ export class FormComponent implements OnInit {
   @Input() formSettings: FormModel[];
   @Input() formClass: string;
   @Input() submitMethod: Function;
-  @Input() isDoingRequest: boolean; 
+  @Input() isDoingRequest: boolean;
   @Input() submitButtonTitle: string = "Confirm";
 
   constructor(private formService: FormService){}
@@ -59,7 +59,7 @@ export class FormComponent implements OnInit {
     this.handleValueSetting(index, icon);
   }
   handleValueSetting(index: number, value: any){
-    this.formStateItems[index] = this.formService.validate(this.formStateItems[index], value, 
+    this.formStateItems[index] = this.formService.validate(this.formStateItems[index], value,
       this.formSettings[index].validationSettings);
 
     this.isFormReadyToSubmit = this.formStateItems.filter(item => item.isAllErrorsResolved).length === this.numberOfFormItems;
@@ -68,11 +68,14 @@ export class FormComponent implements OnInit {
   handleTyping(index: number, e){
     this.handleValueSetting(index, e.target.value);
   }
+  handleTypingWithoutEvent(data: any, index: number) {
+    this.handleValueSetting(index, data);
+  }
 
   fillErrorsOnFocusedInput(index: number){
     if(this.currentOpenedColorsIndex !== -1) this.currentOpenedColorsIndex = -1;
     if(this.currentOpenedIconPalete !== -1) this.currentOpenedIconPalete = -1;
-    
+
     this.currentFocusedInput = index;
     this.showListWithErrorsCounters = false;
   }
@@ -118,7 +121,7 @@ export class FormComponent implements OnInit {
     if(this.isFormReadyToSubmit){
       if(this.currentOpenedColorsIndex !== -1)
         this.currentOpenedColorsIndex = -1;
-      
+
       this.submitMethod(this.formStateItems);
     }
     else{

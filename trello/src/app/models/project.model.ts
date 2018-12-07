@@ -11,6 +11,7 @@ export class ProjectModel {
     public img: string = "",
     public color: string = "",
     public closingDate: any = null,
-    public tasks: TaskModel[] = []
+    public tasks: TaskModel[] = [],
+    public picturePath: string = ""
   ) {}
 }

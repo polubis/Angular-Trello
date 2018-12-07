@@ -3,10 +3,10 @@
 <form [class]="formClass" (submit)="handleSubmit($event)" [ngClass]="{'scalled-form': isDoingRequest}">
   <div class="inputs-container">
     <section class="row" *ngFor="let item of formSettings; let i = index" [ngClass]="{'invalid-input': formStateItems[i].isAllErrorsResolved === false, 'correct-input': formStateItems[i].isAllErrorsResolved === true}">
-        <input *ngIf="item.mode === 'input'" [value]="formStateItems[i].value" (focus)="fillErrorsOnFocusedInput(i)" (input)="handleTyping(i, $event)" (blur)="removeErrorList()" 
-          [type]="item.type" [placeholder]="item.placeholder" />   
+        <input *ngIf="item.mode === 'input'" [value]="formStateItems[i].value" (focus)="fillErrorsOnFocusedInput(i)" (input)="handleTyping(i, $event)" (blur)="removeErrorList()"
+          [type]="item.type" [placeholder]="item.placeholder" />
         <div *ngIf="item.mode === 'color-input'" class="picker-input-container">
-            <input [value]="formStateItems[i].value" (focus)="fillErrorsOnFocusedInput(i)" (input)="handleTyping(i, $event)" (blur)="removeErrorList()" 
+            <input [value]="formStateItems[i].value" (focus)="fillErrorsOnFocusedInput(i)" (input)="handleTyping(i, $event)" (blur)="removeErrorList()"
               [type]="item.type" [placeholder]="item.placeholder" />
             <app-selector [shouldHaveSaveButton]="false" [shouldIconBeColored]="true" [initialColorIcon]="'black'"
             [isPaleteOpen]="currentOpenedColorsIndex === i"
@@ -14,24 +14,31 @@
             </app-selector>
         </div>
 
+        <app-file-picker (addingFile)="handleTypingWithoutEvent($event, i)" *ngIf="item.mode === 'single-file'" ></app-file-picker>
+
+        <textarea [placeholder]="item.placeholder"
+        *ngIf="item.mode === 'textarea'" [value]="formStateItems[i].value" (focus)="fillErrorsOnFocusedInput(i)" (input)="handleTyping(i, $event)" (blur)="removeErrorList()">
+        </textarea>
+
+
         <div class="picker-input-container" *ngIf="item.mode === 'icon-picker'">
-            <span>{{formStateItems[i].value === '' ? formSettings[i].placeholder : formStateItems[i].value}}</span>
-            
-            <app-selector 
-            [shouldHaveSaveButton]="false" [pickerIcon]="formStateItems[i].value === '' ? 'label' : formStateItems[i].value" 
-            [initialColorIcon]="'black'" [isSelectingIcons]="true"
-            [isPaleteOpen]="currentOpenedIconPalete === i"
-            (onCloseItems)="togleIconPalete(i)" (itemChanged)="changeIcon($event, i)">
-            
-            </app-selector>
+          <span>{{formStateItems[i].value === '' ? formSettings[i].placeholder : formStateItems[i].value}}</span>
+
+          <app-selector
+          [shouldHaveSaveButton]="false" [pickerIcon]="formStateItems[i].value === '' ? 'label' : formStateItems[i].value"
+          [initialColorIcon]="'black'" [isSelectingIcons]="true"
+          [isPaleteOpen]="currentOpenedIconPalete === i"
+          (onCloseItems)="togleIconPalete(i)" (itemChanged)="changeIcon($event, i)">
+
+          </app-selector>
         </div>
 
         <div class="type-ahead-container" *ngIf="item.mode === 'type-ahead-with-existing-data'">
-          <input [value]="formStateItems[i].value" (focus)="fillErrorsOnFocusedInput(i)" (input)="handleTypingWithList(i, $event)" 
-            (blur)="removeErrorList()" 
+          <input [value]="formStateItems[i].value" (focus)="fillErrorsOnFocusedInput(i)" (input)="handleTypingWithList(i, $event)"
+            (blur)="removeErrorList()"
             [type]="item.type" [placeholder]="item.placeholder" />
           <ul class="result-list shadow" *ngIf="formStateItems[i].isAllErrorsResolved && currentOpenedListIndex === i">
-            <li *ngFor="let element of item.listElements | sort : 'content' : 'asc'" 
+            <li *ngFor="let element of item.listElements | sort : 'content' : 'asc'"
             (click)="addListElementIntoInputValue(element, i)">
               {{element.content}}
             </li>
@@ -41,8 +48,8 @@
         <div [ngClass]="{'margined-span': formStateItems[i].isAllErrorsResolved !== null}">
           <i *ngIf="formStateItems[i].isAllErrorsResolved === false" class="material-icons">lock_outline</i>
           <i *ngIf="formStateItems[i].isAllErrorsResolved === true" class="material-icons">lock_open</i>
-          
-          <ul class="errors-list" *ngIf="formStateItems[i].isAllErrorsResolved === false && (i === currentFocusedInput || 
+
+          <ul class="errors-list" *ngIf="formStateItems[i].isAllErrorsResolved === false && (i === currentFocusedInput ||
           currentOpenedIconPalete === i || currentOpenedColorsIndex === i)">
             <li *ngFor="let content of formStateItems[i].contents">
                 <i *ngIf="content.isError === false" [style.color]="'#6ECF8E'" class="material-icons">check</i>
@@ -52,7 +59,7 @@
           </ul>
         </div>
 
-        
+
     </section>
   </div>
   <ng-content></ng-content>

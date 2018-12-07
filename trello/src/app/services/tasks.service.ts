@@ -4,6 +4,8 @@ import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
 import { TaskModel } from "src/app/models/task.model";
 import * as _ from 'lodash';
+import { fromPromise } from "rxjs/internal/observable/fromPromise";
+import { Label } from "src/app/models/label.model";
 
 
 @Injectable()
@@ -32,35 +34,51 @@ export class TasksService {
     this.projectId = projectId;
   }
 
-  createBuckets(tasks: any[]): any{
+  putLabelObjectIntoTasks(tasks: any[], labels: Label[]) {
+    return tasks.map(task => {
+      if (task.labelId && task.labelId !== 0) {
+        const labelInProjectLabels = labels.findIndex(x => x.id === task.labelId);
+        if (labelInProjectLabels !== -1) {
+          const { id, name, color, icon, projectId } = labels[labelInProjectLabels];
+          const newTask = {...task, label: new Label(id, name, color, icon, projectId)};
+          return newTask;
+        }
+      }
+      return task;
+    });
+  }
+
+  createBuckets(tasks: any[], projectLabels: Label[]): any{
     const buckets: any = {
       Todo: [],
       InProgress: [],
       Done: [],
     };
+
+    const tasksWithLabelObject = this.putLabelObjectIntoTasks(tasks, projectLabels);
+
     const indexesKeys = Object.keys(this.bucketIndexes);
-    for(let key in tasks){
+    for(let key in tasksWithLabelObject){
       indexesKeys.forEach(element => {
-        console.log(element);
         if(tasks[key].bucket.toLowerCase() === element.toLowerCase()){
-          buckets[element].push(tasks[key]);
+          buckets[element].push(tasksWithLabelObject[key]);
         }
       });
     }
     return buckets;
   }
-  
+
   getTasksForProject(){
     this.requestService.executeRequest("projectDetails", "get", {}, "",
       this.projectId.toString(), {})
       .then((response: any) => {
-        this.buckets = this.createBuckets(response.tasks);
+        this.buckets = this.createBuckets(response.tasks, response.labels);
         this.onChangeTasks.next({buckets: this.buckets, labels: response.labels});
       }).catch(error => this.onChangeTasks.next({buckets: this.buckets, labels: []}));
   }
 
   addTask(formData: any, projectId: number, objectToSpread: any){
-    return this.requestService.executeRequest("addTaskToProject", "post", formData, "Task has been succesfully added into project", 
+    return this.requestService.executeRequest("addTaskToProject", "post", formData, "Task has been succesfully added into project",
         projectId.toString(), objectToSpread);
   }
 
@@ -73,12 +91,25 @@ export class TasksService {
   }
 
   editColor(payload: any, taskId: number){
-    return this.requestService.executeRequest("editTaskColorInProject", "put", payload, 
+    return this.requestService.executeRequest("editTaskColorInProject", "put", payload,
       "Task color has been successfuly edited", taskId.toString(), {});
   }
 
   assignPersonToTask = (formData: any, projectId: number) => {
-    return this.requestService.executeRequest("assignTaskToPerson", "put", formData, "Task has been succesfully assigned", 
+    return this.requestService.executeRequest("assignTaskToPerson", "put", formData, "Task has been succesfully assigned",
       projectId.toString() + "/AssignPersonToTask", {});
+  }
+
+  getComments(taskId: number) {
+    return fromPromise(this.requestService.executeRequest('getComments', 'get',{},  "", taskId.toString(), {}));
+  }
+  deleteComment(commentId: number) {
+    return this.requestService.executeRequest('deleteComment', 'delete', {},  "Comment has been succesfully deleted", commentId.toString(), {});
+  }
+  addComment(formData: any, taskId: number) {
+    return this.requestService.executeRequest('addComment', 'post', formData, "Comment has been succesfully added", "", {tasksId: taskId.toString()});
+  }
+  assignLabelIntoProject(formData: any, projectId: number) {
+    return this.requestService.executeRequest('assignLabel', 'put', formData, "Label has been succesfully assigned", projectId.toString(), formData);
   }
 }

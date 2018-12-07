@@ -114,22 +114,10 @@ export class ProjectsService {
       )
       .then((response: { id: number }) => {
         const creationDate = new Date();
-        this.projects.push(
-          new ProjectModel(
-            addProjectData[0].value,
-            response.id,
-            [],
-            1,
-            creationDate,
-            addProjectData[1].value,
-            "",
-            addProjectData[2].value,
-            null
-          )
-        );
         this.lastAddedProjetId = response.id;
         this.onChangeProjects.emit(this.projects);
         this.onChangeLastAddedProjectId.emit(response.id);
+        this.getProjects();
       })
       .catch(error => {
         this.onChangeProjects.emit(this.projects);

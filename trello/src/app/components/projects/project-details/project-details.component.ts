@@ -7,6 +7,7 @@ import { OperationsService } from "src/app/services/operations.service";
 import { PaginationService } from "src/app/services/pagination.service";
 import { OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs";
+import { projectPicturesBasePath } from '../../../constants/constants';
 @Component({
   selector: "app-project-details",
   templateUrl: "./project-details.component.html",
@@ -18,6 +19,8 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   project: ProjectModel;
   isUserCartOpen: boolean = false;
   routeSubscription: Subscription;
+  projectPicturesBasePath = projectPicturesBasePath;
+  projectId = '';
   constructor(
     private projectsService: ProjectsService,
     private activatedRoute: ActivatedRoute,
@@ -31,6 +34,7 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
     this.isUserCartOpen = false;
   }
   ngOnInit() {
+    this.projectId = this.activatedRoute.snapshot.params["id"];
     const startPageNumber: number = this.paginationService.calculateStartPage(
       this.projectsService.projects,
       "id",
@@ -43,25 +47,33 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
       this.paginationService.limit
     );
     this.routeSubscription = this.activatedRoute.params.subscribe(param => {
+      this.projectId = this.activatedRoute.snapshot.params["id"];
       if (this.projectsService.projects.length > 0) {
-        this.isLoadingProjectDetails = true;
-        this.projectsService
-          .getProjectDetails(param.id)
-          .then((response: any) => {
-            console.log(response);
-            const indexOfProject: number = this.projectsService.projects.findIndex(
-              project => project.id === Number(param.id)
-            );
-            const copiedProject: ProjectModel = {
-              ...this.projectsService.projects[indexOfProject]
-            };
-            copiedProject.tasks = response.tasks.filter(task => task.bucket === "todo");
-            this.project = copiedProject;
-            this.isLoadingProjectDetails = false;
-          })
-          .catch(error => (this.isLoadingProjectDetails = false));
+        this.getProjects();
       }
     });
+
+    this.projectsService.onChangeProjects.subscribe(projects => {
+      this.getProjects();
+    })
+  }
+
+  getProjects() {
+    this.isLoadingProjectDetails = true;
+    this.projectsService
+      .getProjectDetails(this.projectId)
+      .then((response: any) => {
+        const indexOfProject: number = this.projectsService.projects.findIndex(
+          project => project.id === Number(this.projectId)
+        );
+        const copiedProject: ProjectModel = {
+          ...this.projectsService.projects[indexOfProject]
+        };
+        copiedProject.tasks = response.tasks.filter(task => task.bucket === "todo");
+        this.project = copiedProject;
+        this.isLoadingProjectDetails = false;
+      })
+      .catch(error => (this.isLoadingProjectDetails = false));
   }
 
   ngOnDestroy() {

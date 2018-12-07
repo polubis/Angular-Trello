@@ -62,7 +62,7 @@ export class TasksComponent implements OnInit, OnDestroy {
     this.projectsService.deleteLabel(this.labelIdToDelete)
     .then((response: any) => {
       const indexOfDeletedLabel = this.projectLabels.findIndex(label => label.id === this.labelIdToDelete);
-      this.projectLabels.splice(indexOfDeletedLabel, 1);      
+      this.projectLabels.splice(indexOfDeletedLabel, 1);
       this.isDeletingLabel = false;
       this.labelIdToDelete = -1;
       this.operationsService.removeAllAfterDelay(3000);

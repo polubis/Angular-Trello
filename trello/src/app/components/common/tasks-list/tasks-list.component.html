@@ -4,26 +4,28 @@
   <ul *ngIf="items.length > 0; else empty_content">
     <li *ngFor="let item of items | sort : 'name' : 'asc'; let i = index" (startDrag)="startDrag(item, i, bucket)" [dragDirective]="item">
       <div class="task-operations" *ngIf="!isProjectClosed">
-        <app-selector
-        [isPaleteOpen]="currentOpenedColorsIndex === item.id" [isSavingItem]="isSavingTaskColor" 
-        (onSavedItem)="saveTaskColor($event)"
-        (onCloseItems)="togleColorPalette(item.id)" (itemChanged)="changeTaskColor($event, item.id)">
-        </app-selector>
+        <app-label-selector *ngIf="shouldShowLabelSelector" [labels]="projectLabels" [operationTitle]="'Save label'" [taskId]="item.id" (labelSaved)="refreshLabelState($event, i)">
+
+        </app-label-selector>
         <i (click)="togleAssignToTaskPersonModal(item.id)" class="material-icons animated-icon">assignment_returned</i>
         <i (click)="togleEditTaskModal(item.id)" class="material-icons edit-color animated-icon">edit</i>
         <i (click)="togleDeleteTaskPrompt(item.id)" class="material-icons delete-color animated-icon">delete</i>
       </div>
       <div class="main-task-content">
         <div class="task-content">
-          <span>{{i+1}}</span> 
+          <span>{{i+1}}</span>
           <div>
             <b>{{item.name}}</b>
             <span>{{item.description}}</span>
           </div>
         </div>
-    
-        <div class="task-label"><span>BACKEND</span> <i class="material-icons">dns</i></div>
-        
+
+        <div class="task-label" *ngIf="item.label">
+          <span class="label-bar" [style.background]="item.label.color"></span>
+          <span [style.color]="item.label.color">{{item.label.name}}</span>
+          <i [style.color]="item.label.color" class="material-icons">{{item.label.icon}}</i>
+        </div>
+
         <p class="time-to-end">
           <i class="material-icons">av_timer</i>
           <b>1 dzień 11h</b>
@@ -31,16 +33,15 @@
         </p>
       </div>
 
-      <p class="interactive-operations">
-          <span [style.background]="item.color"></span>
-          <i class="material-icons animated-icon">comment</i>
-      </p>
       <div class="user-label">
         <i class="material-icons" *ngIf="item.userId">person</i>
         <span *ngIf="item.userId">{{item.userId}}</span>
         <span *ngIf="!item.userId">This task doesn't have assigned user</span>
-        
       </div>
+
+      <app-comments-list [taskId]="item.id">
+
+      </app-comments-list>
     </li>
   </ul>
 
@@ -67,7 +68,7 @@
   </div>
 </app-modal>
 
-<app-confirm-prompt *ngIf="isDeleteTaskPromptOpen" [btnTitle]="'Delete task'" [icon]="'delete'" 
+<app-confirm-prompt *ngIf="isDeleteTaskPromptOpen" [btnTitle]="'Delete task'" [icon]="'delete'"
 (onConfirm)="deleteTask()"
 (onClosingPrompt)="togleDeleteTaskPrompt()"
 [header]="'Are you sure you want delete this task?'"
@@ -78,7 +79,7 @@
 <app-modal *ngIf="isAddTaskModalOpen" [modalTitle]="'Add new task'"
 (onClosingModal)="togleAddTaskModal()" [width]="'500px'">
   <div class="task-form">
-      <app-form [isDoingRequest]="isAddingTask" [submitMethod]="addTask" 
+      <app-form [isDoingRequest]="isAddingTask" [submitMethod]="addTask"
       [formClass]="'stnd-form'" [formSettings]="addTaskFormSettings">
 
       </app-form>
@@ -89,7 +90,7 @@
 <app-modal *ngIf="idOfTaskToAssign !== -1" [modalTitle]="'Assign person to task'"
 (onClosingModal)="togleAssignToTaskPersonModal()" [width]="'500px'">
   <div class="task-form">
-      <app-form [isDoingRequest]="(isAssigningToTask || isLoadingUsers) ? true : false" [submitMethod]="assignToTaskPerson" 
+      <app-form [isDoingRequest]="(isAssigningToTask || isLoadingUsers) ? true : false" [submitMethod]="assignToTaskPerson"
       [formClass]="'stnd-form'" [formSettings]="findUserFormSettings">
 
       </app-form>

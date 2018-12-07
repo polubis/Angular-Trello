@@ -17,4 +17,8 @@ export class UsersService {
     getUsersByQuery(query: string){
         return this.requestService.executeRequest("getUsersByQuery", "get", {}, "", query, {});
     }
+
+    editProfile(formData: any) {
+      return this.requestService.executeRequest('editProfile', 'post', formData, 'Your user data has been succesfully edited', '', {});
+    }
 }

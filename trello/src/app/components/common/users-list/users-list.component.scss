@@ -35,6 +35,23 @@ ul{
             color: white;
             display: flex;
             flex-flow: column;
+            .image-container{
+              height: 250px;
+              .empty-image{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+                i{
+                  font-size: 40px;
+                  color: #98EE99;
+                }
+              }
+              img{
+                width: 100%;
+                height: auto;
+              }
+            }
             .circle-btn{
                 margin: auto auto 0 auto;
                 width: 90%;
@@ -47,6 +64,10 @@ ul{
             }
             .user-data{
                 padding: 0 15px;
+                p:first-of-type{
+                  padding-top: 0;
+                  margin-top: 0;
+                }
                 p{
                     padding: 15px;
                     color: #E4E4E4;
@@ -63,4 +84,7 @@ ul{
             font-size: 22px;
         }
     }
+}
+.add-user-form-container{
+  padding: 0 20px 20px 20px;
 }

@@ -85,7 +85,11 @@ form{
                 }
             }
         }
-       input{
+        textarea{
+          resize: none;
+          height: 50px;
+        }
+       input, textarea{
            width: 90%;
            border: none;
            border-bottom: 1px solid #0588DC;

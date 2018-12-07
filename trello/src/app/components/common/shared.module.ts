@@ -21,22 +21,29 @@ import { FilterPipe } from "src/app/directives/filter-pipe";
 import { UsersListComponent } from './users-list/users-list.component';
 import { SearcherComponent } from './searcher/searcher.component';
 import { DragDropDirectiveModule} from "angular4-drag-drop";
+import { CommentsListComponent } from './comments-list/comments-list.component';
+import { LabelSelectorComponent } from './label-selector/label-selector.component';
+import { FilePickerComponent } from './file-picker/file-picker.component';
 @NgModule({
-    declarations: [ FormComponent, LoggedNavigationComponent, 
-    LogoComponent, ModalComponent, OperationsComponent, PaginationComponent, 
+    declarations: [ FormComponent, LoggedNavigationComponent,
+    LogoComponent, ModalComponent, OperationsComponent, PaginationComponent,
     SpinnerComponent, ToglerComponent, DebounceClick, ConfirmPromptComponent, ErrorHandlerComponent,
     LengthPipe, SortingPipe, FilterPipe,
     TasksListComponent,
     SelectorComponent,
     UsersListComponent,
-    SearcherComponent],
+    SearcherComponent,
+    CommentsListComponent,
+    LabelSelectorComponent,
+    FilePickerComponent
+    ],
     imports: [CommonModule, AppRoutingModule, DragDropDirectiveModule],
     exports: [
-        FormComponent, LoggedNavigationComponent, 
-        LogoComponent, ModalComponent, OperationsComponent, PaginationComponent, 
+        FormComponent, LoggedNavigationComponent,
+        LogoComponent, ModalComponent, OperationsComponent, PaginationComponent,
         SpinnerComponent, ToglerComponent, DebounceClick, ConfirmPromptComponent,
         ErrorHandlerComponent, LengthPipe, TasksListComponent, SelectorComponent, SortingPipe,
-        FilterPipe, UsersListComponent, SearcherComponent
+        FilterPipe, UsersListComponent, SearcherComponent, CommentsListComponent, LabelSelectorComponent, FilePickerComponent
     ]
 })
 export class SharedModule {}
