@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Input } from "@angular/core";
+import { Input, EventEmitter, Output } from "@angular/core";
 import { userPicturesBasePath, editUserDataFormSettings } from '../../../constants/constants';
 import { UsersService } from "src/app/services/users.service";
 @Component({
@@ -9,8 +9,11 @@ import { UsersService } from "src/app/services/users.service";
 })
 export class UsersListComponent implements OnInit {
   @Input() users: any[];
+  @Input() isDeleting: boolean;
+  @Output() deleting = new EventEmitter<any>();
   currentOpenedUserCartIndex = -1;
   userPicturesBasePath = userPicturesBasePath;
+  personToDeleteIndex = -1;
   constructor(private usersService: UsersService) { }
   togleUserDetails(event, index: number){
     event.stopPropagation();
@@ -18,5 +21,7 @@ export class UsersListComponent implements OnInit {
   }
   ngOnInit() {
   }
-
+  togleRemovePersonFromProject(index: number) {
+    this.personToDeleteIndex = index;
+  }
 }

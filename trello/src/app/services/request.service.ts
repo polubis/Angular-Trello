@@ -25,6 +25,7 @@ export class RequestService {
         getUsersFromProject: { url: "Project/GetAllMembers/", needsAuth: true },
         getUsersByQuery: { url: "/Project/UserSearcher?query=", needsAuth: true },
         addProjectPicture: { url: "/Project/Picture/", needsAuth: true, formData: true, requestKeys: ["File"] },
+        removePersonFromProject: { url: "Project/RemovePersonFromProject", needsAuth: true},
 
         //labels
         addLabelIntoProject: { url: "Label/Add/", needsAuth: true, requestKeys: ["Name", "Color", "Icon"] },

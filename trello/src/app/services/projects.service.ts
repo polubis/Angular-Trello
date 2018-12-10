@@ -159,4 +159,11 @@ export class ProjectsService {
   addPersonToProject(payload: any){
     return this.requestService.executeRequest("addPersonToProject", "post", payload, "Person has been succesfully added into project", "", {});
   }
+
+  removePersonFromProject(userId: any, projectId: any) {
+    const queryString = `?userId=${userId}&projectId=${projectId}`;
+    console.log([{value: userId}, {value: projectId}])
+    return this.requestService.executeRequest("removePersonFromProject", "delete", {},
+      "Person has been succesfully removed from project", queryString, {});
+  }
 }

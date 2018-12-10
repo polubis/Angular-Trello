@@ -10,7 +10,7 @@
         <img *ngIf="project.picturePath" [ngStyle]="{'opacity': project.closingDate ? '.4' : '1'}" [src]="projectPicturesBasePath + project.picturePath" />
         <p><span>COLLABORATORS</span></p>
 
-        <app-users-list [users]="project.collaborators">
+        <app-users-list [users]="project.collaborators" (deleting)="deletePersonFromProject($event)" [isDeleting]="isDeletingPersonFromProject">
         </app-users-list>
       </div>
 

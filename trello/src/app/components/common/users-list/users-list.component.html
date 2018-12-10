@@ -20,7 +20,7 @@
         <p><b>Number of tasks</b><span>{{user.numberOfTasks}}</span></p>
       </div>
 
-      <button class="circle-btn" (click)="togleEditUserModal()">
+      <button class="circle-btn" (click)="togleRemovePersonFromProject(i)">
         REMOVE FROM PROJECT
       </button>
 
@@ -31,3 +31,10 @@
     </div>
   </li>
 </ul>
+
+<app-confirm-prompt *ngIf="personToDeleteIndex !== -1" [btnTitle]="'Remove person from project'" [icon]="'delete'"
+(onConfirm)="deleting.emit(users[personToDeleteIndex])"
+(onClosingPrompt)="togleRemovePersonFromProject(-1)"
+[header]="'Are you sure you want remove this person from project?'">
+<app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-small spinner-form'" *ngIf="isDeleting"></app-spinner>
+</app-confirm-prompt>

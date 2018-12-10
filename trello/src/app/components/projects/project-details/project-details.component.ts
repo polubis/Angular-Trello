@@ -21,6 +21,7 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   routeSubscription: Subscription;
   projectPicturesBasePath = projectPicturesBasePath;
   projectId = '';
+  isDeletingPersonFromProject = false;
   constructor(
     private projectsService: ProjectsService,
     private activatedRoute: ActivatedRoute,
@@ -82,5 +83,17 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
     this.projectsService.currentWatchedProjectId = -1;
     this.projectsService.onChangeCurrentWatchedProjectId.emit(-1);
     this.routeSubscription.unsubscribe();
+  }
+
+  deletePersonFromProject(user: any) {
+    console.log(user.id, this.projectId);
+    this.isDeletingPersonFromProject = true;
+    this.projectsService.removePersonFromProject(user.id, this.projectId)
+    .then(response => {
+      this.isDeletingPersonFromProject = false;
+      this.operationsService.removeAllAfterDelay(3000);
+    }).catch(error => {
+      this.isDeletingPersonFromProject = false;
+    });
   }
 }
