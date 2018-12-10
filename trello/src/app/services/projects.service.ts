@@ -21,7 +21,6 @@ export class ProjectsService {
   ) {}
 
   editProject(id: number, formData: any) {
-    console.log(formData);
     this.requestService
       .executeRequest(
         "editProject",
@@ -162,7 +161,6 @@ export class ProjectsService {
 
   removePersonFromProject(userId: any, projectId: any) {
     const queryString = `?userId=${userId}&projectId=${projectId}`;
-    console.log([{value: userId}, {value: projectId}])
     return this.requestService.executeRequest("removePersonFromProject", "delete", {},
       "Person has been succesfully removed from project", queryString, {});
   }

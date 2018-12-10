@@ -86,7 +86,6 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   }
 
   deletePersonFromProject(user: any) {
-    console.log(user.id, this.projectId);
     this.isDeletingPersonFromProject = true;
     this.projectsService.removePersonFromProject(user.id, this.projectId)
     .then(response => {

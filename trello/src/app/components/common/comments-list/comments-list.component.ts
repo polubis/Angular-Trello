@@ -39,7 +39,6 @@ export class CommentsListComponent implements OnInit {
 
     this.tasksService.getComments(this.taskId).subscribe((comments: any[]) => {
       this.comments = comments;
-      console.log(this.comments);
       this.isLoading = false;
     });
   }

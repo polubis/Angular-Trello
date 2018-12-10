@@ -78,7 +78,6 @@ export class RequestService {
 
             if(params !== "")
                 requestPath += params;
-            console.log(modifiedPayload);
             const reqReference = (requestType !== "get" && requestType !== "delete") ? this.http[requestType](requestPath, modifiedPayload, { withCredentials: true }) :
                 this.http[requestType](requestPath,  { withCredentials: true });
             reqReference.subscribe(
