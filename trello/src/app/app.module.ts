@@ -21,6 +21,7 @@ import { ColorsService } from "src/app/services/colors.service";
 import { ManageComponent } from './components/manage/manage.component';
 import { IconsService } from "src/app/services/icons.service";
 import { UsersService } from "src/app/services/users.service";
+import { ProjectCartComponent } from './components/projects/project-cart/project-cart.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +29,8 @@ import { UsersService } from "src/app/services/users.service";
     ProjectsComponent,
     ProjectDetailsComponent,
     TasksComponent,
-    ManageComponent
+    ManageComponent,
+    ProjectCartComponent
   ],
   imports: [
     BrowserModule,

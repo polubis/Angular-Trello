@@ -1,0 +1,19 @@
+<div *ngIf="project.picturePath" class="picture-container">
+  <img [src]="projectPicturesBasePath + project.picturePath" />
+</div>
+<app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-small spinner-form'" *ngIf="projectIdWherePictureIsAdding === project.id"></app-spinner>
+<div class="empty-picture" *ngIf="!project.picturePath">
+  <app-file-picker [btnClass]="'add-project-picture-btn'" [shouldShowAddedImage]="false" (addingFile)="addingFile.emit($event)"></app-file-picker>
+</div>
+<div class="title-container">
+    <span class="project-title">{{project.name}}</span>
+    <span *ngIf="project.creationDate " class="creation-date">created in: {{project.creationDate | date: 'medium'}}</span>
+    <span *ngIf="project.closingDate" class="closing-date">closed in: {{project.closingDate | date: 'medium'}}</span>
+</div>
+<article>
+  {{project.description | shorten: '30'}}
+</article>
+<div [ngClass]="{'actual-watched-project': (project.id === actualWatchedProject && selectClass === 'actual-watched-project')}"></div>
+<div class="go-to-btn-container">
+    <button debounceClick (click)="clicking.emit()" class="label-btn">{{btnTitle}}</button>
+</div>

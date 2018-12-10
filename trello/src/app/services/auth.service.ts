@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { EventEmitter } from "@angular/core";
+import { User } from "src/app/models/user";
+import { Subject } from "rxjs";
 
 @Injectable()
 export class AuthService{
     isAuthenticated: boolean = false;
     onAuthenticateChanges = new EventEmitter<boolean>();
+    userData = new Subject<User>();
     constructor(){
         const isAuth = this.getASpecyficCookieValue("auth", document.cookie);
         this.isAuthenticated = isAuth !== "";
@@ -13,10 +16,10 @@ export class AuthService{
     getASpecyficCookieValue(nameOfValue: string, cookies: string): string {
         const index = cookies.search(nameOfValue);
         let value = "";
-        
+
         if(index === -1)
             return "";
-        
+
         else{
             for(let i = index + nameOfValue.length+1; i < cookies.length; i++){
                 if(cookies.charAt(i) === ";")
@@ -27,7 +30,7 @@ export class AuthService{
         }
         return value;
     }
-    
+
     setCookie(name: string, expDays: number, path: string, value: string){
         const date = new Date();
         date.setTime(date.getTime() + (expDays*24*60*60*1000));
@@ -40,5 +43,11 @@ export class AuthService{
         document.cookie = name + "=; expires=" + expDate;
         this.isAuthenticated = false;
         this.onAuthenticateChanges.emit(false);
+    }
+    setUserData(user: User) {
+      this.userData.next(user);
+    }
+    getUserData() {
+
     }
 }

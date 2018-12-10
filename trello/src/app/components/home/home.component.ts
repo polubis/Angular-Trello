@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { loginFormSettings, registerFormSettings } from '../../constants/constants'; 
+import { loginFormSettings, registerFormSettings } from '../../constants/constants';
 import FormModel from '../../models/form.model';
 import { RequestService } from '../../services/request.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { OperationsService } from '../../services/operations.service';
+import { User } from "src/app/models/user";
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
@@ -22,7 +23,7 @@ export class HomeComponent implements OnInit {
   isDoingRequest: boolean = false;
   isRegisterModalOpen: boolean = false;
 
-  constructor(private requestService: RequestService, private authService: AuthService, private router: Router, 
+  constructor(private requestService: RequestService, private authService: AuthService, private router: Router,
     private operationsService: OperationsService) {}
   ngOnInit() {}
 
@@ -40,8 +41,10 @@ export class HomeComponent implements OnInit {
     this.isDoingRequest = true;
     this.requestService
       .executeRequest("login", "post", loginData, "", "", {})
-      .then(response => {
+      .then((user: User) => {
         this.authService.setCookie("auth", 1, "/", "true");
+        this.authService.setCookie("userId", 1, "/", user.id);
+        this.authService.setUserData(user);
         this.isDoingRequest = false;
         this.router.navigate(["/projects"]);
       })

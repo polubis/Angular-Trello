@@ -23,9 +23,17 @@
             min-width: 125px;
         }
     }
+    .white-btn{
+      color: white;
+    }
     .cart-list{
         right: 0;
         top: 35px;
+    }
+    .account-list{
+      width: 250px;
+      right: 15px;
+      top: 35px;
     }
     ul{
         z-index: 1;

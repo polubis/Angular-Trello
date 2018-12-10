@@ -19,7 +19,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     private router: Router,
     private operationsService: OperationsService,
     private paginationService: PaginationService,
-    private projectsService: ProjectsService
+    private projectsService: ProjectsService,
   ) {}
   projectPicturesBasePath = projectPicturesBasePath;
   projects: ProjectModel[] = [];
@@ -33,6 +33,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   isEditingProject: boolean = false;
   projectIdWherePictureIsAdding = -1;
   isEditProjectModalOpen: boolean = false;
+  wholePageView = false;
 
   leftRange: number = -1;
   rightRange: number = 1;
@@ -162,5 +163,13 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     this.onChangeProjectsSub.unsubscribe();
     this.onChangeLastAddedProjectId.unsubscribe();
     this.onPageChange.unsubscribe();
+  }
+
+  togleWholePageView(){
+    this.wholePageView = !this.wholePageView;
+  }
+
+  navigateProjectManage(projectId: number) {
+    this.router.navigate(['/manage', projectId, 'tasks']);
   }
 }

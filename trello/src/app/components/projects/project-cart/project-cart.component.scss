@@ -1,0 +1,55 @@
+.picture-container{
+  height: 200px;
+}
+.empty-picture{
+  height: 200px;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+img{
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+}
+.title-container{
+    display: flex;
+    flex-flow: column;
+    .project-title{
+        text-transform: uppercase;
+        font-size: 12px;
+        font-weight: bolder;
+    }
+}
+.closing-date, .creation-date{
+    margin-left: auto;
+    font-size: 11px;
+}
+.project-title{
+    margin: 5px 0;
+    color: #78AC78;
+    font-weight: bolder;
+    text-align: left;
+}
+.title-container, button, article{
+    padding: 5px;
+}
+.actual-watched-project{
+    position: absolute;
+    height: 25px;
+    width: 25px;
+    background: #f2f2f2;
+    bottom: -105px;
+    transform: rotate(45deg);
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+.go-to-btn-container{
+  button{
+      color: #FFEEEE;
+      margin-left: auto;
+  }
+}

@@ -8,9 +8,10 @@
 
   </nav>
   <div>
-    <button (click)="togleEditUserModal()" class="user-settings-btn">
-      <i class="material-icons">settings</i>
-    </button>
+      <!-- (click)="togleEditUserModal()"  -->
+    <app-togler [listClass]="'account-list'"
+    (onSelectItem)="handleTogleRowClick($event)" [items]="toglerItems"
+    title="ACCOUNT" btnClass="label-btn white-btn"></app-togler>
     <button (click)="logout()" class="main-nav-btn">Logout</button>
   </div>
 </div>

@@ -4,7 +4,7 @@
 
 <div class="main-container">
   <app-error-handler [isLoading]="isFetchingProjects" [operationName]="'projects'">
-  <div class="project-list-container" *ngIf="projects.length > 0" [ngClass]="{'animate-slider': isSlideChanged}">
+  <div class="project-list-container" *ngIf="projects.length > 0" [ngClass]="{'animate-slider': isSlideChanged, 'whole-page-view': wholePageView, 'pagination-page-view': !wholePageView}">
       <p *ngIf="projectIndexInArray !== -1">
         <span>YOUR PROJECTS</span>
         <button debounceClick (click)="togleAddProjectModal()"
@@ -12,53 +12,51 @@
           <i class="material-icons animated-icon">add</i> ADD PROJECT
         </button>
 
-        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate"
+        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate && !wholePageView"
         (click)="togleCloseProjectConfirmModal()" class="label-btn">
           <i class="material-icons animated-icon">close</i> CLOSE PROJECT
         </button>
-        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate"
+        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate && !wholePageView"
         (click)="togleEditProjectModal()" class="label-btn">
           <i class="material-icons animated-icon">edit</i> EDIT PROJECT
         </button>
 
-        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate" (click)="togleUserSearcher()"
+        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate && !wholePageView" (click)="togleUserSearcher()"
         class="label-btn">
           <i class="material-icons animated-icon">search</i> ADD USER TO PROJECT
+        </button>
+
+        <button class="label-btn pagination-view-btn" (click)="togleWholePageView()" *ngIf="wholePageView">
+          <i class="material-icons">close</i>
+          SWITCH TO PAGINATION VIEW
         </button>
 
       </p>
       <app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-small spinner-form'" *ngIf="isDeletingProject"></app-spinner>
 
-      <app-pagination [items]="projects" [limit]="limit"></app-pagination>
+      <app-pagination *ngIf="!wholePageView" [items]="projects" [limit]="limit"></app-pagination>
 
-      <ul>
+      <ul *ngIf="!wholePageView">
         <li *ngFor="let project of projects | sort: 'id': 'asc'; let i = index" [ngClass]="{'closed-project': project.closingDate}"
         [ngStyle]="{'display': (i >= leftRange && i < rightRange && leftRange !== -1)
           ? 'initial' : 'none'}">
-          <div *ngIf="project.picturePath" class="picture-container">
-            <img [src]="projectPicturesBasePath + project.picturePath" />
-          </div>
-          <app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-small spinner-form'" *ngIf="projectIdWherePictureIsAdding === project.id"></app-spinner>
-          <div class="empty-picture" *ngIf="!project.picturePath">
-            <app-file-picker [btnClass]="'add-project-picture-btn'" [shouldShowAddedImage]="false" (addingFile)="changeProjectPicture($event, project.id)"></app-file-picker>
-          </div>
-          <div class="title-container">
-              <span class="project-title">{{project.name}}</span>
-              <span *ngIf="project.creationDate " class="creation-date">created in: {{project.creationDate | date: 'medium'}}</span>
-              <span *ngIf="project.closingDate" class="closing-date">closed in: {{project.closingDate | date: 'medium'}}</span>
-          </div>
-          <article>
-            {{project.description | shorten: '30'}}
-          </article>
-          <div class="go-to-btn-container">
-              <button debounceClick (click)="changeProject(project.id, i)" class="label-btn">Go to</button>
-          </div>
-
-          <div [ngClass]="{'actual-watched-project': project.id === actualWatchedProject}"></div>
+          <app-project-cart [projectPicturesBasePath]="projectPicturesBasePath" (clicking)="changeProject(project.id, i)"
+          [projectIdWherePictureIsAdding]="projectIdWherePictureIsAdding" (addingFile)="changeProjectPicture($event, project.id)"
+          [project]="project" [actualWatchedProject]="actualWatchedProject"></app-project-cart>
         </li>
       </ul>
-      <footer>
-        <button class="label-btn">WHOLE PAGE VIEW</button>
+
+      <ul *ngIf="wholePageView" class="whole-page-view">
+        <li *ngFor="let project of projects | sort: 'id': 'asc'; let i = index">
+            <app-project-cart [projectPicturesBasePath]="projectPicturesBasePath" [selectClass]="''"
+            [btnTitle]="'GO TO'" (addingFile)="changeProjectPicture($event, project.id)" (clicking)="navigateProjectManage(project.id)"
+            [projectIdWherePictureIsAdding]="projectIdWherePictureIsAdding"
+            [project]="project" [actualWatchedProject]="actualWatchedProject"></app-project-cart>
+        </li>
+      </ul>
+
+      <footer *ngIf="!wholePageView">
+        <button (click)="togleWholePageView()" class="label-btn"><i class="material-icons">fullscreen</i> WHOLE PAGE VIEW</button>
       </footer>
     </div>
 
