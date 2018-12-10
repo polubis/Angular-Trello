@@ -5,11 +5,25 @@
     </button>
     <button class="main-nav-btn">Teams</button>
     <button class="main-nav-btn">Stats</button>
+
   </nav>
-  <button (click)="logout()" class="main-nav-btn">Logout</button>
+  <div>
+    <button (click)="togleEditUserModal()" class="user-settings-btn">
+      <i class="material-icons">settings</i>
+    </button>
+    <button (click)="logout()" class="main-nav-btn">Logout</button>
+  </div>
 </div>
 
 <div class="actual-path-container">
   <span>{{path}}</span>
   <app-logo></app-logo>
 </div>
+<app-modal *ngIf="isEditUserDataModalOpen" [modalTitle]="'Edit your user data'"
+(onClosingModal)="togleEditUserModal()" [width]="'500px'">
+  <div class="form-wrapper">
+    <app-form [isDoingRequest]="isEditingUserData" [submitMethod]="saveUserData"
+    [formClass]="'stnd-form'" [formSettings]="editUserDataFormSettings">
+    </app-form>
+  </div>
+</app-modal>

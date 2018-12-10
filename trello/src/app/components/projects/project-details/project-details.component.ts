@@ -48,13 +48,15 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
     );
     this.routeSubscription = this.activatedRoute.params.subscribe(param => {
       this.projectId = this.activatedRoute.snapshot.params["id"];
-      if (this.projectsService.projects.length > 0) {
+      if (this.projectsService.projects.length > 0 && this.projectId) {
         this.getProjects();
       }
     });
 
     this.projectsService.onChangeProjects.subscribe(projects => {
-      this.getProjects();
+      if (this.projectId) {
+        this.getProjects();
+      }
     })
   }
 

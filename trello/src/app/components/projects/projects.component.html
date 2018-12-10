@@ -38,9 +38,9 @@
           <div *ngIf="project.picturePath" class="picture-container">
             <img [src]="projectPicturesBasePath + project.picturePath" />
           </div>
-
+          <app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-small spinner-form'" *ngIf="projectIdWherePictureIsAdding === project.id"></app-spinner>
           <div class="empty-picture" *ngIf="!project.picturePath">
-            <app-file-picker [btnClass]="'add-project-picture-btn'" [shouldShowAddedImage]="false"></app-file-picker>
+            <app-file-picker [btnClass]="'add-project-picture-btn'" [shouldShowAddedImage]="false" (addingFile)="changeProjectPicture($event, project.id)"></app-file-picker>
           </div>
           <div class="title-container">
               <span class="project-title">{{project.name}}</span>

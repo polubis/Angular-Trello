@@ -4,7 +4,7 @@ import { Subscription } from "rxjs";
 import { addCommentFormSettings } from '../../../constants/constants';
 import FormModel from "src/app/models/form.model";
 import { OperationsService } from "src/app/services/operations.service";
-
+import { userPicturesBasePath } from '../../../constants/constants';
 @Component({
   selector: 'app-comments-list',
   templateUrl: './comments-list.component.html',
@@ -20,6 +20,7 @@ export class CommentsListComponent implements OnInit {
   isAddingCommentModalOpen = false;
   commentToDelete = -1;
   addCommentFormSettings: FormModel[] = [...addCommentFormSettings];
+  userPicturesBasePath = userPicturesBasePath;
   constructor(private tasksService: TasksService, private operationsService: OperationsService) { }
 
   ngOnInit() {
@@ -38,6 +39,7 @@ export class CommentsListComponent implements OnInit {
 
     this.tasksService.getComments(this.taskId).subscribe((comments: any[]) => {
       this.comments = comments;
+      console.log(this.comments);
       this.isLoading = false;
     });
   }

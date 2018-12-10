@@ -11,9 +11,6 @@ export class UsersListComponent implements OnInit {
   @Input() users: any[];
   currentOpenedUserCartIndex = -1;
   userPicturesBasePath = userPicturesBasePath;
-  isEditUserDataModalOpen = false;
-  isEditingUserData = false;
-  editUserDataFormSettings = [...editUserDataFormSettings];
   constructor(private usersService: UsersService) { }
   togleUserDetails(event, index: number){
     event.stopPropagation();
@@ -21,14 +18,5 @@ export class UsersListComponent implements OnInit {
   }
   ngOnInit() {
   }
-  togleEditUserModal() {
-    this.isEditUserDataModalOpen = !this.isEditUserDataModalOpen;
-  }
 
-  saveUserData = (formData: any) => {
-    this.isEditingUserData = true;
-    this.usersService.editProfile(formData).then((response: any) => {
-      this.isEditingUserData = false;
-    }).catch(() => this.isEditingUserData = false);
-  }
 }

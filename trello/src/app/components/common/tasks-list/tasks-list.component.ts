@@ -11,6 +11,7 @@ import { FormService } from "src/app/services/form.service";
 import { EventEmitter } from "@angular/core";
 import { Output } from "@angular/core";
 import { Label } from "src/app/models/label.model";
+import { userPicturesBasePath } from '../../../constants/constants';
 @Component({
   selector: "app-tasks-list",
   templateUrl: "./tasks-list.component.html",
@@ -44,6 +45,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
     Done: 2
   };
   taskToChange: number = -1;
+  userPicturesBasePath = userPicturesBasePath;
   constructor(
     private tasksService: TasksService,
     private projectsService: ProjectsService,
@@ -52,7 +54,6 @@ export class TasksListComponent implements OnInit, OnDestroy {
     private formService: FormService
   ) {}
   ngOnInit() {
-    console.log(this.projectId);
   }
   ngOnDestroy() {
   }
@@ -172,12 +173,16 @@ export class TasksListComponent implements OnInit, OnDestroy {
     this.tasksService
       .assignPersonToTask(model, idOfProject)
       .then(response => {
+        const indexOfProject = this.projectsService.projects.findIndex(x => x.id == idOfProject);
+        const collaborators: any[] = [...this.projectsService.projects[indexOfProject].collaborators];
         const index = this.items.findIndex(
           item => item.id === this.idOfTaskToAssign
         );
+
+        const user: any = collaborators.find(x => x.id === model.userId);
         this.isAssigningToTask = false;
         this.idOfTaskToAssign = -1;
-        this.items[index].userId = formData[0].value;
+        this.items[index].user = {...user};
         this.operationsService.removeAllAfterDelay(3000);
       })
       .catch(error => (this.isAssigningToTask = false));

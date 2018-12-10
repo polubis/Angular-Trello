@@ -47,11 +47,10 @@ export class SearcherComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.getResults().subscribe(items => {
       const itemsWithoutPersonsInProject = [];
-
       items.forEach(item => {
         let shouldAdd = true;
         this.personsAlreadyInProject.forEach(person => {
-          if (person === item.id) shouldAdd = false;
+          if (person.id === item.id) shouldAdd = false;
         });
         if (shouldAdd) itemsWithoutPersonsInProject.push(item);
       });

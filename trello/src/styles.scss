@@ -164,9 +164,9 @@ input, textarea{
 
 .user-label{
   display: flex;
-  padding: 15px 0;
+  padding: 15px 10px;
   align-items: center;
-  i:first-of-type{
+  i:first-of-type:not(.delete-color){
       font-size: 22px;
       color: #98EE99;
   }
@@ -175,4 +175,23 @@ input, textarea{
       color: white;
       font-size: 14px;
   }
+
+}
+.small-avatar{
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.broken-image{
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+}
+.broken-image-white{
+  background: white;
+}
+.medium-broken-picture{
+  width: 50px;
+  height: 50px;
 }

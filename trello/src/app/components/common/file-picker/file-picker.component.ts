@@ -20,12 +20,14 @@ export class FilePickerComponent implements OnInit {
   ngOnInit() {
   }
   addFile(event) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imgRef.nativeElement.src = reader.result;
-      this.selectedFile = event.target.files[0];
+    if (this.shouldShowAddedImage) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imgRef.nativeElement.src = reader.result;
+        this.selectedFile = event.target.files[0];
+      }
+      reader.readAsDataURL(event.target.files[0]);
     }
-    reader.readAsDataURL(event.target.files[0]);
 
     this.addingFile.emit(event.target.files[0]);
   }

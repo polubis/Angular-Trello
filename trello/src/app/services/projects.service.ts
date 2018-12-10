@@ -4,6 +4,7 @@ import { EventEmitter } from "@angular/core";
 import { RequestService } from "src/app/services/request.service";
 import { ProjectModel } from '../models/project.model';
 import { OperationsService } from "src/app/services/operations.service";
+import { fromPromise } from "rxjs/internal-compatibility";
 @Injectable()
 export class ProjectsService {
   projects: ProjectModel[] = [];
@@ -20,6 +21,7 @@ export class ProjectsService {
   ) {}
 
   editProject(id: number, formData: any) {
+    console.log(formData);
     this.requestService
       .executeRequest(
         "editProject",
@@ -28,7 +30,7 @@ export class ProjectsService {
         "Project has been succesfully edited",
         id.toString(), {}
       )
-      .then(response => {
+      .then((response: ProjectModel) => {
         const projectIndex: number = this.projects.findIndex(
           project => project.id === id
         );
@@ -36,6 +38,7 @@ export class ProjectsService {
         copiedProject.name = formData[0].value;
         copiedProject.description = formData[1].value;
         copiedProject.color = formData[2].value;
+        copiedProject.picturePath = response.picturePath;
 
         this.projects[projectIndex] = copiedProject;
         this.onChangeProjects.emit(this.projects);
@@ -112,18 +115,34 @@ export class ProjectsService {
         addProjectData,
         "Project has been succesfuly added", "", {}
       )
-      .then((response: { id: number }) => {
-        const creationDate = new Date();
-        this.lastAddedProjetId = response.id;
+      .then((newProject: ProjectModel) => {
+        this.lastAddedProjetId = newProject.id;
+        const projects = [...this.projects];
+        projects.push(newProject);
+        this.projects = projects;
         this.onChangeProjects.emit(this.projects);
-        this.onChangeLastAddedProjectId.emit(response.id);
-        this.getProjects();
+        this.onChangeLastAddedProjectId.emit(newProject.id);
       })
       .catch(error => {
         this.onChangeProjects.emit(this.projects);
         this.onChangeLastAddedProjectId.emit(-1);
       });
   };
+
+  addPictureToProject(projectId: number, model: any, callBackFunction: any) {
+    this.requestService.executeRequest('addProjectPicture', 'put', [{value: model}], '', projectId.toString(), {})
+    .then((response: {picturePath: string}) => {
+      const projects = [...this.projects];
+      const indexOfProject = projects.findIndex(project => project.id === projectId);
+      projects[indexOfProject].picturePath = response.picturePath;
+      this.projects = projects;
+      if (this.currentWatchedProjectId === projects[indexOfProject].id) {
+        this.onChangeProjects.emit(this.projects);
+      }
+      callBackFunction();
+    }).catch(error => callBackFunction());
+  }
+
 
   getProjectDetails(id: string) {
     this.currentWatchedProjectId = Number(id);

@@ -96,6 +96,11 @@ export const editProjectFormSettings: FormModel[] = [
         validationSettings: {
             isCorrectFormat: patterns.hex
         } ,listElements: []
+    },
+    { label: "File", placeholder: "select your project image...", type: "file", mode: "single-file", initialValue: null,
+      validationSettings: {
+
+      } , listElements: []
     }
 ];
 
@@ -152,12 +157,12 @@ export const addCommentFormSettings: FormModel[] = [
 ];
 
 export const editUserDataFormSettings: FormModel[] = [
-  { label: "First Name", placeholder: "type your project name...", type: "input", mode: "input", initialValue: null,
+  { label: "First Name", placeholder: "type your first name...", type: "input", mode: "input", initialValue: null,
   validationSettings: {
       minLength: 5, maxLength: 25, required: true, isCorrectFormat: patterns.name
   },listElements: []
   },
-  { label: "Last Name", placeholder: "type your project description...", type: "input", mode: "input",initialValue: null,
+  { label: "Last Name", placeholder: "type your last name...", type: "input", mode: "input",initialValue: null,
     validationSettings: {
         minLength: 5, maxLength: 25, required: true, isCorrectFormat: patterns.name
     } ,listElements: []

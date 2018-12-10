@@ -31,6 +31,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   isAddingProject: boolean = false;
   isDeletingProject: boolean = false;
   isEditingProject: boolean = false;
+  projectIdWherePictureIsAdding = -1;
   isEditProjectModalOpen: boolean = false;
 
   leftRange: number = -1;
@@ -52,7 +53,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     this.onChangeProjectsSub = this.projectsService.onChangeProjects.subscribe(
       (projects: ProjectModel[]) => {
         this.projects = projects;
-        console.log(this.projects);
         this.isFetchingProjects = false;
         if (this.isDeletingProject) this.isDeletingProject = false;
         if (this.isEditingProject) {
@@ -153,6 +153,10 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     this.isOpenCloseProjectConfirmModal = !this.isOpenCloseProjectConfirmModal;
   }
 
+  changeProjectPicture(file: any, projectId: number) {
+    this.projectIdWherePictureIsAdding = projectId;
+    this.projectsService.addPictureToProject(projectId, file, () => this.projectIdWherePictureIsAdding = -1);
+  }
   ngOnDestroy() {
     this.onChangeCurrentWatchedProjectSub.unsubscribe();
     this.onChangeProjectsSub.unsubscribe();

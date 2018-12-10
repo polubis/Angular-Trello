@@ -40,7 +40,6 @@ export class LabelSelectorComponent implements OnInit {
     };
     this.tasksService.assignLabelIntoProject(model, this.currentSelectedLabel.projectId).then(response => {
       this.labelSaved.emit(this.currentSelectedLabel);
-      console.log(this.currentSelectedLabel);
       this.isSavingItem = false;
       this.toglePalete();
     }).catch(() => {

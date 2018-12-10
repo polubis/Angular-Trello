@@ -19,11 +19,12 @@ export class RequestService {
         addProject: { url: "Project/Add", needsAuth: true, requestKeys: ["Name", "Description", "Color", "File"], formData: true },
         projectDetails: { url: "Project/Details/", needsAuth: true },
         closeProject: { url: "Project/Close/", needsAuth: true },
-        editProject: { url: "Project/Edit/", needsAuth: true, requestKeys: ["Name", "Description", "Color"] },
+        editProject: { url: "Project/Edit/", needsAuth: true, requestKeys: ["Name", "Description", "Color", "File"], formData: true },
 
         addPersonToProject: { url: "Project/AddPersonToProject", needsAuth: true },
         getUsersFromProject: { url: "Project/GetAllMembers/", needsAuth: true },
         getUsersByQuery: { url: "/Project/UserSearcher?query=", needsAuth: true },
+        addProjectPicture: { url: "/Project/Picture/", needsAuth: true, formData: true, requestKeys: ["File"] },
 
         //labels
         addLabelIntoProject: { url: "Label/Add/", needsAuth: true, requestKeys: ["Name", "Color", "Icon"] },
@@ -76,7 +77,7 @@ export class RequestService {
 
             if(params !== "")
                 requestPath += params;
-
+            console.log(modifiedPayload);
             const reqReference = (requestType !== "get" && requestType !== "delete") ? this.http[requestType](requestPath, modifiedPayload, { withCredentials: true }) :
                 this.http[requestType](requestPath,  { withCredentials: true });
             reqReference.subscribe(

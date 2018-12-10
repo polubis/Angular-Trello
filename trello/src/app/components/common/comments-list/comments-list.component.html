@@ -7,11 +7,14 @@
 <div class="comments" *ngIf="isCommentsShowed">
   <ul *ngIf="comments.length > 0">
     <li *ngFor="let comment of comments; let i = index">
+
       <div class="user-label">
-        <i class="material-icons">person</i>
+        <i *ngIf="!comment.picturePath" class="material-icons">person</i>
+        <img [handleImage]="'broken-image-white'" *ngIf="comment.picturePath" [src]="userPicturesBasePath + comment.picturePath" />
         <span>{{comment.userId}}</span>
         <i class="material-icons animated-icon delete-color" (click)="setCommentToDelete(i)">delete</i>
       </div>
+
       <div class="comment-content">{{comment.content}}</div>
     </li>
   </ul>

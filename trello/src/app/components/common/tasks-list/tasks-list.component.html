@@ -7,7 +7,7 @@
         <app-label-selector *ngIf="shouldShowLabelSelector" [labels]="projectLabels" [operationTitle]="'Save label'" [taskId]="item.id" (labelSaved)="refreshLabelState($event, i)">
 
         </app-label-selector>
-        <i (click)="togleAssignToTaskPersonModal(item.id)" class="material-icons animated-icon">assignment_returned</i>
+        <i *ngIf="!item.user" (click)="togleAssignToTaskPersonModal(item.id)" class="material-icons animated-icon">assignment_returned</i>
         <i (click)="togleEditTaskModal(item.id)" class="material-icons edit-color animated-icon">edit</i>
         <i (click)="togleDeleteTaskPrompt(item.id)" class="material-icons delete-color animated-icon">delete</i>
       </div>
@@ -33,10 +33,14 @@
         </p>
       </div>
 
-      <div class="user-label">
-        <i class="material-icons" *ngIf="item.userId">person</i>
-        <span *ngIf="item.userId">{{item.userId}}</span>
-        <span *ngIf="!item.userId">This task doesn't have assigned user</span>
+      <div class="user-label" *ngIf="item.user">
+        <img [handleImage]="'broken-image-white'" *ngIf="item.user.picturePath" [src]="userPicturesBasePath + item.user.picturePath" />
+        <i *ngIf="!item.user.picturePath" class="material-icons">person</i>
+        <span>{{item.user.firstName}} {{item.user.lastName}}</span>
+      </div>
+
+      <div class="user-label" *ngIf="!item.user">
+          <span>This task doesn't have assigned user</span>
       </div>
 
       <app-comments-list [taskId]="item.id">

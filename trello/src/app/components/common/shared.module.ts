@@ -24,6 +24,7 @@ import { DragDropDirectiveModule} from "angular4-drag-drop";
 import { CommentsListComponent } from './comments-list/comments-list.component';
 import { LabelSelectorComponent } from './label-selector/label-selector.component';
 import { FilePickerComponent } from './file-picker/file-picker.component';
+import { ErrorImage } from "src/app/directives/image";
 @NgModule({
     declarations: [ FormComponent, LoggedNavigationComponent,
     LogoComponent, ModalComponent, OperationsComponent, PaginationComponent,
@@ -35,7 +36,8 @@ import { FilePickerComponent } from './file-picker/file-picker.component';
     SearcherComponent,
     CommentsListComponent,
     LabelSelectorComponent,
-    FilePickerComponent
+    FilePickerComponent,
+    ErrorImage
     ],
     imports: [CommonModule, AppRoutingModule, DragDropDirectiveModule],
     exports: [
@@ -43,7 +45,7 @@ import { FilePickerComponent } from './file-picker/file-picker.component';
         LogoComponent, ModalComponent, OperationsComponent, PaginationComponent,
         SpinnerComponent, ToglerComponent, DebounceClick, ConfirmPromptComponent,
         ErrorHandlerComponent, LengthPipe, TasksListComponent, SelectorComponent, SortingPipe,
-        FilterPipe, UsersListComponent, SearcherComponent, CommentsListComponent, LabelSelectorComponent, FilePickerComponent
+        FilterPipe, UsersListComponent, SearcherComponent, CommentsListComponent, LabelSelectorComponent, FilePickerComponent, ErrorImage
     ]
 })
 export class SharedModule {}

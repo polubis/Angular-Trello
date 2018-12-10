@@ -1,12 +1,23 @@
 .navigation-container{
     background: #424242;
     position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 30px;
     nav{
         width: 1200px;
         margin: 0 auto;
         button{
             margin-right: 15px;
         }
+    }
+    div{
+      display: inherit;
+      align-items: inherit;
+      .user-settings-btn{
+        margin-right: 30px;
+      }
     }
     & > button{
         position: absolute;
@@ -30,4 +41,9 @@
     color: #424242;
     align-items: center;
     justify-content: space-between;
+}
+.user-settings-btn{
+  color: white;
+  background: transparent;
+  border: none;
 }

@@ -1,27 +1,27 @@
 <ul>
   <li (click)="togleUserDetails($event, i)" [style.backgroundImage]="'url('+ userPicturesBasePath + user.picturePath +')'" *ngFor="let user of users; let i = index">
+    <img [handleImage]="''" *ngIf="user.picturePath" [src]="userPicturesBasePath + user.picturePath" />
     <div *ngIf="!user.picturePath" class="avatar">
       <i class="material-icons">person</i>
     </div>
 
     <div *ngIf="currentOpenedUserCartIndex === i" class="user-details-cart">
       <div class="image-container">
-        <img [src]="userPicturesBasePath + user.picturePath" [style.visibility]="user.picturePath ? 'visible' : 'hidden'"/>
+        <img *ngIf="user.picturePath" [handleImage]="'broken-image-white'" [src]="userPicturesBasePath + user.picturePath" />
         <div class="empty-image" *ngIf="!user.picturePath">
           <i class="material-icons">person</i>
         </div>
      </div>
       <div class="user-data">
-        <p><b>Username</b><span>{{user.userName}}</span></p>
-        <p><b>Email</b><span>tomasz@wp.pl</span></p>
-        <p><b>First name</b><span>Tomasz</span></p>
-        <p><b>Last name</b><span>Tomaszkiewicz</span></p>
-        <p><b>Number of tasks</b><span>13</span></p>
-        <p><b>Number of projects</b><span>16</span></p>
+        <p><b>Username</b><span>{{user.id}}</span></p>
+        <p><b>Email</b><span>{{user.email}}</span></p>
+        <p><b>First name</b><span>{{user.firstName}}</span></p>
+        <p><b>Last name</b><span>{{user.lastName}}</span></p>
+        <p><b>Number of tasks</b><span>{{user.numberOfTasks}}</span></p>
       </div>
 
       <button class="circle-btn" (click)="togleEditUserModal()">
-        EDIT ACCOUNT DATA
+        REMOVE FROM PROJECT
       </button>
 
       <button (click)="togleUserDetails($event)" class="label-btn">
@@ -31,12 +31,3 @@
     </div>
   </li>
 </ul>
-
-<app-modal *ngIf="isEditUserDataModalOpen" [modalTitle]="'Edit your user data'"
-(onClosingModal)="togleEditUserModal()" [width]="'500px'">
-  <div class="add-user-form-container">
-    <app-form [isDoingRequest]="isEditingUserData" [submitMethod]="saveUserData"
-    [formClass]="'stnd-form'" [formSettings]="editUserDataFormSettings">
-    </app-form>
-  </div>
-</app-modal>
