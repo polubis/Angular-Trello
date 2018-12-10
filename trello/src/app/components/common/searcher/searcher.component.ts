@@ -3,7 +3,7 @@ import { Subscription, Subject } from "rxjs";
 import { UsersService } from "src/app/services/users.service";
 import { of } from 'rxjs';
 import { from } from 'rxjs';
-
+import { userPicturesBasePath } from '../../../constants/constants';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/debounceTime';
@@ -35,6 +35,7 @@ export class SearcherComponent implements OnInit, OnDestroy {
   @Output() onCloseSearcher = new EventEmitter<void>();
   isSearching: boolean = false;
   inputValue = new Subject();
+  userPicturesBasePath = userPicturesBasePath;
   subscription: Subscription;
   results: any[] = [];
 

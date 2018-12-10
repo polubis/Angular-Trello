@@ -40,16 +40,8 @@ ul{
               display: flex;
               align-items: center;
               justify-content: center;
-              .empty-image{
-                height: 50px;
-                width: 50px;
-                display: inherit;
-                justify-content: inherit;
-                align-items: inherit;
-                i{
-                  font-size: 40px;
-                  color: #98EE99;
-                }
+              .empty-image i{
+                font-size: 40px;
               }
               img:not(.broken-image){
                 width: 100%;

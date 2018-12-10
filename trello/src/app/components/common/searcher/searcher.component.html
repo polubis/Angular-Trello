@@ -5,7 +5,7 @@
         <div>
           <i *ngIf="!isSearching" class="material-icons">search</i>
           <app-spinner *ngIf="isSearching" [spinnerClass]="'spinner spinner-small searcher-spinner'"></app-spinner>
-          
+
         </div>
     </div>
     <i (click)="closeSearcher()" class="material-icons">close</i>
@@ -15,13 +15,16 @@
     <ul>
       <li *ngFor="let result of results; let i = index" class="shadow">
         <div class="image-container">
-          <img src="assets/guitar.jpg" alt="picture"/>
+          <img *ngIf="result.picturePath" [handleImage]="''" [src]="userPicturesBasePath + result.picturePath" alt="picture"/>
+          <div *ngIf="!result.picturePath" class="empty-image">
+            <i class="material-icons">person</i>
+          </div>
           <span>{{result.id}}</span>
         </div>
 
         <p>
           <i class="material-icons">person</i>
-          <span> {{result.firstName}} {{result.lastName}}</span> 
+          <span> {{result.firstName}} {{result.lastName}}</span>
           <i class="material-icons">email</i>
           <span>{{result.email}}</span>
         </p>
