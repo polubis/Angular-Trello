@@ -172,3 +172,21 @@ export const editUserDataFormSettings: FormModel[] = [
     } ,listElements: []
   }
 ];
+
+export const changePasswordFormSettings: FormModel[] = [
+  { label: "Old password", placeholder: "type your password...", type: "password", mode: "input", initialValue: null,
+    validationSettings: {
+        minLength: 7, maxLength: 25, required: true, shouldShowOneUppercase: 1, isContainsNumber: 1, isContainsSpecialChars: 1
+    } ,listElements: []
+  },
+  { label: "New password", placeholder: "type your new password...", type: "password", mode: "input", initialValue: null,
+    validationSettings: {
+        minLength: 7, maxLength: 25, required: true, shouldShowOneUppercase: 1, isContainsNumber: 1, isContainsSpecialChars: 1
+    } ,listElements: []
+  },
+  { label: "New repeated password", placeholder: "repeat your new password...", type: "password", mode: "input", initialValue: null,
+    validationSettings: {
+        minLength: 7, maxLength: 25, required: true, shouldShowOneUppercase: 1, isContainsNumber: 1, isContainsSpecialChars: 1
+    } ,listElements: []
+  },
+];

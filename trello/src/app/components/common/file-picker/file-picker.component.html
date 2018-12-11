@@ -9,7 +9,17 @@
 
   <input type="file" [style.display]="'none'" (change)="addFile($event)" #inputRef/>
   <button [class]="btnClass" (click)="openAddingFile()" type="button">
-    <i class="material-icons">image</i>
-    <i class="material-icons i-on-blue">add</i>
+    <ng-container *ngIf="!normalBtn">
+      <i class="material-icons">image</i>
+      <i class="material-icons i-on-blue">add</i>
+    </ng-container>
+
+    <ng-container *ngIf="normalBtn">
+      <i class="material-icons image-icon">
+        image
+      </i>
+      CHANGE AVATAR
+    </ng-container>
+
   </button>
 </div>

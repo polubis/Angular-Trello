@@ -20,6 +20,8 @@ export class RequestService {
         projectDetails: { url: "Project/Details/", needsAuth: true },
         closeProject: { url: "Project/Close/", needsAuth: true },
         editProject: { url: "Project/Edit/", needsAuth: true, requestKeys: ["Name", "Description", "Color", "File"], formData: true },
+        getLoggedUserData: { url: 'Account', needsAuth: true },
+        changePassword: { url: 'Account/ChangePassword', needsAuth: true, requestKeys: ['Password', 'NewPassword', 'ConfirmNewPassword'] },
 
         addPersonToProject: { url: "Project/AddPersonToProject", needsAuth: true },
         getUsersFromProject: { url: "Project/GetAllMembers/", needsAuth: true },

@@ -12,6 +12,7 @@ export class FilePickerComponent implements OnInit {
   @Input() classes = '';
   @Input() shouldShowAddedImage = true;
   @Input() btnClass = 'add-file-btn';
+  @Input() normalBtn = false;
   @Output() addingFile = new EventEmitter<any>();
 
   selectedFile: any;

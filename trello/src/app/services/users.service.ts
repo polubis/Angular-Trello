@@ -21,4 +21,8 @@ export class UsersService {
     editProfile(formData: any) {
       return this.requestService.executeRequest('editProfile', 'post', formData, 'Your user data has been succesfully edited', '', {});
     }
+
+    changePassword(formData: any) {
+      return this.requestService.executeRequest('changePassword', 'post', formData, 'You password has been succesfully changed', '', {});
+    }
 }

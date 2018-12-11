@@ -47,7 +47,4 @@ export class AuthService{
     setUserData(user: User) {
       this.userData.next(user);
     }
-    getUserData() {
-
-    }
 }

@@ -26,6 +26,11 @@
           class="label-btn">
             <i class="material-icons animated-icon">search</i> ADD USER TO PROJECT
           </button>
+
+          <button class="label-btn pagination-view-btn" (click)="togleWholePageView()" *ngIf="wholePageView">
+            <i class="material-icons">close</i>
+            SWITCH TO PAGINATION VIEW
+          </button>
         </ng-container>
 
         <ng-container *ngIf="projectIndexInArray === -1">

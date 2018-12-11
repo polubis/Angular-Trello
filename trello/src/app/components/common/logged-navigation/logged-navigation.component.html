@@ -28,3 +28,60 @@
     </app-form>
   </div>
 </app-modal>
+
+
+<app-modal *ngIf="userProfileOpen" (onClosingModal)="togleUserProfile()">
+  <div class="user-profile">
+    <app-spinner [spinnerClass]="'spinner spinner-small spinner-form'" *ngIf="isGettingUserData"></app-spinner>
+    <ng-container *ngIf="!isGettingUserData && userData">
+      <div class="options">
+        <p>Account settings</p>
+        <div class="operations">
+          <button (click)="openEditDetails()" class="label-btn"><i class="material-icons animated-icon">edit</i> EDIT DETAILS</button>
+          <app-file-picker [classes]="'normal-btn'" [normalBtn]="true" [shouldShowAddedImage]="false" (addingFile)="changeAvatar($event)"></app-file-picker>
+          <button (click)="togleChangePasswordModal()" class="label-btn"><i class="material-icons animated-icon">security</i> CHANGE PASSWORD</button>
+        </div>
+        <button class="label-btn"><i class="material-icons animated-icon">delete</i> DELETE ACCOUNT</button>
+      </div>
+
+      <div class="image-content">
+        <img [handleImage]="''" *ngIf="userData.picturePath" [src]="userPicturesBasePath + userData.picturePath" />
+        <i *ngIf="!userData.picturePath" class="material-icons">person</i>
+        <app-spinner *ngIf="isChangingAvatar" [showBackdrop]="true" [spinnerClass]="'spinner spinner-small spinner-form'">
+
+        </app-spinner>
+      </div>
+
+      <div class="account-details">
+        <div class="detail">
+          <span>email</span>
+          <span>{{userData.email}}</span>
+        </div>
+        <div *ngIf="userData.username" class="detail">
+          <span>username</span>
+          <span>{{userData.username}}</span>
+        </div>
+        <div *ngIf="userData.firstName" class="detail">
+          <span>first name</span>
+          <span>{{userData.firstName}}</span>
+        </div>
+        <div *ngIf="userData.lastName" class="detail">
+          <span>last name</span>
+          <span>{{userData.lastName}}</span>
+        </div>
+      </div>
+
+      <button (click)="togleUserProfile()" class="label-btn done-btn">DONE</button>
+    </ng-container>
+  </div>
+
+</app-modal>
+
+<app-modal *ngIf="openChangePasswordModal" [modalTitle]="'Change your password'"
+(onClosingModal)="togleChangePasswordModal()" [width]="'500px'">
+  <div class="form-wrapper">
+    <app-form [isDoingRequest]="isChangingPassword" [submitMethod]="changePassword"
+    [formClass]="'stnd-form'" [formSettings]="changePasswordFormSettings">
+    </app-form>
+  </div>
+</app-modal>

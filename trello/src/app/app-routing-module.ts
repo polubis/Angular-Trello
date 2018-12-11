@@ -32,7 +32,8 @@ const routes: Routes = [
         canActivate: [LoggedUserGuard]
       }
     ]
-  }
+  },
+  { path: '**', redirectTo: "projects" }
 ];
 
 @NgModule({

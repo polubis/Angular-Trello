@@ -47,3 +47,77 @@
   background: transparent;
   border: none;
 }
+.user-profile{
+  max-width: 500px;
+  min-height: 500px;
+  display: grid;
+  grid-template-rows: 1fr 1fr 80px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+  "settings image"
+  "content content"
+  "footer footer";
+
+  .options, .image-content{
+    background: rgba(152, 152, 152, 0.13);
+  }
+  .options{
+    grid-area: settings;
+    padding: 15px;
+    display: flex;
+    flex-flow: column;
+    p{
+      margin: 0;
+      font-size: 22px;
+      margin-bottom: 25px;
+    }
+    & > button{
+      color: #D47D7D;
+      margin-top: auto;
+    }
+    .operations{
+      button{
+        margin-bottom: 20px;
+      }
+    }
+  }
+  .image-content{
+    grid-area: image;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    i{
+      font-size: 48px;
+    }
+    img{
+      border-radius: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .account-details{
+    grid-area: content;
+    padding: 20px;
+    display: flex;
+    flex-flow: wrap;
+    .detail{
+      display: flex;
+      flex-flow: column;
+      margin: 10px 30px;
+    }
+    span:first-of-type{
+      color: #BEBEBE;
+      margin-bottom: 5px;
+      font-size: 12px;
+    }
+    span:last-of-type{
+      font-size: 16px;
+    }
+  }
+  .done-btn{
+    color: #6495DA;
+    margin: 0 auto;
+    grid-area: footer;
+    font-size: 20px;
+  }
+}

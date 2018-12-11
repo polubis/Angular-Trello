@@ -19,7 +19,7 @@
   }
 }
 .add-file-btn{
-  i:last-of-type{
+  i:last-of-type:not(.image-icon){
     font-size: 14px;
     margin-top: 15px;
     margin-left: auto;
@@ -30,11 +30,18 @@
 }
 .add-project-picture-btn{
   color: white;
-  i:first-of-type{
+  i:first-of-type:not(.image-icon){
     font-size: 48px;
   }
-  i:last-of-type{
+  i:last-of-type:not(.image-icon){
     font-size: 20px;
     margin-top: 30px;
   }
+}
+.normal-btn{
+  padding-left: 6px;
+  margin-bottom: 20px;
+}
+.image-icon{
+  margin-right: 5px;
 }
