@@ -5,33 +5,41 @@
 <div class="main-container">
   <app-error-handler [isLoading]="isFetchingProjects" [operationName]="'projects'">
   <div class="project-list-container" *ngIf="projects.length > 0" [ngClass]="{'animate-slider': isSlideChanged, 'whole-page-view': wholePageView, 'pagination-page-view': !wholePageView}">
-      <p *ngIf="projectIndexInArray !== -1">
+      <p>
         <span>YOUR PROJECTS</span>
-        <button debounceClick (click)="togleAddProjectModal()"
-        class="label-btn">
-          <i class="material-icons animated-icon">add</i> ADD PROJECT
-        </button>
+        <ng-container *ngIf="projectIndexInArray !== -1">
+          <button debounceClick (click)="togleAddProjectModal()"
+          class="label-btn">
+            <i class="material-icons animated-icon">add</i> ADD PROJECT
+          </button>
 
-        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate && !wholePageView"
-        (click)="togleCloseProjectConfirmModal()" class="label-btn">
-          <i class="material-icons animated-icon">close</i> CLOSE PROJECT
-        </button>
-        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate && !wholePageView"
-        (click)="togleEditProjectModal()" class="label-btn">
-          <i class="material-icons animated-icon">edit</i> EDIT PROJECT
-        </button>
+          <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate && !wholePageView"
+          (click)="togleCloseProjectConfirmModal()" class="label-btn">
+            <i class="material-icons animated-icon">close</i> CLOSE PROJECT
+          </button>
+          <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate && !wholePageView"
+          (click)="togleEditProjectModal()" class="label-btn">
+            <i class="material-icons animated-icon">edit</i> EDIT PROJECT
+          </button>
 
-        <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate && !wholePageView" (click)="togleUserSearcher()"
-        class="label-btn">
-          <i class="material-icons animated-icon">search</i> ADD USER TO PROJECT
-        </button>
+          <button debounceClick *ngIf="actualWatchedProject !== -1 && !projects[projectIndexInArray].closingDate && !wholePageView" (click)="togleUserSearcher()"
+          class="label-btn">
+            <i class="material-icons animated-icon">search</i> ADD USER TO PROJECT
+          </button>
+        </ng-container>
 
-        <button class="label-btn pagination-view-btn" (click)="togleWholePageView()" *ngIf="wholePageView">
-          <i class="material-icons">close</i>
-          SWITCH TO PAGINATION VIEW
-        </button>
-
+        <ng-container *ngIf="projectIndexInArray === -1">
+          <button debounceClick (click)="togleAddProjectModal()"
+          class="label-btn">
+            <i class="material-icons animated-icon">add</i> ADD PROJECT
+          </button>
+          <button class="label-btn pagination-view-btn" (click)="togleWholePageView()" *ngIf="wholePageView">
+            <i class="material-icons">close</i>
+            SWITCH TO PAGINATION VIEW
+          </button>
+        </ng-container>
       </p>
+
       <app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-small spinner-form'" *ngIf="isDeletingProject"></app-spinner>
 
       <app-pagination *ngIf="!wholePageView" [items]="projects" [limit]="limit"></app-pagination>
