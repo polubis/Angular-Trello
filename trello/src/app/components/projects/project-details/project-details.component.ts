@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectsService } from "src/app/services/projects.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ProjectModel } from "src/app/models/project.model";
 import FormModel from "src/app/models/form.model";
 import { OperationsService } from "src/app/services/operations.service";
@@ -8,6 +8,7 @@ import { PaginationService } from "src/app/services/pagination.service";
 import { OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs";
 import { projectPicturesBasePath } from '../../../constants/constants';
+import { AuthService } from "src/app/services/auth.service";
 @Component({
   selector: "app-project-details",
   templateUrl: "./project-details.component.html",
@@ -26,7 +27,9 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
     private projectsService: ProjectsService,
     private activatedRoute: ActivatedRoute,
     private operationsService: OperationsService,
-    private paginationService: PaginationService
+    private paginationService: PaginationService,
+    private authService: AuthService,
+    private router: Router
   ) {}
   popUpUserDetails(){
     this.isUserCartOpen = true;
@@ -89,8 +92,21 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
     this.isDeletingPersonFromProject = true;
     this.projectsService.removePersonFromProject(user.id, this.projectId)
     .then(response => {
-      this.isDeletingPersonFromProject = false;
+      if (user.id === this.authService.userId) {
+        this.projectsService.getProjects();
+        this.projectId = '';
+        this.router.navigate(["/projects"]);
+      } else {
+        this.isDeletingPersonFromProject = false;
+        const project = {...this.project};
+        const collaborators: any[] = [...project.collaborators];
+        const indexOfUser = collaborators.findIndex(collaborator => collaborator.id === user.id);
+        collaborators.splice(indexOfUser, 1);
+        project.collaborators = collaborators;
+        this.project = project;
+      }
       this.operationsService.removeAllAfterDelay(3000);
+
     }).catch(error => {
       this.isDeletingPersonFromProject = false;
     });

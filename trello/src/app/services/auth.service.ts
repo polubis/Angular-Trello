@@ -8,9 +8,13 @@ export class AuthService{
     isAuthenticated: boolean = false;
     onAuthenticateChanges = new EventEmitter<boolean>();
     userData = new Subject<User>();
+    userId: string;
     constructor(){
-        const isAuth = this.getASpecyficCookieValue("auth", document.cookie);
+        const cookies = document.cookie;
+        const isAuth = this.getASpecyficCookieValue("auth", cookies);
+        const userId = this.getASpecyficCookieValue("userId", cookies);
         this.isAuthenticated = isAuth !== "";
+        this.userId = userId;
     }
 
     getASpecyficCookieValue(nameOfValue: string, cookies: string): string {
