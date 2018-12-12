@@ -1,14 +1,14 @@
 <div *ngIf="project.picturePath" class="picture-container">
-  <img [src]="projectPicturesBasePath + project.picturePath" />
+  <img [src]="projectPicturesBasePath + project.picturePath" [ngStyle]="{'opacity': project.closingDate ? '.4' : '1'}"/>
 </div>
 <app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-small spinner-form'" *ngIf="projectIdWherePictureIsAdding === project.id"></app-spinner>
 <div class="empty-picture" *ngIf="!project.picturePath">
   <app-file-picker [btnClass]="'add-project-picture-btn'" [shouldShowAddedImage]="false" (addingFile)="addingFile.emit($event)"></app-file-picker>
 </div>
 <div class="title-container">
-    <span class="project-title">{{project.name}}</span>
-    <span *ngIf="project.creationDate " class="creation-date">created in: {{project.creationDate | date: 'medium'}}</span>
-    <span *ngIf="project.closingDate" class="closing-date">closed in: {{project.closingDate | date: 'medium'}}</span>
+  <span class="project-title">{{project.name}}</span>
+  <span *ngIf="project.creationDate " class="creation-date">created in: {{project.creationDate | date: 'medium'}}</span>
+  <span *ngIf="project.closingDate" class="closing-date">closed in: {{project.closingDate | date: 'medium'}}</span>
 </div>
 <article>
   {{project.description | shorten: '30'}}

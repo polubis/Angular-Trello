@@ -7,10 +7,6 @@ export class Timer {
       return 'This task is not touched yet';
     }
 
-    if (time === 0) {
-      return '1 minute';
-    }
-
     const { hourLength, dayLength, weekLength } = this;
 
     let timeString = '';
