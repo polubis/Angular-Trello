@@ -1,7 +1,7 @@
 
 import { RequestService } from "src/app/services/request.service";
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
+import { Subject, of } from "rxjs";
 import { TaskModel } from "src/app/models/task.model";
 import * as _ from 'lodash';
 import { fromPromise } from "rxjs/internal/observable/fromPromise";
@@ -25,7 +25,6 @@ export class TasksService {
   }
 
   moveTaskIntoOtherBoard(taskId: number, bucket: string){
-    ///Task/MoveTask?Id=2&Bucket=2
     const query: string = "?Id=" + taskId.toString() + "&Bucket=" + bucket;
     return this.requestService.executeRequest("moveTask", "put", {}, "", query, {});
   }
@@ -68,13 +67,18 @@ export class TasksService {
     return buckets;
   }
 
-  getTasksForProject(){
+  getTasksForProject(resetFunc?: any){
     this.requestService.executeRequest("projectDetails", "get", {}, "",
       this.projectId.toString(), {})
       .then((response: any) => {
         this.buckets = this.createBuckets(response.tasks, response.labels);
         this.onChangeTasks.next({buckets: this.buckets, labels: response.labels});
-      }).catch(error => this.onChangeTasks.next({buckets: this.buckets, labels: []}));
+        if (resetFunc) resetFunc();
+      }).catch(error => {
+        this.onChangeTasks.next({buckets: this.buckets, labels: []})
+        if (resetFunc)
+          resetFunc();
+      });
   }
 
   addTask(formData: any, projectId: number, objectToSpread: any){
@@ -111,5 +115,28 @@ export class TasksService {
   }
   assignLabelIntoProject(formData: any, projectId: number) {
     return this.requestService.executeRequest('assignLabel', 'put', formData, "Label has been succesfully assigned", projectId.toString(), formData);
+  }
+
+  startTaskTime(taskId: number, bucketName: string, resetFunc: any) {
+    return this.requestService.executeRequest('startTaskTime', 'post', {}, '', taskId.toString(), {})
+      .then(response => {
+        if (bucketName !== 'InProgress') {
+          this.moveTaskIntoOtherBoard(taskId, this.bucketIndexes.InProgress).then(response => {
+            this.getTasksForProject(resetFunc);
+          }).catch(error => {
+            resetFunc();
+          });
+        } else {
+          this.getTasksForProject(resetFunc);
+        }
+
+      }).catch(() => resetFunc());
+  }
+
+  stopTaskTime(taskId: number, bucketName: string, resetFunc: any) {
+    return this.requestService.executeRequest('stopTaskTime', 'put', {}, '', taskId.toString(), {})
+      .then(response => {
+        this.getTasksForProject((resetFunc));
+      }).catch(() => resetFunc());;
   }
 }

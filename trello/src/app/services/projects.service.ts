@@ -7,7 +7,7 @@ import { OperationsService } from "src/app/services/operations.service";
 import { fromPromise } from "rxjs/internal-compatibility";
 @Injectable()
 export class ProjectsService {
-  projects: ProjectModel[] = [];
+  projects: ProjectModel[];
   currentWatchedProjectId: number = -1;
   lastAddedProjetId: number = -1;
 

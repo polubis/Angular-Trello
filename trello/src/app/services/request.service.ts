@@ -42,6 +42,10 @@ export class RequestService {
         assignTaskToPerson: { url: "Task/", needsAuth: true },
         assignLabel: { url: "Task/AssignLabel/", needsAuth: true},
 
+        stopTaskTime: { url: "/Task/StopTime/", needsAuth: true},
+        startTaskTime: { url: "/Task/StartTime/", needsAuth: true},
+
+
         //comments
         addComment: { url: "Comments", needsAuth: true, requestKeys: ['conntent'] },
         deleteComment: { url: "Comments/Delete/", needsAuth: true },

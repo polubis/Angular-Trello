@@ -73,6 +73,7 @@ export class TasksComponent implements OnInit, OnDestroy {
     this.tasksSubscription = this.tasksService.onChangeTasks.subscribe(
       (project: any) => {
         if (this.isDownloadingTasks) this.isDownloadingTasks = false;
+
         this.buckets = project.buckets;
         this.projectLabels = project.labels;
         this.bucketsListsKeys = Object.keys(project.buckets);
@@ -81,6 +82,10 @@ export class TasksComponent implements OnInit, OnDestroy {
 
     this.tasksService.getTasksForProject();
     this.projectId = this.tasksService.projectId;
+
+    if (!this.projectsService.projects) {
+      this.projectsService.getProjects();
+    }
   }
 
   togleAddLabelModal() {
@@ -104,7 +109,7 @@ export class TasksComponent implements OnInit, OnDestroy {
     this.projectsService.editLabelInProject(this.labelIdToEdit, formData)
     .then((response) => {
       const indexOfEditedLabel: number = this.projectLabels.findIndex(label => label.id === this.labelIdToEdit);
-      const label = {name: formData[0].value, color: formData[1].value, icon: formData[2].value, id: this.labelIdToEdit };
+      const label = {name: formData[0].value, color: formData[1].value, icon: formData[2].value, id: this.labelIdToEdit, projectId: this.projectId };
       this.projectLabels[indexOfEditedLabel] = label;
       this.isEditingLabel = false;
       this.operationsService.removeAllAfterDelay(3000);

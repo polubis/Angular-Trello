@@ -25,6 +25,7 @@ import { CommentsListComponent } from './comments-list/comments-list.component';
 import { LabelSelectorComponent } from './label-selector/label-selector.component';
 import { FilePickerComponent } from './file-picker/file-picker.component';
 import { ErrorImage } from "src/app/directives/image";
+import { TimerComponent } from './timer/timer.component';
 @NgModule({
     declarations: [ FormComponent, LoggedNavigationComponent,
     LogoComponent, ModalComponent, OperationsComponent, PaginationComponent,
@@ -37,7 +38,8 @@ import { ErrorImage } from "src/app/directives/image";
     CommentsListComponent,
     LabelSelectorComponent,
     FilePickerComponent,
-    ErrorImage
+    ErrorImage,
+    TimerComponent
     ],
     imports: [CommonModule, AppRoutingModule, DragDropDirectiveModule],
     exports: [

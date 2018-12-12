@@ -32,6 +32,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   isEditingTask: boolean = false;
   isDeletingTask: boolean = false;
   isAddingTask: boolean = false;
+  isChangingTime = false;
   isAddTaskModalOpen: boolean = false;
   editTaskFormSettings: FormModel[] = [...addTaskFormSettings];
   addTaskFormSettings: FormModel[] = [...addTaskFormSettings];
@@ -178,7 +179,6 @@ export class TasksListComponent implements OnInit, OnDestroy {
         const index = this.items.findIndex(
           item => item.id === this.idOfTaskToAssign
         );
-
         const user: any = collaborators.find(x => x.id === model.userId);
         this.isAssigningToTask = false;
         this.idOfTaskToAssign = -1;
@@ -194,4 +194,12 @@ export class TasksListComponent implements OnInit, OnDestroy {
     this.tasksService.getTasksForProject();
   }
 
+  startTimer(index: number, taskId: number) {
+    this.isChangingTime = true;
+    this.tasksService.startTaskTime(taskId, this.bucket, () => this.isChangingTime = false);
+  }
+  stopTimer(index: number, taskId: number) {
+    this.isChangingTime = true;
+    this.tasksService.stopTaskTime(taskId, this.bucket, () => this.isChangingTime = false);
+  }
 }

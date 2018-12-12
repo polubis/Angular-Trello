@@ -1,0 +1,17 @@
+.time-spend{
+  display: flex;
+  align-items: center;
+  margin-top: 0;
+  i{
+      margin-left: -6px;
+      margin-right: 16px;
+  }
+  b{
+      margin-right: 10px;
+  }
+  span{
+      font-size: 12px;
+      color: #BABABA;
+      margin-top: 4px;
+  }
+}
