@@ -22,6 +22,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   @Input() items: TaskModel[];
   @Input() limit: number;
   @Input() projectId: number;
+  @Input() shouldLetStartingTasks = true;
   @Input() bucket: string;
   @Input() isProjectClosed: boolean = false;
   @Input() projectLabels: Label[];
@@ -195,11 +196,16 @@ export class TasksListComponent implements OnInit, OnDestroy {
   }
 
   startTimer(index: number, taskId: number) {
-    this.isChangingTime = true;
-    this.tasksService.startTaskTime(taskId, this.bucket, () => this.isChangingTime = false);
+    if (!this.isChangingTime) {
+      this.isChangingTime = true;
+      this.tasksService.startTaskTime(taskId, this.bucket, () => this.isChangingTime = false);
+    }
+
   }
   stopTimer(index: number, taskId: number) {
-    this.isChangingTime = true;
-    this.tasksService.stopTaskTime(taskId, this.bucket, () => this.isChangingTime = false);
+    if(!this.isChangingTime) {
+      this.isChangingTime = true;
+      this.tasksService.stopTaskTime(taskId, this.bucket, () => this.isChangingTime = false);
+    }
   }
 }

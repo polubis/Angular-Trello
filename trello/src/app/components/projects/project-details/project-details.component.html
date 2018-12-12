@@ -26,7 +26,7 @@
 
       <div>
         <p><span>LAST ADDED TASKS WITH TO DO STATUS</span></p>
-        <app-tasks-list [projectId]="projectId" [shouldShowLabelSelector]="false"
+        <app-tasks-list [shouldLetStartingTasks]="false" [projectId]="projectId" [shouldShowLabelSelector]="false"
         [items]="project.tasks" [limit]="'10'" [bucket]="'Todo'" [isProjectClosed]="project.closingDate">
 
         </app-tasks-list>

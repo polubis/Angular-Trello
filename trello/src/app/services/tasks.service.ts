@@ -136,6 +136,17 @@ export class TasksService {
   stopTaskTime(taskId: number, bucketName: string, resetFunc: any) {
     return this.requestService.executeRequest('stopTaskTime', 'put', {}, '', taskId.toString(), {})
       .then(response => {
+
+        if (bucketName === 'InProgress') {
+          this.moveTaskIntoOtherBoard(taskId, this.bucketIndexes.Done).then(response => {
+            this.getTasksForProject(resetFunc);
+          }).catch(error => {
+            resetFunc();
+          });
+        } else {
+          this.getTasksForProject(resetFunc);
+        }
+
         this.getTasksForProject((resetFunc));
       }).catch(() => resetFunc());;
   }

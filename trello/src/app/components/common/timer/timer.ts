@@ -8,7 +8,7 @@ export class Timer {
     }
 
     if (time === 0) {
-      return '1 minute ago';
+      return '1 minute';
     }
 
     const { hourLength, dayLength, weekLength } = this;

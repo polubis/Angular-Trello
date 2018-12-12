@@ -8,13 +8,13 @@
 
         </app-label-selector>
         <i *ngIf="!item.user" (click)="togleAssignToTaskPersonModal(item.id)" class="material-icons animated-icon">assignment_returned</i>
-        <i (click)="startTimer(i, item.id)" *ngIf="item.user && item.timer === 'START'" class="material-icons animated-icon">play_circle_outline</i>
-        <i (click)="stopTimer(i, item.id)" *ngIf="item.timer === 'STOP'" class="material-icons animated-icon">pause_circle_outline</i>
+        <i (click)="startTimer(i, item.id)" *ngIf="item.user && item.timer === 'START' && shouldLetStartingTasks" class="material-icons animated-icon">play_circle_outline</i>
+        <i (click)="stopTimer(i, item.id)" *ngIf="item.timer === 'STOP' && shouldLetStartingTasks" class="material-icons animated-icon">pause_circle_outline</i>
         <i (click)="togleEditTaskModal(item.id)" class="material-icons edit-color animated-icon">edit</i>
         <i (click)="togleDeleteTaskPrompt(item.id)" class="material-icons delete-color animated-icon">delete</i>
       </div>
 
-      <app-spinner [showBackdrop]="true" [spinnerClass]="'spinner spinner-small spinner-form'" *ngIf="isChangingTime"></app-spinner>
+      <app-spinner [spinnerClass]="'spinner spinner-small spinner-form'" *ngIf="isChangingTime"></app-spinner>
 
       <div class="main-task-content">
         <div class="task-content">
